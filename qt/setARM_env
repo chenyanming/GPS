@@ -1,0 +1,21 @@
+#!/bin/sh
+#export QPEDIR=/home/ming/src/qt4.5/__install/arm/bin
+#export QTOPIA_DEPOT_PATH=/home/ming/src/qt4.5/__install/arm/bin
+#export QTDIR=/home/ming/src/qt4.5/__install/arm/bin
+#export DQTDIR=/home/ming/src/qt4.5/__install/arm/bin
+#export QMAKE=/home/ming/src/qt4.5/__install/arm/bin/qmake
+#export UIC=/home/ming/src/qt4.5/__install/arm/bin/uic
+#export TMAKEDIR=/home/ming/src/qt4.5/__install/arm/bin
+#export TMAKEPATH=$TMAKEDIR/lib/qws/linux-arm-g++
+#export PATH=$QPEDIR/bin:$QTDIR/bin:$DQTDIR/bin:$TMAKEDIR/bin:$PATH
+#export LD_LIBRARY_PATH=$QPEDIR/lib:$QTDIR/lib:$DQTDIR/lib:$LD_LIBRARY_PATH
+
+
+export QPEDIR=/home/ming/src/qt/qt4.5.0/__install/arm
+export QTOPIA_DEPOT_PATH=/home/ming/src/qt/qt4.5.0/__install/arm
+export QTDIR=/home/ming/src/qt/qt4.5.0/__install/arm
+export DQTDIR=/home/ming/src/qt/qt4.5.0/__install/arm
+export QMAKE=/home/ming/src/qt/qt4.5.0/__install/arm/bin/qmake
+export UIC=/home/ming/src/qt/qt4.5.0/__install/arm/bin/uic
+export PATH=$QPEDIR/bin:$QTDIR/bin:$DQTDIR/bin:$PATH
+export LD_LIBRARY_PATH=$QPEDIR/lib:$QTDIR/lib:$DQTDIR/lib:$LD_LIBRARY_PATH
