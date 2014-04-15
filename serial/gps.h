@@ -9,7 +9,13 @@ extern "C"{
 */
 struct gprmc_data
 {
-	//接受到的原始数据，一个字节一个数据
+/*
+** 用于存放整条命令的缓冲
+*/
+	char command[100];
+/*
+** 接受到的原始数据，一个字节一个数据
+*/
 	char utc[10];
 	char status;
 	char latitude[11];
@@ -22,7 +28,9 @@ struct gprmc_data
 	char mode;
 	char cs[4];
 
-	//以下是对上面数据再次封装,用于后期处理，没调用一次GPRMC_analysis()就会发生改变,调用一次GPRMC_analysis()就是处理一条GPRMC命令
+/*
+** 以下是对上面数据再次封装,用于后期处理，没调用一次GPRMC_analysis()就会发生改变,调用一次GPRMC_analysis()就是处理一条GPRMC命令
+*/
 	//char status;
 	//char n;
 	//char e;
@@ -81,10 +89,21 @@ struct gpgsv_data
 	int id[50];//卫星编号
 	int no;//可见卫星数目
 
+/*
+** 用于存放整条命令的缓冲
+*/
+	char command0[100];
+	char command1[100];
+	char command2[100];
+	char command3[100];
+	char command4[100];
+	
 };
 
 struct gpgsa_data
 {
+	char command[100];
+
 	char smode;//smode
 	char fs;//fix status
 	char sv[30];//satellite number
@@ -106,22 +125,26 @@ struct gpgsa_data
 
 struct gpgll_data
 {
+	char command[100];
 	char cs[3];
 };
 
 struct gpgga_data
 {
+	char command[100];
 	char cs[3];
 };
 
 
 struct gpvtg_data
 {
+	char command[100];
 	char cs[3];
 };
 
 struct gptxt_data
 {
+	char command[100];
 	char cs[3];
 };
 /*
@@ -138,7 +161,9 @@ extern struct gptxt_data gptxt;
 extern int openGPS(char *dev);
 extern int readGPS(int fd);
 extern int closeGPS(int fd);
+extern int printCommand(void);
 extern int printGPS(void);
+
 
 
 #ifdef __cplusplus
