@@ -1,5 +1,3 @@
-//#define PRINT_COMMAND //打印GPRMC, GPGSV, GPGSA
-//#define PRINT_COMMAND1 //打印GPGLL, GPGGA, GPVTG, GPTXT
 #include <sys/time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -114,10 +112,7 @@ int GPRMC_analysis(char *buf, struct gprmc_data *data)
 			if (pgprmc[i] != '\r' && pgprmc[i+1] != '\n')//pgprmc[i]就是指当前处理的字符
 			//if (pgprmc[i] != '\n')//pgprmc[i]就是指当前处理的字符
 			{
-				//先将当前字符输出
-				#ifdef PRINT_COMMAND
-				printf("%c", pgprmc[i]);
-				#endif
+				//逐个字符保存，方便打印
 				data->command[i] = pgprmc[i];
 				//遇到不是换行符，小于空格，大于z的符号，也就是遇到非法字符，退出程序
 				if (pgprmc[i] <' ' || pgprmc[i] > 'z')
@@ -275,10 +270,7 @@ int GPGSV_analysis(char *buf, struct gpgsv_data *data)
 				if (pgpgsv[i] != '\r' && pgpgsv[i+1] != '\n')//pgpgsv[i]就是指当前处理的字符
 				//if (pgpgsv[i] != '\n')//pgpgsv[i]就是指当前处理的字符
 				{
-					//先将当前字符输出
-					#ifdef PRINT_COMMAND
-					printf("%c", pgpgsv[i]);
-					#endif
+					//逐个字符保存，方便打印
 					switch(k)//最大支持5条GPGSV命令
 					{
 						case 0:
@@ -486,10 +478,7 @@ int GPGSA_analysis(char *buf, struct gpgsa_data *data)
 			if (pgpgsa[i] != '\r' && pgpgsa[i+1] != '\n')//pgpgsa[i]就是指当前处理的字符
 			//if (pgpgsa[i] != '\n')//pgpgsa[i]就是指当前处理的字符
 			{
-				//先将当前字符输出
-				#ifdef PRINT_COMMAND
-				printf("%c", pgpgsa[i]);
-				#endif
+				//保存字符
 				data->command[i] = pgpgsa[i];
 				//遇到不是换行符，小于空格，大于z的符号，也就是遇到非法字符，退出程序
 				if (pgpgsa[i] <' ' || pgpgsa[i] > 'z')
@@ -606,10 +595,7 @@ int GPGLL_analysis(char *buf, struct gpgll_data *data)
 			if (pgpgll[i] != '\r' && pgpgll[i+1] != '\n')//pgpgll[i]就是指当前处理的字符
 			//if (pgpgll[i] != '\n')//pgpgll[i]就是指当前处理的字符
 			{
-				//先将当前字符输出
-				#ifdef PRINT_COMMAND
-				printf("%c", pgpgll[i]);
-				#endif
+				//保存字符
 				data->command[i] = pgpgll[i];
 				//遇到不是换行符，小于空格，大于z的符号，也就是遇到非法字符，退出程序
 				if (pgpgll[i] <' ' || pgpgll[i] > 'z')
@@ -685,10 +671,7 @@ int GPGGA_analysis(char *buf, struct gpgga_data *data)
 			if (pgpgga[i] != '\r' && pgpgga[i+1] != '\n')//pgpgga[i]就是指当前处理的字符
 			//if (pgpgga[i] != '\n')//pgpgga[i]就是指当前处理的字符
 			{
-				//先将当前字符输出
-				#ifdef PRINT_COMMAND
-				printf("%c", pgpgga[i]);
-				#endif
+				//保存字符
 				data->command[i] = pgpgga[i];
 				//遇到不是换行符，小于空格，大于z的符号，也就是遇到非法字符，退出程序
 				if (pgpgga[i] <' ' || pgpgga[i] > 'z')
@@ -764,10 +747,7 @@ int GPVTG_analysis(char *buf, struct gpvtg_data *data)
 			if (pgpvtg[i] != '\r' && pgpvtg[i+1] != '\n')//pgpvtg[i]就是指当前处理的字符
 			//if (pgpvtg[i] != '\n')//pgpvtg[i]就是指当前处理的字符
 			{
-				//先将当前字符输出
-				#ifdef PRINT_COMMAND
-				printf("%c", pgpvtg[i]);
-				#endif
+				//保存字符
 				data->command[i] = pgpvtg[i];
 				//遇到不是换行符，小于空格，大于z的符号，也就是遇到非法字符，退出程序
 				if (pgpvtg[i] <' ' || pgpvtg[i] > 'z')
@@ -843,10 +823,7 @@ int GPTXT_analysis(char *buf, struct gptxt_data *data)
 			if (pgptxt[i] != '\r' && pgptxt[i+1] != '\n')//pgptxt[i]就是指当前处理的字符
 			//if (pgptxt[i] != '\n')//pgptxt[i]就是指当前处理的字符
 			{
-				//先将当前字符输出
-				#ifdef PRINT_COMMAND
-				printf("%c", pgptxt[i]);
-				#endif
+				//保存字符
 				data->command[i] = pgptxt[i];
 				//遇到不是换行符，小于空格，大于z的符号，也就是遇到非法字符，退出程序
 				if (pgptxt[i] <' ' || pgptxt[i] > 'z')
@@ -950,9 +927,10 @@ void gettime()
 		if (gprmc.utc[0] == '1')
 		{
 			gprmc.hour = gprmc.hour + 10;
-			if (gprmc.hour >= 24)
+			if (gprmc.hour >= 24)//凌晨到早上7点才会执行的
 			{
 				gprmc.hour = gprmc.hour - 24;
+				gprmc.day = 1;
 			}
 		}
 
@@ -960,9 +938,64 @@ void gettime()
 		gprmc.minute = (gprmc.utc[2]-48)*10 + gprmc.utc[3]-48;
 		gprmc.second = (gprmc.utc[4]-48)*10 + gprmc.utc[5]-48;
 
-		gprmc.day = (gprmc.date[0]-48)*10 + gprmc.date[1]-48;
-		gprmc.month = (gprmc.date[2]-48)*10 + gprmc.date[3]-48;
-		gprmc.year = (gprmc.date[4]-48)*10 + gprmc.date[5]-48;
+		if (gprmc.day == 1)//超前8小时后，日+1
+		{
+			gprmc.day = (gprmc.date[0]-48)*10 + gprmc.date[1]-48 + 1;
+			gprmc.month = (gprmc.date[2]-48)*10 + gprmc.date[3]-48;
+			gprmc.year = (gprmc.date[4]-48)*10 + gprmc.date[5]-48;
+			switch(gprmc.month)
+			{
+				case 1:
+				case 3:
+				case 5:
+				case 7:
+				case 8:
+				case 10:
+					if (gprmc.day == 32) {
+						//gprmc.day = 1;
+						gprmc.month++;
+					}
+					break;
+				case 4:
+				case 6:
+				case 9:
+				case 11:
+					if (gprmc.day == 31) {
+						//gprmc.day = 1;
+						gprmc.month++;
+					}
+					break;
+				case 2:
+					if (((gprmc.year % 4 == 0) && (gprmc.year % 100 != 0)) || (gprmc.year % 400 == 0)) {//判断闰年
+						if (gprmc.day == 30) {
+							//gprmc.day = 1;
+							gprmc.month = 3;
+						}
+					}
+					else {
+						if (gprmc.day == 29) {
+							//gprmc.day = 1;
+							gprmc.month = 3;
+						}
+					}
+					break;
+				case 12:
+					if (gprmc.day == 32) {
+						//gprmc.day = 1;
+						gprmc.month = 1;
+						gprmc.year++;
+					}
+					break;
+				default:
+					break;
+			}
+		}
+		else//day = ?因为一开始设置是？而不是0
+		{
+			gprmc.day = (gprmc.date[0]-48)*10 + gprmc.date[1]-48;
+			gprmc.month = (gprmc.date[2]-48)*10 + gprmc.date[3]-48;
+			gprmc.year = (gprmc.date[4]-48)*10 + gprmc.date[5]-48;
+		}
 	}
 	//定位无效时，什么都不做
 }
@@ -980,13 +1013,6 @@ void getposition()
 		gprmc.long_minute= (gprmc.longitude[3]-48)*10 + gprmc.longitude[4]-48;
 		gprmc.long_second= ((gprmc.longitude[6]-48)*10000 + (gprmc.longitude[7]-48)*1000 + (gprmc.longitude[8]-48)*100 + (gprmc.longitude[9]-48)*10 + gprmc.longitude[10]-48)*60/100000.0;
 
-		//printf("纬度\t\t\t经度\t\n");
-		//printf("%c纬%d°%d\'%.5f\"\t%c经%d°%d\'%.5f\"\n", gprmc.n, gprmc.lati_degree, gprmc.lati_minute, gprmc.lati_second, gprmc.e, gprmc.long_degree, gprmc.long_minute, gprmc.long_second);
-	}
-	else
-	{
-		//printf("纬度\t\t\t经度\t\n");
-		//printf("%c纬%c°%c\'%c\"\t%c经%c°%c\'%c\"\n", gprmc.n, (char)gprmc.lati_degree, (char)gprmc.lati_minute, (char)gprmc.lati_second, gprmc.e, (char)gprmc.long_degree, (char)gprmc.long_minute, (char)gprmc.long_second);
 	}
 }
 
@@ -1067,82 +1093,13 @@ int readGPS(int fd)
 {
 	memset(rxd_buf, 0, sizeof(rxd_buf));//必须将上一次的残留物清除，这一步至关重要！
 	read_serial(fd, rxd_buf);
-
-	#ifdef PRINT_COMMAND
-	if (gprmc.hour >=0 && gprmc.hour <= 23) 
-		printf("%d:%d:%d\t", gprmc.hour, gprmc.minute, gprmc.second);
-	else
-		printf("%c:%c:%c\t", (char)gprmc.hour, (char)gprmc.minute, (char)gprmc.second);
-	#endif
 	GPRMC_analysis(rxd_buf, &gprmc);
-	#ifdef PRINT_COMMAND
-	printf("\n");
-	#endif
-
-
-	#ifdef PRINT_COMMAND
-	if (gprmc.hour >=0 && gprmc.hour <= 23) 
-		printf("%d:%d:%d\t", gprmc.hour, gprmc.minute, gprmc.second);
-	else
-		printf("%c:%c:%c\t", (char)gprmc.hour, (char)gprmc.minute, (char)gprmc.second);
-	#endif
 	GPGSV_analysis(rxd_buf, &gpgsv);
-	#ifdef PRINT_COMMAND
-	printf("\n");
-	#endif
-
-	#ifdef PRINT_COMMAND
-	if (gprmc.hour >=0 && gprmc.hour <= 23) 
-		printf("%d:%d:%d\t", gprmc.hour, gprmc.minute, gprmc.second);
-	else
-		printf("%c:%c:%c\t", (char)gprmc.hour, (char)gprmc.minute, (char)gprmc.second);
-	#endif
 	GPGSA_analysis(rxd_buf, &gpgsa);
-	#ifdef PRINT_COMMAND1
-	printf("\n");
-	#endif
-
-	#ifdef PRINT_COMMAND1
-	if (gprmc.hour >=0 && gprmc.hour <= 23) 
-		printf("%d:%d:%d\t", gprmc.hour, gprmc.minute, gprmc.second);
-	else
-		printf("%c:%c:%c\t", (char)gprmc.hour, (char)gprmc.minute, (char)gprmc.second);
-	#endif
 	GPGLL_analysis(rxd_buf, &gpgll);
-	#ifdef PRINT_COMMAND1
-	printf("\n");
-	#endif
-
-	#ifdef PRINT_COMMAND1
-	if (gprmc.hour >=0 && gprmc.hour <= 23) 
-		printf("%d:%d:%d\t", gprmc.hour, gprmc.minute, gprmc.second);
-	else
-		printf("%c:%c:%c\t", (char)gprmc.hour, (char)gprmc.minute, (char)gprmc.second);
-	#endif
 	GPGGA_analysis(rxd_buf, &gpgga);
-	#ifdef PRINT_COMMAND1
-	printf("\n");
-	#endif
-
-	#ifdef PRINT_COMMAND1
-	if (gprmc.hour >=0 && gprmc.hour <= 23) 
-		printf("%d:%d:%d\t", gprmc.hour, gprmc.minute, gprmc.second);
-	else
-		printf("%c:%c:%c\t", (char)gprmc.hour, (char)gprmc.minute, (char)gprmc.second);
-	#endif
 	GPVTG_analysis(rxd_buf, &gpvtg);
-	#ifdef PRINT_COMMAND1
-	printf("\n");
-	#endif
-
-	#ifdef PRINT_COMMAND1
-	if (gprmc.hour >=0 && gprmc.hour <= 23) 
-		printf("%d:%d:%d\t", gprmc.hour, gprmc.minute, gprmc.second);
-	else
-		printf("%c:%c:%c\t", (char)gprmc.hour, (char)gprmc.minute, (char)gprmc.second);
-	#endif
 	GPTXT_analysis(rxd_buf, &gptxt);
-
 	return 1;
 
 }
@@ -1156,11 +1113,26 @@ int closeGPS(int fd)
 int printCommand(void)
 {
 	printf("%s\n", gprmc.command);
-	printf("%s\n", gpgsv.command0);
-	printf("%s\n", gpgsv.command1);
-	printf("%s\n", gpgsv.command2);
-	printf("%s\n", gpgsv.command3);
-	printf("%s\n", gpgsv.command4);
+	if (gpgsv.command0[0] != 0)
+	{
+		printf("%s\n", gpgsv.command0);
+	}
+	if (gpgsv.command1[0] != 0)
+	{
+		printf("%s\n", gpgsv.command1);
+	}
+	if (gpgsv.command2[0] != 0)
+	{
+		printf("%s\n", gpgsv.command2);
+	}
+	if (gpgsv.command3[0] != 0)
+	{
+		printf("%s\n", gpgsv.command3);
+	}
+	if (gpgsv.command4[0] != 0)
+	{
+		printf("%s\n", gpgsv.command4);
+	}
 	printf("%s\n", gpgsa.command);
 	return 1;	
 }
@@ -1170,59 +1142,50 @@ int printGPRMC(void)
 
 	if (gprmc.status == 'A')
 	{
-		printf("\n");
-		//printf("--------------------------------------------------------------------------------------------\n");
-		printf("时间\t日期\t纬度\t经度\t速度\n");
+		printf("\n时间\t日期\t纬度\t经度\t速度\n");
 		printf(
 		"%d:%d:%d\t"
 		"20%d-%d-%d\t"
-		"%c纬%d°%d\'%.5f\"\t"
-		"%c经%d°%d\'%.5f\"\t"
+		"%c%d°%d\'%.5f\"\t"
+		"%c%d°%d\'%.5f\"\t"
 		"%.5fkm/h\n",
 		gprmc.hour, gprmc.minute, gprmc.second, 
 		gprmc.year, gprmc.month, gprmc.day,
 		gprmc.n, gprmc.lati_degree, gprmc.lati_minute, gprmc.lati_second, 
 		gprmc.e, gprmc.long_degree, gprmc.long_minute, gprmc.long_second,
 		gprmc.kmph);
-		//printf("--------------------------------------------------------------------------------------------\n");
 		printf("\n");
 	}
 	else if (gprmc.hour >=0 && gprmc.hour <= 23)
 	{
-		printf("\n");
-		//printf("----------------------------------------------------------------------\n");
-		printf("时间\t日期\t纬度\t经度\t速度\n");
+		printf("\n时间\t日期\t纬度\t经度\t速度\n");
 		printf(
 		"%d:%d:%d\t"
 		"20%d-%d-%d\t"
-		"%c纬%c°%c\'%c\"\t"
-		"%c经%c°%c\'%c\"\t"
+		"%c%c°%c\'%c\"\t"
+		"%c%c°%c\'%c\"\t"
 		"%ckm/h\n",
 		gprmc.hour, gprmc.minute, gprmc.second, 
 		gprmc.year, gprmc.month, gprmc.day,
 		gprmc.n, (char)gprmc.lati_degree, (char)gprmc.lati_minute, (char)gprmc.lati_second,
 		gprmc.e, (char)gprmc.long_degree, (char)gprmc.long_minute, (char)gprmc.long_second,
 		(char)gprmc.kmph);
-		//printf("----------------------------------------------------------------------\n");
 		printf("\n");
 	}	
 	else
 	{
-		printf("\n");
-		//printf("----------------------------------------------------------------------\n");
-		printf("时间\t日期\t纬度\t经度\t速度\n");
+		printf("\n时间\t日期\t纬度\t经度\t速度\n");
 		printf(
 		"%c:%c:%c\t"
 		"%c-%c-%c\t"
-		"%c纬%c°%c\'%c\"\t"
-		"%c经%c°%c\'%c\"\t"
+		"%c%c°%c\'%c\"\t"
+		"%c%c°%c\'%c\"\t"
 		"%ckm/h\n",
 		(char)gprmc.hour, (char)gprmc.minute, (char)gprmc.second, 
 		(char)gprmc.year, (char)gprmc.month, (char)gprmc.day,
 		(char)gprmc.n, (char)gprmc.lati_degree, (char)gprmc.lati_minute, (char)gprmc.lati_second,
 		(char)gprmc.e, (char)gprmc.long_degree, (char)gprmc.long_minute, (char)gprmc.long_second,
 		(char)gprmc.kmph);
-		//printf("----------------------------------------------------------------------\n");
 		printf("\n");
 
 	}
@@ -1233,7 +1196,6 @@ int printGPRMC(void)
 int printGPGSV(void)
 {	
 	int i = 0;
-	//printf("***********************************************\n");
 	printf("可见卫星数目\t卫星号\n");
 	printf("%d\t", gpgsv.no);
 	while (gpgsv.id[i] > 0)
@@ -1242,7 +1204,6 @@ int printGPGSV(void)
 		i++;
 	}
 	printf("\n");
-	//printf("***********************************************\n");
 	printf("\n");
 	return 1;
 }
@@ -1250,8 +1211,7 @@ int printGPGSV(void)
 
 int printGPGSA(void)
 {
-	int i = 0;
-	//printf("=================================================================================\n");
+	int i = 0, j = 0, k = 0, num;
 	printf("定位模式\t定位类型\t有效卫星\t卫星号\t精度因子\n");
 
 	if (gpgsa.smode == 'M')
@@ -1266,22 +1226,43 @@ int printGPGSA(void)
 	else 
 		printf("未定位\t");
 
-	printf("%d\t", i);
-	i = 0;
+
+	//算出可用于定位的卫星个数，并输出
 	while (gpgsa.id[i] > 0)
 	{
-		printf("%d ", gpgsa.id[i]);
 		i++;
 	}
+	num = i;
+	printf("%d\t", num);
+
+	//从小到大逐个输出可用于定位的卫星号
+	//冒泡法排序
+	for (i = 0; i < num-1; i++)
+		for (j = 0; j < num-1-i; j++)
+			if (gpgsa.id[j] > 0)
+			{
+				if (gpgsa.id[j] > gpgsa.id[j+1])
+				{
+					k = gpgsa.id[j];
+					gpgsa.id[j] = gpgsa.id[j+1];
+					gpgsa.id[j+1] = k;
+				}
+			}
+
+	for (i = 0; i < num; i++)
+	{
+		printf("%d ", gpgsa.id[i]);
+	}
+
+
 	if (gpgsa.fs == '1')
 	{
 		printf("\n");
 	}
 	else
 	{
-		printf("\t%s %s %s\n", gpgsa.pdop, gpgsa.hdop, gpgsa.vdop);
+		printf("\tp=%s h=%s v=%s\n", gpgsa.pdop, gpgsa.hdop, gpgsa.vdop);
 	}
-	//printf("=================================================================================\n");
 	return 1;
 }
 

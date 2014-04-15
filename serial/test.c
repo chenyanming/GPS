@@ -23,7 +23,7 @@ int main(int argc, char const *argv[])
 	int fd;
 	int i = 0;
 	fd = openGPS("/dev/tq2440_serial1");
-	cfg(fd, cfg_rate_200);//不知道是什么原因定位太慢了，加快看看怎样
+	//cfg(fd, cfg_rate_200);//不知道是什么原因定位太慢了，加快看看怎样
 	//cfg(fd, cfg_msg_GPGLL_on);
 	//cfg(fd, cfg_msg_GPGGA_on);
 	//cfg(fd, cfg_msg_GPVTG_on);
@@ -52,11 +52,13 @@ int main(int argc, char const *argv[])
 		if (i == 15) {
 		}
 
-		sleep(1);
 		readGPS(fd);
-		printf("\n\n\n**************************************************************************************");
+
+		printf("=================================================================================\n");
+		printCommand();
 		printGPS();
-		printf("\n**************************************************************************************");
+		sleep(1);
+
 		fflush(stdout);//配合QT使用，应该是清除缓冲区吧，这样才可以正常输出。
 	}
 	closeGPS(fd);
