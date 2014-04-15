@@ -1,4 +1,4 @@
-#define PRINT_COMMAND //打印GPRMC, GPGSV, GPGSA
+//#define PRINT_COMMAND //打印GPRMC, GPGSV, GPGSA
 //#define PRINT_COMMAND1 //打印GPGLL, GPGGA, GPVTG, GPTXT
 #include <sys/time.h>
 #include <sys/types.h>
@@ -52,7 +52,9 @@ int printGPGSA();
 int openGPS(char *dev);
 int readGPS(int fd);
 int closeGPS(int fd);
+int printCommand(void);
 int printGPS(void);
+
 
 /*
 **没有找到GPRMC命令，返回0
@@ -116,6 +118,7 @@ int GPRMC_analysis(char *buf, struct gprmc_data *data)
 				#ifdef PRINT_COMMAND
 				printf("%c", pgprmc[i]);
 				#endif
+				data->command[i] = pgprmc[i];
 				//遇到不是换行符，小于空格，大于z的符号，也就是遇到非法字符，退出程序
 				if (pgprmc[i] <' ' || pgprmc[i] > 'z')
 				{
@@ -251,7 +254,7 @@ int GPGSV_analysis(char *buf, struct gpgsv_data *data)
 		*/
 
 		//每一次for代表处理一条GPGSV，如果在for内不将数据读走，就清0（避免信息重复），但是不能清除存在读取该命令后保存的数据
-		memset(data, 0, sizeof(struct gpgsv_data) - sizeof(data->id) - sizeof(data->no));
+		memset(data, 0, sizeof(struct gpgsv_data) - sizeof(data->id) - sizeof(data->no) - sizeof(data->command0) - sizeof(data->command1) - sizeof(data->command2) - sizeof(data->command3) - sizeof(data->command4));
 		pgpgsv = strstr(pstr, "$GPGSV,");//返回char指针
 
 		/*
@@ -276,6 +279,26 @@ int GPGSV_analysis(char *buf, struct gpgsv_data *data)
 					#ifdef PRINT_COMMAND
 					printf("%c", pgpgsv[i]);
 					#endif
+					switch(k)//最大支持5条GPGSV命令
+					{
+						case 0:
+							data->command0[i] = pgpgsv[i];
+							break;
+						case 1:
+							data->command1[i] = pgpgsv[i];
+							break;
+						case 2:
+							data->command2[i] = pgpgsv[i];
+							break;
+						case 3:
+							data->command3[i] = pgpgsv[i];
+							break;
+						case 4:
+							data->command4[i] = pgpgsv[i];
+							break;
+						default:
+							break;
+					}
 					//遇到不是换行符，小于空格，大于z的符号，也就是遇到非法字符，退出程序
 					if (pgpgsv[i] <' ' || pgpgsv[i] > 'z')
 					{
@@ -467,6 +490,7 @@ int GPGSA_analysis(char *buf, struct gpgsa_data *data)
 				#ifdef PRINT_COMMAND
 				printf("%c", pgpgsa[i]);
 				#endif
+				data->command[i] = pgpgsa[i];
 				//遇到不是换行符，小于空格，大于z的符号，也就是遇到非法字符，退出程序
 				if (pgpgsa[i] <' ' || pgpgsa[i] > 'z')
 				{
@@ -586,6 +610,7 @@ int GPGLL_analysis(char *buf, struct gpgll_data *data)
 				#ifdef PRINT_COMMAND
 				printf("%c", pgpgll[i]);
 				#endif
+				data->command[i] = pgpgll[i];
 				//遇到不是换行符，小于空格，大于z的符号，也就是遇到非法字符，退出程序
 				if (pgpgll[i] <' ' || pgpgll[i] > 'z')
 				{
@@ -664,6 +689,7 @@ int GPGGA_analysis(char *buf, struct gpgga_data *data)
 				#ifdef PRINT_COMMAND
 				printf("%c", pgpgga[i]);
 				#endif
+				data->command[i] = pgpgga[i];
 				//遇到不是换行符，小于空格，大于z的符号，也就是遇到非法字符，退出程序
 				if (pgpgga[i] <' ' || pgpgga[i] > 'z')
 				{
@@ -742,6 +768,7 @@ int GPVTG_analysis(char *buf, struct gpvtg_data *data)
 				#ifdef PRINT_COMMAND
 				printf("%c", pgpvtg[i]);
 				#endif
+				data->command[i] = pgpvtg[i];
 				//遇到不是换行符，小于空格，大于z的符号，也就是遇到非法字符，退出程序
 				if (pgpvtg[i] <' ' || pgpvtg[i] > 'z')
 				{
@@ -820,6 +847,7 @@ int GPTXT_analysis(char *buf, struct gptxt_data *data)
 				#ifdef PRINT_COMMAND
 				printf("%c", pgptxt[i]);
 				#endif
+				data->command[i] = pgptxt[i];
 				//遇到不是换行符，小于空格，大于z的符号，也就是遇到非法字符，退出程序
 				if (pgptxt[i] <' ' || pgptxt[i] > 'z')
 				{
@@ -1125,6 +1153,17 @@ int closeGPS(int fd)
 	return 1;
 }
 
+int printCommand(void)
+{
+	printf("%s\n", gprmc.command);
+	printf("%s\n", gpgsv.command0);
+	printf("%s\n", gpgsv.command1);
+	printf("%s\n", gpgsv.command2);
+	printf("%s\n", gpgsv.command3);
+	printf("%s\n", gpgsv.command4);
+	printf("%s\n", gpgsa.command);
+	return 1;	
+}
 
 int printGPRMC(void)
 {
