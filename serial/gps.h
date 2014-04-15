@@ -85,7 +85,9 @@ struct gpgsv_data
 
 	char cs[3];//Checksum
 
-	//数据再次封装
+/*
+** 数据
+*/
 	int id[50];//卫星编号
 	int no;//可见卫星数目
 
@@ -97,7 +99,7 @@ struct gpgsv_data
 	char command2[100];
 	char command3[100];
 	char command4[100];
-	
+
 };
 
 struct gpgsa_data
@@ -112,7 +114,9 @@ struct gpgsa_data
 	char vdop[6];
 	char cs[3];//checksum
 
-	//数据再次封装
+/*
+** 数据
+*/
 	//char smode;
 	//char fs;
 	int id[14];
@@ -162,7 +166,7 @@ extern int openGPS(char *dev);
 extern int readGPS(int fd);
 extern int closeGPS(int fd);
 extern int printCommand(void);
-extern int printGPS(void);
+extern int printData(void);
 
 
 

@@ -51,7 +51,7 @@ int openGPS(char *dev);
 int readGPS(int fd);
 int closeGPS(int fd);
 int printCommand(void);
-int printGPS(void);
+int printData(void);
 
 
 /*
@@ -1266,7 +1266,7 @@ int printGPGSA(void)
 	return 1;
 }
 
-int printGPS(void)
+int printData(void)
 {
 	printGPRMC();
 	printGPGSV();

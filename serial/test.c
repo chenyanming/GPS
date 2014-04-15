@@ -56,7 +56,7 @@ int main(int argc, char const *argv[])
 
 		printf("=================================================================================\n");
 		printCommand();
-		printGPS();
+		printData();
 		sleep(1);
 
 		fflush(stdout);//配合QT使用，应该是清除缓冲区吧，这样才可以正常输出。
