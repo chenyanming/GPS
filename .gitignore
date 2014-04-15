@@ -21,3 +21,8 @@
 *.i*86
 *.x86_64
 *.hex
+
+# other
+build-qt-Desktop_Qt_4_5_3_GCC_32bit-Debug/*
+*.pro
+*.pro.user
