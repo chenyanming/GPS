@@ -6,44 +6,44 @@ It is Based on NEO-6 u-blox 6 GPS Modules, Linux kernel 2.6.30, busybox, Qt 4.5 
 
 
 ## Example 例子
-***********************************
-1. 包含头文件
-<pre><code>\#include "gps.h"
-</code></pre>
 
-1. 打开GPS设备，`int openGPS(char *dev);`
-<pre><code>int fd;  
-fd = openGPS("/dev/tq2440_serial1");
-</code></pre>
+1. 包含头文件 
+
+        #include "gps.h"
+
+1. 打开GPS设备，`int openGPS(char *dev);`   
+
+        int fd;  
+        fd = openGPS("/dev/tq2440_serial1");
 
 2. 读取GPS数据，`int readGPS(int fd);`，然后就可以访问结构体gprmc， gpgsv， gpgsa的成员
-<pre><code>readGPS(fd);
-printf("Now the time is: %d:%d:%d.\n", gprmc.hour, gprmc.minute, gprmc.second);
-</code></pre>
+
+        readGPS(fd);
+        printf("Now the time is: %d:%d:%d.\n", gprmc.hour, gprmc.minute, gprmc.second);
 
 3. 关闭GPS，`int closeGPS(int fd);`
-<pre><code>closeGPS(fd);
-</code></pre>
+
+        closeGPS(fd);
 
 __可选:__ 打印所有接受到NEMA的命令，`int printCommand(void);`
 
 __可选:__ 打印所有分析后的数据，`int printData(void);`
 
 __可选:__ 配置GPS，`int cfg(int fd, const char *buf);`
-<pre><code>    #include "serial.h"
-    ......
-    cfg(fd, cfg_rate_1000);//1Hz为默认配置
-    cfg(fd, cfg_msg_GPGLL_off);//关闭GPGLL
-    cfg(fd, cfg_msg_GPGGA_off);//关闭GPGGA
-    cfg(fd, cfg_msg_GPVTG_off);//关闭GPVTG
-    cfg(fd, cfg_rst_prt_38400);//修改GPS模块的波特率为38400
-    init_serial(fd, B38400);//修改串口的波特率为38400
-    cfg(fd, cfg_cfg_save);//保存配置
-    ......
-</code></pre>
+
+        #include "serial.h"
+        ......
+        cfg(fd, cfg_rate_1000);//1Hz为默认配置
+        cfg(fd, cfg_msg_GPGLL_off);//关闭GPGLL
+        cfg(fd, cfg_msg_GPGGA_off);//关闭GPGGA
+        cfg(fd, cfg_msg_GPVTG_off);//关闭GPVTG
+        cfg(fd, cfg_rst_prt_38400);//修改GPS模块的波特率为38400
+        init_serial(fd, B38400);//修改串口的波特率为38400
+        cfg(fd, cfg_cfg_save);//保存配置
+        ......
 
 ## serial/
-************************************
+
 C接口，其中gps.h头文件包含所有的重要的结构体和函数，调用readGPS(int fd)函数后，数据就保存在各个接口处。
 ### gps.h
 #### important members 重要成员
@@ -108,17 +108,16 @@ Test code.
 
 
 ## GPS/
-************************************
+
 Master version.
 
 基本功能QT界面，有启动GPS，关闭GPS，关机，重启4个功能。
 
 ## qt/
-************************************
+
 Development version.
 
 ## Contact 联系信息
-***************
 
 *Author:* DR_MING  
 *Email:* elecming@gmail.com   
