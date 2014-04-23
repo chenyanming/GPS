@@ -25,7 +25,7 @@ It is Based on NEO-6 u-blox 6 GPS Modules, Linux kernel 2.6.30, busybox, Qt 4.5 
 
         closeGPS(fd);
 
-__可选:__ 打印所有接受的NEMA命令，`int printCommand(void);`
+__可选:__ 打印所有接收的NEMA命令，`int printCommand(void);`
 
 __可选:__ 打印所有分析后的数据，`int printData(void);`
 
