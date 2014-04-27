@@ -21,12 +21,12 @@
 int main(int argc, char const *argv[])
 {
 	int fd;
-	int i = 0;
 	fd = openGPS("/dev/tq2440_serial1");
 	//cfg(fd, cfg_rate_200);//不知道是什么原因定位太慢了，加快看看怎样
 	//cfg(fd, cfg_msg_GPGLL_on);
-	//cfg(fd, cfg_msg_GPGGA_on);
+	cfg(fd, cfg_msg_GPGGA_on);
 	//cfg(fd, cfg_msg_GPVTG_on);
+	cfg(fd, cfg_cfg_save);//保存配置
 
 /*
 **	这部分代码用于保存配置到EEPROME的，要修改配置就根据需要配置，然后运行
@@ -43,26 +43,18 @@ int main(int argc, char const *argv[])
 	cfg(fd, cfg_cfg_save);//保存配置
 */
 
-	while(1) {
-		i++;
-		if (i == 5) {
-		}
-		if (i == 10) {
-		}
-		if (i == 15) {
-		}
-
+	while(1) 
+	{
 		readGPS(fd);
-
 		printf("=================================================================================\n");
 		printCommand();
 		printData();
 		sleep(1);
-
 		fflush(stdout);//配合QT使用，应该是清除缓冲区吧，这样才可以正常输出。
 	}
 	closeGPS(fd);
 	return 0;
+	
 }
 #endif
 
@@ -93,11 +85,17 @@ int main()
 #endif
 
 #ifdef x86
+
+extern int GPRMC_analysis(char *buf, struct gprmc_data *data);
+extern int GPGSV_analysis(char *buf, struct gpgsv_data *data);
+extern int GPGSA_analysis(char *buf, struct gpgsa_data *data);
+extern int GPGGA_analysis(char *buf, struct gpgga_data *data);
+
 int main()
 {
 	int fd, rev, i = 1;
 	char rxd_buf[4000];
-	fd = open("/home/ming/KuaiPan/Project/kernel_module/tq2440/2.serial/real.txt", O_RDONLY);
+	fd = open("/home/ming/Project/kernel_module/tq2440/GPS/serial/real.txt", O_RDONLY);
 	rev = read(fd, rxd_buf, 4000);
 	if (rev == 0)
 	{
@@ -106,10 +104,12 @@ int main()
 	GPRMC_analysis(rxd_buf, &gprmc);
 	GPGSV_analysis(rxd_buf, &gpgsv);
 	GPGSA_analysis(rxd_buf, &gpgsa);
-	printGPRMC();
-	printGPGSV();
-	printGPGSA();
+	GPGGA_analysis(rxd_buf, &gpgga);
+	printCommand();
+	printData();
 	close(fd);
 	return 0;
 }
 #endif
+
+

@@ -1,0 +1,720 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"file",
+				"file_path"
+			],
+			[
+				"GP",
+				"GPIO_Pin	uint16_t"
+			],
+			[
+				"cfg",
+				"cfg(int fd, const char *buf)	int"
+			],
+			[
+				"cfgcs",
+				"cfg_rst_cs_start	const char []"
+			],
+			[
+				"r",
+				"rename(const char *__old, const char *__new)	int"
+			],
+			[
+				"cfg_rate",
+				"cfg_rate_2000	const char []"
+			],
+			[
+				"gpgga",
+				"gpgga_data	struct"
+			],
+			[
+				"gpgg",
+				"gpgga_data	struct"
+			],
+			[
+				"Ublox",
+				"Ublox_Cfg_Ack_Check	u_int8_t"
+			],
+			[
+				"read",
+				"read(int __fd, void *__buf, size_t __nbytes)	ssize_t"
+			],
+			[
+				"uint",
+				"u_int16_t	typedef"
+			],
+			[
+				"no",
+				"nomsg	char"
+			],
+			[
+				"close",
+				"closeGPS(int fd)	int"
+			],
+			[
+				"tq2",
+				"tq2440_serial1"
+			],
+			[
+				"pri",
+				"printf	printf …"
+			],
+			[
+				"lati",
+				"lati_degree	int"
+			],
+			[
+				"lo",
+				"long_second	int"
+			],
+			[
+				"l",
+				"long_minute	int"
+			],
+			[
+				"long",
+				"long_degree	int"
+			],
+			[
+				"la",
+				"lati_minute	int"
+			],
+			[
+				"gp",
+				"gprmc	struct gprmc_data"
+			],
+			[
+				"lt",
+				"lati_minute	int"
+			],
+			[
+				"st",
+				"status	char"
+			],
+			[
+				"open",
+				"open(const char *__file, int __oflag, ...)	int"
+			],
+			[
+				"re",
+				"receive_buf	char [2048]"
+			],
+			[
+				"rev",
+				"rev_test	int"
+			],
+			[
+				"tv",
+				"tv_usec	__suseconds_t"
+			],
+			[
+				"open_seria",
+				"open_serial(int fd)	int"
+			],
+			[
+				"B9",
+				"B9600	macro"
+			],
+			[
+				"O_NO",
+				"O_NONBLOCK	macro"
+			],
+			[
+				"O_RD",
+				"O_RDWR	macro"
+			],
+			[
+				"MEM",
+				"MEMDEV_SIZE	macro"
+			],
+			[
+				"MEMDEV",
+				"MEMDEV_SIZE	macro"
+			],
+			[
+				"mem_",
+				"mem_devp	struct mem_dev *"
+			],
+			[
+				"ENoD",
+				"ENODEV	macro"
+			],
+			[
+				"mem",
+				"mem_major	int"
+			],
+			[
+				"i",
+				"if	If Condition"
+			],
+			[
+				"s",
+				"setGas(int mGas)	void"
+			],
+			[
+				"b",
+				"bCat"
+			],
+			[
+				"get",
+				"getAge"
+			],
+			[
+				"set",
+				"setAge"
+			],
+			[
+				"ma",
+				"mCat"
+			],
+			[
+				"m",
+				"mNumber"
+			],
+			[
+				"print",
+				"printnumber"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "Packages/User/stm32_make.sublime-build",
+	"command_palette":
+	{
+		"height": 117.0,
+		"selected_items":
+		[
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"mdp",
+				"Markdown Preview: Python Markdown: Export HTML in Sublime Text"
+			],
+			[
+				"md",
+				"Markdown Preview: Python Markdown: Preview in Browser"
+			],
+			[
+				"m",
+				"Markdown Preview: Open Markdown Cheat sheet"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"sento",
+				"Send to evernote"
+			],
+			[
+				"remov",
+				"Package Control: Remove Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				":w",
+				":w - Save"
+			],
+			[
+				"packagere",
+				"Package Control: Remove Package"
+			],
+			[
+				"git st",
+				"Git: Show Tags"
+			],
+			[
+				"git statu",
+				"Git: Status"
+			],
+			[
+				"git lg",
+				"Git: Log All"
+			],
+			[
+				"git status",
+				"Git: Status"
+			],
+			[
+				"gits",
+				"Git: Status"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"inp",
+				"InputHelper"
+			],
+			[
+				"inpu",
+				"InputHelper"
+			],
+			[
+				"pacak",
+				"Package Control: Enable Package"
+			],
+			[
+				"u",
+				"Package Control: Upgrade/Overwrite All Packages"
+			],
+			[
+				"ctags",
+				"CTags: Show Symbols (file)"
+			],
+			[
+				"",
+				":$ - EOF"
+			],
+			[
+				"sublime",
+				"Preferences: SublimeClang Settings – User"
+			],
+			[
+				"Snippet: ",
+				"Snippet: #include <…>"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 647.0
+	},
+	"console":
+	{
+		"height": 230.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/ming/Project/stm32/src/main.c",
+		"/home/ming/Project/stm32/src/Makefile",
+		"/home/ming/Project/stm32/libs/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/stm32f10x.h",
+		"/home/ming/Project/stm32/src/startup.c",
+		"/home/ming/Project/stm32/src/main_bk.c",
+		"/home/ming/Project/stm32/libs/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_gpio.h",
+		"/home/ming/Project/stm32/main.c",
+		"/home/ming/Project/stm32/stm32.sublime-project",
+		"/home/ming/.config/sublime-text-2/Packages/User/stm32_make.sublime-build",
+		"/home/ming/Project/stm32/libs/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_rcc.h",
+		"/home/ming/Project/stm32/libs/Makefile",
+		"/home/ming/Project/stm32/libs/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.c",
+		"/home/ming/.config/sublime-text-2/Packages/SublimeClang/SublimeClang.sublime-settings",
+		"/home/ming/.config/sublime-text-2/Packages/User/make.sublime-build",
+		"/home/ming/Project/sublime/first.sublime-project",
+		"/home/ming/Project/kernel_module/tq2440/GPS/serial/gps.c",
+		"/home/ming/Project/stm32/src/hw_config.h",
+		"/home/ming/Project/stm32/src/hw_config.c",
+		"/home/ming/XP/Program/STM8/digital_source/lcd1602.c.dump",
+		"/home/ming/XP/Program/STM8/digital_source/main.c.dump",
+		"/home/ming/XP/Program/STM8/digital_source/lcd1602.c",
+		"/home/ming/XP/Program/STM8/digital_source/main.c",
+		"/home/ming/Project/kernel_module/tq2440/GPS/serial/test.c",
+		"/home/ming/Project/kernel_module/tq2440/GPS/serial/gps.h",
+		"/home/ming/XP/Program/STM8/Voltmeter/digtal_tube.c.dump",
+		"/home/ming/XP/Program/STM8/Voltmeter/adc.c.dump",
+		"/home/ming/XP/Program/STM8/Voltmeter/main.c.dump",
+		"/home/ming/XP/Program/STM8/Voltmeter/digtal_tube.c",
+		"/home/ming/XP/Program/STM8/Voltmeter/adc.c",
+		"/home/ming/XP/Program/STM8/Voltmeter/main.c",
+		"/home/ming/Project/kernel_module/tq2440/GPS/serial/serial.h",
+		"/home/ming/Desktop/hello.md",
+		"/home/ming/Project/kernel_module/tq2440/GPS/serial/serial.c",
+		"/home/ming/Project/Kile_project/My_Note/account.tex",
+		"/home/ming/Project/kernel_module/tq2440/GPS/README.md",
+		"/home/ming/.config/sublime-text-2/Packages/User/SublimeEvernote.sublime-settings",
+		"/home/ming/Project/Kile_project/My_Note/note.tex",
+		"/home/ming/Project/Kile_project/My_Note/ubuntu.tex",
+		"/home/ming/Project/Kile_project/My_Note/other.tex",
+		"/home/ming/Project/Kile_project/My_Note/latex.tex",
+		"/home/ming/.config/sublime-text-2/Packages/User/LaTeXTools.sublime-settings",
+		"/home/ming/Project/Kile_project/My_Note/preamble.tex",
+		"/home/ming/Project/Kile_project/My_Note/raspberrypi.tex",
+		"/home/ming/.config/sublime-text-2/Packages/LaTeXTools/README.markdown",
+		"/home/ming/.config/sublime-text-2/Packages/User/SublimeClang.sublime-settings",
+		"/home/ming/.config/sublime-text-2/Packages/CTags/CTags.sublime-settings",
+		"/home/ming/Desktop/pi/spy.py",
+		"/usr/lib/python2.7/os.py",
+		"/home/ming/Project/kernel_module/tq2440/GPS/serial/test.sh",
+		"/home/ming/KuaiPan/Project/kernel_module/tq2440/GPS/serial/gps.h",
+		"/home/ming/KuaiPan/Project/kernel_module/tq2440/GPS/serial/gps.c",
+		"/home/ming/KuaiPan/Project/kernel_module/tq2440/2.serial/test.c",
+		"/home/ming/KuaiPan/Project/kernel_module/tq2440/2.serial/gps.h",
+		"/home/ming/KuaiPan/Project/kernel_module/tq2440/2.serial/gps.c",
+		"/home/ming/KuaiPan/Project/kernel_module/tq2440/2.serial/serial.h",
+		"/home/ming/KuaiPan/Project/kernel_module/tq2440/2.serial/serial.c",
+		"/home/ming/KuaiPan/Project/kernel_module/tq2440/2.serial/Makefile",
+		"/home/ming/Document/毕业设计/写应用/参考程序/stm32gps/HARDWARE/GPS/gps.c.dump",
+		"/home/ming/Document/毕业设计/写应用/参考程序/stm32gps/USER/test.c.dump",
+		"/home/ming/Document/毕业设计/写应用/参考程序/stm32gps/HARDWARE/GPS/gps.c",
+		"/home/ming/Document/毕业设计/写应用/参考程序/stm32gps/USER/test.c",
+		"/home/ming/1",
+		"/home/ming/KuaiPan/Project/kernel_module/tq2440/2.serial/tmp.c",
+		"/home/ming/KuaiPan/Project/kernel_module/tq2440/2.serial/text.txt",
+		"/home/ming/Document/毕业设计/写应用/参考程序/Serial_Test/serial_test.c",
+		"/home/ming/Document/毕业设计/写应用/参考程序/stm32gps/HARDWARE/GPS/gps.h.dump",
+		"/home/ming/Document/毕业设计/写应用/参考程序/stm32gps/USMART/usmart.h.dump",
+		"/home/ming/Document/毕业设计/写应用/参考程序/stm32gps/USMART/usmart.c.dump",
+		"/home/ming/Document/毕业设计/写应用/参考程序/stm32gps/HARDWARE/USART2/usart2.c.dump",
+		"/home/ming/Document/毕业设计/写应用/参考程序/stm32gps/HARDWARE/USART2/usart2.c",
+		"/home/ming/Document/毕业设计/写应用/参考程序/stm32gps/HARDWARE/USART2/usart2.h.dump",
+		"/home/ming/Document/毕业设计/写应用/参考程序/stm32gps/HARDWARE/USART2/usart2.h",
+		"/home/ming/Document/毕业设计/写应用/参考程序/stm32gps/HARDWARE/GPS/gps.h",
+		"/home/ming/Document/毕业设计/写应用/参考程序/stm32gps/USMART/usmart.c",
+		"/home/ming/Document/毕业设计/写应用/参考程序/stm32gps/USMART/usmart.h",
+		"/home/ming/.config/sublime-text-2/Packages/Default/Default (Linux).sublime-keymap",
+		"/home/ming/.config/sublime-text-2/Packages/User/Default (Linux).sublime-keymap",
+		"/home/ming/.config/sublime-text-2/Packages/Default/Preferences.sublime-settings",
+		"/home/ming/Document/毕业设计/GPS/stm32_GPS/ALIENTEK MINISTM32/USER/test.c.dump",
+		"/home/ming/Document/毕业设计/GPS/stm32_GPS/ALIENTEK MINISTM32/HARDWARE/GPS/gps.h.dump",
+		"/home/ming/Document/毕业设计/GPS/stm32_GPS/ALIENTEK MINISTM32/HARDWARE/GPS/gps.c.dump",
+		"/home/ming/KuaiPan/Project/kernel_module/tq2440/2.serial/QT/GPS/main.cpp",
+		"/home/ming/KuaiPan/Project/kernel_module/tq2440/2.serial/b.txt",
+		"/home/ming/Document/毕业设计/GPS/stm32_GPS/ALIENTEK MINISTM32/HARDWARE/GPS/gps.h",
+		"/home/ming/Document/毕业设计/GPS/stm32_GPS/ALIENTEK MINISTM32/USER/test.c",
+		"/home/ming/Document/毕业设计/GPS/stm32_GPS/ALIENTEK MINISTM32/HARDWARE/GPS/gps.c",
+		"/home/ming/Document/毕业设计/GPS/stm32_GPS/ALIENTEK MINISTM32/HARDWARE/USART2/usart2.c.dump",
+		"/home/ming/Document/毕业设计/GPS/stm32_GPS/ALIENTEK MINISTM32/HARDWARE/USART2/usart2.c",
+		"/home/ming/Document/毕业设计/GPS/stm32_GPS/ALIENTEK MINISTM32/USMART/usmart.c.dump",
+		"/home/ming/Document/毕业设计/GPS/stm32_GPS/ALIENTEK MINISTM32/USMART/usmart_config.c.dump",
+		"/home/ming/Document/毕业设计/GPS/stm32_GPS/ALIENTEK MINISTM32/USMART/usmart.c",
+		"/home/ming/Document/毕业设计/GPS/stm32_GPS/ALIENTEK MINISTM32/USMART/usmart_config.c",
+		"/home/ming/Document/毕业设计/GPS/stm32_GPS/ALIENTEK MINISTM32/HARDWARE/LCD/ILI93xx.c.dump",
+		"/home/ming/Document/毕业设计/GPS/stm32_GPS/ALIENTEK MINISTM32/HARDWARE/LCD/ILI93xx.c",
+		"/home/ming/Document/毕业设计/GPS/stm32_GPS/ALIENTEK MINISTM32/USMART/usmart_str.c.dump",
+		"/home/ming/Document/毕业设计/GPS/stm32_GPS/ALIENTEK MINISTM32/USMART/usmart_str.c",
+		"/home/ming/Document/毕业设计/GPS/stm32_GPS/ATK新版/ATK-NEO-6M -V2.3版本GPS模块/2，程序源码/ALIENTEK MINISTM32 扩展实验23 ATK-NEO-6M GPS模块实验(适合Mini板)/USER/test.c.dump",
+		"/home/ming/Document/毕业设计/GPS/stm32_GPS/ATK新版/ATK-NEO-6M -V2.3版本GPS模块/2，程序源码/ALIENTEK MINISTM32 扩展实验23 ATK-NEO-6M GPS模块实验(适合Mini板)/USER/test.c",
+		"/home/ming/KuaiPan/Project/kernel_module/tq2440/1.open/open.c",
+		"/home/ming/KuaiPan/Project/kernel_module/tq2440/2.serial/serial_pc.c",
+		"/home/ming/src/kernel/linux-2.6.30.4_20100531/arch/cris/include/asm/termbits.h",
+		"/home/ming/KuaiPan/Project/kernel_module/tq2440/1.open/b",
+		"/home/ming/KuaiPan/Project/kernel_module/tq2440/1.open/a.txt",
+		"/home/ming/src/qt/qt4.8.5/qt-everywhere-opensource-src-4.8.5/src/gui/embedded/qscreen_qws.cpp",
+		"/home/ming/XP/Program/tmp/src/stdafx.cpp.dump",
+		"/home/ming/src/qt/qt4.5.0/qt-embedded-linux-opensource-src-4.5.0/src/gui/embedded/qmousetslib_qws.cpp",
+		"/home/ming/src/qt/qt4.8.5/qt-everywhere-opensource-src-4.8.5/src/gui/embedded/qmouseqnx_qws.cpp",
+		"/home/ming/src/kernel/linux-2.6.30.4_20100531/drivers/serial/s3c2440.c",
+		"/home/ming/src/kernel/linux-2.6.30.4_20100531/drivers/serial/samsung.c",
+		"/home/ming/src/kernel/linux-2.6.30.4/drivers/serial/s3c2440.c",
+		"/home/ming/src/kernel/linux-2.6.30.4/drivers/serial/samsung.c",
+		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/drivers/serial/s3c2440.c",
+		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/drivers/serial/samsung.c",
+		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/include/linux/console.h",
+		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/drivers/scsi/qla2xxx/qla_def.h",
+		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/drivers/serial/crisv10.c",
+		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/arch/arm/include/asm/termbits.h",
+		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/drivers/s390/char/sclp_con.c",
+		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/arch/alpha/include/asm/termbits.h",
+		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/drivers/serial/serial_core.c",
+		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/drivers/atm/horizon.c",
+		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/arch/arm/plat-s3c/include/plat/regs-serial.h",
+		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/drivers/serial/samsung.h",
+		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/drivers/base/platform.c",
+		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/include/linux/serial_core.h",
+		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/Documentation/accounting/getdelays.c",
+		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/include/linux/miscdevice.h",
+		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/fs/select.c"
+	],
+	"find":
+	{
+		"height": 44.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			"/home/ming/src/kernel/linux-2.6.30.4_20100531",
+			"/home/ming/src/qt/qt4.8.5/qt-everywhere-opensource-src-4.8.5/src",
+			"/home/ming/src/qt/qt4.5.0/qt-embedded-linux-opensource-src-4.5.0/src",
+			"/home/ming/src/qt/qt4.8.5/qt-everywhere-opensource-src-4.8.5/src",
+			"/home/ming/src/qt/qt4.5.0/qt-embedded-linux-opensource-src-4.5.0/src",
+			"/home/ming/src/qt/qt4.5.0/qt-embedded-linux-opensource-src-4.5.0/src/gui/inputmethod",
+			"/home/ming/src/kernel/linux-2.6.30.4_20100531/drivers/serial",
+			"/home/ming/src/kernel/linux-2.6.30.4/drivers/serial",
+			"/home/ming/src/kernel/linux-2.6.30.4",
+			"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440",
+			"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/drivers/serial",
+			"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440",
+			"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/drivers/serial",
+			"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440",
+			"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/drivers/serial",
+			"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440",
+			"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/drivers/serial",
+			"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"h",
+			"lcd_string",
+			"home/ming/Ming_project/",
+			"printGPS",
+			"printf",
+			"switch",
+			"PRINT_COMMAND",
+			"getchecksum",
+			"NMEA_GPVTG_Analysis",
+			"校验",
+			"校验和",
+			"sum",
+			"check",
+			"save",
+			"prt",
+			"r_buf",
+			"pGPTXT",
+			"GPVTG",
+			"gpvtg_data",
+			"GPGGA",
+			"GPRMC",
+			"gpgga_data",
+			"pgpgga",
+			"pgpgsa",
+			"pgpgll",
+			"pgpgsa",
+			"readGPS",
+			"b5",
+			"b562 0501 0200 0608 3139 3234 2e30 302c\n562c 2c2c 2c2c 2c2c 3131 3034 3134 2c2c\n2c4e 2a37 340a 0a24 4750 5654 472c 2c2c\n2c2c 2c2c 2c2c 4e2a 3330 0a0a 2447 5000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 e835 1640\n1800 0000 00f0 0140 0100 0000 80f8 0940\n0000 0000 0000 0000 0000 0000 1800 0000\ne835 1640 ffff ffff 0100 0000 48fb 0940\n0000 0000 8803 0a40 0000 0000 0000 0000\n0004 0000 dcf9 0940 a9bd 0000 aabd 0000\n0100 0000 0a00 0000 585b 90be e835 1640\n0030 1640 fc6b 0740 0000 0000 0000 0000\n0000 0000 0000 0000 a85a 90be 9c5a 90be\nc8fd ffff fc86 0740 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 90bd 0000 ffff ffff 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 ffff ffff a8bd 0000\n0000 0000 9c5a 90be 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 2000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\na7bd 0000 0000 0000 0000 0000 0000 0000\n6400 0000 0000 0000 1900 0000 0100 0000\n9c5a 90be 0000 0000 545b 90be 9b5a 90be\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 0000 0000 0000 0000\n0000 0000 0000 0000 4c0e 0440 1469 690d\n5cd5 0140 0200 0000 58c6 0340 0400 0000\n0000 0000 5095 0040 0000 0000 1856 0240\nd8a7 0140 0300 0000 7859 90be 6c5a 90be\n630d 0305 1cda 0340 0000 0000 0000 0000\n0100 0000 4303 0000 88d5 0140 98d2 0140\n3684 0000 5c5d 0440 5083 0000 0100 0000\nacfd 0340 1469 690d 5cd5 0140 0200 0000\n30c2 0340 0400 0000 0000 0000 5095 0040\n945a 90be 1856 0240 d8a7 0140 1800 0000\ne059 90be d45a 90be 5d59 ab00 1cda 0340\n0000 0000 0000 0000 0100 0000 3902 0000\n88d5 0140 98d2 0140 1584 0000 5c5d 0440\nf082 0000 0100 0000 c056 0240 b82b 6b15\nd45a 90be c85a 90be 7858 0240 0000 0000\n1584 0000 0000 0000 fc5a 90be 6497 0040\nc85a 90be 1c58 0240 0000 0000 88d5 0140\n0100 0000 0000 0000 0100 0000 0000 0000\n0000 0000 5000 0000 9839 ffff 0000 0000\n4c0e 0440 0050 0240 7858 0240 1c5b 90be\nc056 0240 88d5 0140 10de 0140 8083 0000\nc056 0240 0050 0240 0000 0000 70d9 0140\n6043 0100 70dc 0040 88d5 0131 bc5a 90be\n300a 0000 0000 0000 0254 0000 0300 0000\n1861 0840 e835 1640 a886 0000 0401 0000\n0400 0000 bd08 0000 acfd 0340 98d2 0140\n1504 0500 a605 7907 0012 0f17 88d5 0140\n10de 0140 8083 0000 c056 0240 0050 0240\n0000 0000 70d9 0140 4843 0100 70dc 0040\n88d5 0140 0100 0000 0100 0000 0000 0000\n300a 0000 545b 90be 1504 0500 f8bc 0000\n0000 0000 a886 0000 0000 0000 0000 0000\n0000 0000 0050 0240 146b 90be 70f3 0740\n146b 90be 545b 90be 90bd 0000 a887 0000\n",
+			"b5",
+			"62",
+			"b5",
+			"05 ",
+			"01",
+			"b5",
+			"05 01",
+			"0105",
+			"0501",
+			"62",
+			"b5",
+			"u16",
+			"init",
+			"sum =",
+			"ctrl+f",
+			"printf(\"\\n",
+			"gpgsv",
+			"memset",
+			"mouth",
+			"serial_fd",
+			"(\"**---------------------------------------------\\",
+			"(\"-----------------------------------------------\\",
+			"printGPGSA",
+			"switch",
+			"cs",
+			"k",
+			"')",
+			"pgprmc",
+			"gpprmc",
+			"gpgsv",
+			"memset",
+			"gettime",
+			"GPRMC_analysis",
+			"memset",
+			"checksum",
+			"校验",
+			"异或",
+			"latitude",
+			"lati_second",
+			"longtitude",
+			"latitude",
+			"utc",
+			"经度",
+			"p1+1",
+			"data.",
+			"GPGSV_analysis",
+			"open_serial",
+			"pgrmc",
+			"NO GP",
+			"pos",
+			"read_serial",
+			"receive_buf",
+			"buf",
+			"pbuf",
+			"rev",
+			"flag_close",
+			"rev_test",
+			"str",
+			"count",
+			"read_GPS",
+			"nosv",
+			"data.cs",
+			"gpgsv",
+			"pgprmc",
+			"gpgsv",
+			"	//",
+			"/n",
+			"Ublox_CheckSum",
+			"open_serial",
+			"NMEA_Str2num",
+			"NMEA_Comma_Pos",
+			"analysis",
+			"usart2_rx_sta",
+			"usart2_rx",
+			"uart2_rx",
+			"msg",
+			"gpsx",
+			"printf",
+			"endif",
+			"B9600",
+			"init_serial",
+			"open_serial",
+			"init_serial",
+			"open_serial",
+			"read_GPS",
+			"init_serial",
+			"fd",
+			"\n	",
+			"IXANY",
+			"INPCK",
+			"B9600",
+			"buf4",
+			"QWS_DISPLAY",
+			"QWS_MOUSE_PROTO",
+			"mouse0",
+			"mouse",
+			"/dev/mouse0",
+			"dev/event0",
+			"event0"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"home/ming/Project/",
+			"printdata",
+			"rxd_buf",
+			"pgptxt",
+			"GPTXT",
+			"gptxt_data",
+			"GPVTG",
+			"gpvtg_data",
+			"pgpvtg",
+			"pgpgga",
+			"pgpgsa",
+			"pgpgll",
+			"u_int16_t",
+			"month",
+			"pgpgsa",
+			"longitude",
+			"long_second",
+			"longitude",
+			"longtitude",
+			"latitude",
+			"gpgsv.",
+			"gprmc.",
+			"gprmc",
+			"read_serial",
+			"pgpgsv",
+			"gpgsv"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 35.0
+	},
+	"input":
+	{
+		"height": 35.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.clang":
+	{
+		"height": 160.0
+	},
+	"output.exec":
+	{
+		"height": 202.0
+	},
+	"replace":
+	{
+		"height": 66.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"show_minimap": false,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 179.0,
+	"status_bar_visible": true
+}

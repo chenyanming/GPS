@@ -46,6 +46,7 @@ int getchecksum(char *command, char *c1, char *c2);
 int printGPRMC();
 int printGPGSV();
 int printGPGSA();
+int printGPGGA();
 
 int openGPS(char *dev);
 int readGPS(int fd);
@@ -652,7 +653,7 @@ int GPGGA_analysis(char *buf, struct gpgga_data *data)
 {
 	char *pstr, *pgpgga, checksum = 0;
 	int comma = 0;
-	int i = 0, j = 0;
+	int i = 0, j = 0, k = 0;
 
 	//结构体所有数据清0
 	memset(data, 0, sizeof(struct gpgga_data));
@@ -696,6 +697,10 @@ int GPGGA_analysis(char *buf, struct gpgga_data *data)
 				{
 					switch(comma)
 					{
+						case 9:
+							data->msl[j] = pgpgga[i];
+							j++;
+							break;							
 						default:
 							break;
 					}
@@ -718,6 +723,34 @@ int GPGGA_analysis(char *buf, struct gpgga_data *data)
 			memset(data, 0, sizeof(struct gpgga_data));
 			//printf("checksum error for GPGGA!\n");
 			return 0;
+		}
+
+		//获得海拔，只能获得正海拔,0.0到99999.9
+		k = 0;
+		if (data->msl[k] != '-' && data->msl[k] >= '0' && data->msl[k] <= '9')//如果不是负海拔
+		{
+			while (data->msl[k] >= '0' && data->msl[k] <= '9')
+				k++;//判断整数位有多少个
+			switch (k)
+			{
+				case 1:
+					data->altitude = (data->msl[0]-'0')+ 0.1*(data->msl[2]-'0');
+					break;
+				case 2:
+					data->altitude = 10*(data->msl[0]-'0') + (data->msl[1]-'0')+ 0.1*(data->msl[3]-'0');
+					break;
+				case 3:
+					data->altitude = 100*(data->msl[0]-'0') + 10*(data->msl[1]-'0') + (data->msl[2]-'0')+ 0.1*(data->msl[4]-'0');
+					break;
+				case 4:
+					data->altitude = 1000*(data->msl[0]-'0') + 100*(data->msl[1]-'0') + 10*(data->msl[2]-'0') + (data->msl[3]-'0')+ 0.1*(data->msl[5]-'0');
+					break;
+				case 5:
+					data->altitude = 10000*(data->msl[0]-'0') + 1000*(data->msl[1]-'0') + 100*(data->msl[2]-'0') + 10*(data->msl[3]-'0') + (data->msl[4]-'0')+ 0.1*(data->msl[6]-'0');
+					break;
+				default:
+					break;
+			}
 		}
 
 		return 1;		
@@ -1266,11 +1299,27 @@ int printGPGSA(void)
 	return 1;
 }
 
+int printGPGGA(void)
+{
+	if (gpgga.altitude > 0)//海拔大于0才输出数值
+	{
+		printf("\n海拔\n");
+		printf("%.1fm\n", gpgga.altitude);
+	}
+	else 
+	{
+		printf("\n海拔\n");
+		printf("?\n");
+	}
+	return 1;	
+}
+
 int printData(void)
 {
 	printGPRMC();
 	printGPGSV();
 	printGPGSA();
+	printGPGGA();
 	return 1;
  }
  
