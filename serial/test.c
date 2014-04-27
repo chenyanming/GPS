@@ -24,9 +24,9 @@ int main(int argc, char const *argv[])
 	fd = openGPS("/dev/tq2440_serial1");
 	//cfg(fd, cfg_rate_200);//不知道是什么原因定位太慢了，加快看看怎样
 	//cfg(fd, cfg_msg_GPGLL_on);
-	cfg(fd, cfg_msg_GPGGA_on);
+	//cfg(fd, cfg_msg_GPGGA_on);
 	//cfg(fd, cfg_msg_GPVTG_on);
-	cfg(fd, cfg_cfg_save);//保存配置
+	//cfg(fd, cfg_cfg_save);//保存配置
 
 /*
 **	这部分代码用于保存配置到EEPROME的，要修改配置就根据需要配置，然后运行

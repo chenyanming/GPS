@@ -611,10 +611,7 @@ int GPGLL_analysis(char *buf, struct gpgll_data *data)
 				else if (pgpgll[i] == ',')
 				{
 					comma++;//遇到逗号，comma加1
-					if (comma >= 15)
-					{
-						j = 0;//每次检测到逗号，对索引j清0，为处理下个字符做准备，并在逗号后加入编号
-					}
+					j = 0;//每次检测到逗号，对索引j清0，为处理下个字符做准备，并在逗号后加入编号
 					//printf("[%d]", comma);
 				}
 				else
@@ -687,16 +684,17 @@ int GPGGA_analysis(char *buf, struct gpgga_data *data)
 				else if (pgpgga[i] == ',')
 				{
 					comma++;//遇到逗号，comma加1
-					if (comma >= 15)
-					{
-						j = 0;//每次检测到逗号，对索引j清0，为处理下个字符做准备，并在逗号后加入编号
-					}
+					j = 0;//每次检测到逗号，对索引j清0，为处理下个字符做准备，并在逗号后加入编号
 					//printf("[%d]", comma);
 				}
 				else
 				{
 					switch(comma)
 					{
+						case 7:
+							data->nosv[j] = pgpgga[i];
+							j++;
+							break;
 						case 9:
 							data->msl[j] = pgpgga[i];
 							j++;
@@ -725,7 +723,7 @@ int GPGGA_analysis(char *buf, struct gpgga_data *data)
 			return 0;
 		}
 
-		//获得海拔，只能获得正海拔,0.0到99999.9
+		//获得海拔，只能获得正海拔,0.0到99999.9,顺便获得用于定位的卫星个数
 		k = 0;
 		if (data->msl[k] != '-' && data->msl[k] >= '0' && data->msl[k] <= '9')//如果不是负海拔
 		{
@@ -751,6 +749,8 @@ int GPGGA_analysis(char *buf, struct gpgga_data *data)
 				default:
 					break;
 			}
+
+			data->number = 10*(data->nosv[0]-'0')+(data->nosv[1]-'0');
 		}
 
 		return 1;		
@@ -795,10 +795,7 @@ int GPVTG_analysis(char *buf, struct gpvtg_data *data)
 				else if (pgpvtg[i] == ',')
 				{
 					comma++;//遇到逗号，comma加1
-					if (comma >= 15)
-					{
-						j = 0;//每次检测到逗号，对索引j清0，为处理下个字符做准备，并在逗号后加入编号
-					}
+					j = 0;//每次检测到逗号，对索引j清0，为处理下个字符做准备，并在逗号后加入编号
 					//printf("[%d]", comma);
 				}
 				else
@@ -871,10 +868,7 @@ int GPTXT_analysis(char *buf, struct gptxt_data *data)
 				else if (pgptxt[i] == ',')
 				{
 					comma++;//遇到逗号，comma加1
-					if (comma >= 15)
-					{
-						j = 0;//每次检测到逗号，对索引j清0，为处理下个字符做准备，并在逗号后加入编号
-					}
+					j = 0;//每次检测到逗号，对索引j清0，为处理下个字符做准备，并在逗号后加入编号
 					//printf("[%d]", comma);
 				}
 				else
@@ -1167,6 +1161,7 @@ int printCommand(void)
 		printf("%s\n", gpgsv.command4);
 	}
 	printf("%s\n", gpgsa.command);
+	printf("%s\n", gpgga.command);
 	return 1;	
 }
 
@@ -1301,15 +1296,15 @@ int printGPGSA(void)
 
 int printGPGGA(void)
 {
-	if (gpgga.altitude > 0)//海拔大于0才输出数值
+	if (gpgga.altitude > 0)//海拔大于0才输出数值,顺便打印用于定位的卫星个数
 	{
-		printf("\n海拔\n");
-		printf("%.1fm\n", gpgga.altitude);
+		printf("\n海拔\t用于定位的卫星个数\n");
+		printf("%.1fm\t%d\n", gpgga.altitude, gpgga.number);
 	}
 	else 
 	{
 		printf("\n海拔\n");
-		printf("?\n");
+		printf("?\t?\n");
 	}
 	return 1;	
 }

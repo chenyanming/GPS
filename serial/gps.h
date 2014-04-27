@@ -136,10 +136,13 @@ struct gpgll_data
 struct gpgga_data
 {
 	char command[100];
+	char nosv[3];
 	char msl[10];
 	char cs[3];
 
+	int number;
 	double altitude;
+
 };
 
 

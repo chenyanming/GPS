@@ -18,7 +18,7 @@ It is Based on NEO-6 u-blox 6 GPS Modules, Linux kernel 2.6.30, busybox, Qt 4.5 
 
 2. 读取GPS数据，`int readGPS(int fd);`，然后就可以访问结构体gprmc， gpgsv， gpgsa的成员
 
-        readGPS(fd);
+        readGPS(fd);//openGPS()需要一定时间，大约2秒后正常
         printf("Now the time is: %d:%d:%d.\n", gprmc.hour, gprmc.minute, gprmc.second);
 
 3. 关闭GPS，`int closeGPS(int fd);`
@@ -49,6 +49,10 @@ C接口，其中gps.h头文件包含所有的重要的结构体和函数，调�
 #### important members 重要成员
 *gprmc*
 
+    char status;//定位状态，A正在定位，V无效定位
+    char n;//N北纬，S南纬
+	char e;//E东经，W西经
+	
 	int hour;//时
 	int minute;//分
 	int second;//秒
@@ -65,15 +69,18 @@ C接口，其中gps.h头文件包含所有的重要的结构体和函数，调�
 	
 *gpgsv*
 
-    int id[50];//卫星编号
+    int id[50];//可见卫星的编号
 	int no;//可见卫星数目
 	
 *gpgsa*
 
-	char smode;//mode
-	char fs;//fix mode
-	int id[14];//有效卫星号
+	int id[14];//用于定位的卫星编号 
 	
+*gpgga*
+    
+    int number;//用于定位的卫星个数
+    double altitude;//海拔，米
+    
 ### serial.h
     int cfg(int fd, const char *buf);
     
