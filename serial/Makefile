@@ -1,5 +1,5 @@
 testarm: test.c serial.c gps.c 
-	arm-linux-gcc -g test.c serial.c gps.c  -o testarm
+	arm-linux-gcc -g test.c serial.c gps.c gprs.c -o testarm
 debugarm: test
 	arm-linux-gdb test
 testx86: test.c serial.c gps.c 

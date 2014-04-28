@@ -3,210 +3,54 @@
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 !_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
-AR	QT/GPS/Makefile	/^AR            = ar cqs$/;"	m
-CC	QT/GPS/Makefile	/^CC            = gcc$/;"	m
-CFLAGS	QT/GPS/Makefile	/^CFLAGS        = -pipe -O2 -Wall -W -D_REENTRANT $(DEFINES)$/;"	m
-CHK_DIR_EXISTS	QT/GPS/Makefile	/^CHK_DIR_EXISTS= test -d$/;"	m
-COMPRESS	QT/GPS/Makefile	/^COMPRESS      = gzip -9f$/;"	m
-COPY	QT/GPS/Makefile	/^COPY          = cp -f$/;"	m
-COPY_DIR	QT/GPS/Makefile	/^COPY_DIR      = $(COPY) -r$/;"	m
-COPY_FILE	QT/GPS/Makefile	/^COPY_FILE     = $(COPY)$/;"	m
-CXX	QT/GPS/Makefile	/^CXX           = g++$/;"	m
-CXXFLAGS	QT/GPS/Makefile	/^CXXFLAGS      = -pipe -O2 -Wall -W -D_REENTRANT $(DEFINES)$/;"	m
-DEFINES	QT/GPS/Makefile	/^DEFINES       = -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED$/;"	m
-DEL_DIR	QT/GPS/Makefile	/^DEL_DIR       = rmdir$/;"	m
-DEL_FILE	QT/GPS/Makefile	/^DEL_FILE      = rm -f$/;"	m
-DESTDIR	QT/GPS/Makefile	/^DESTDIR       = $/;"	m
-DIST	QT/GPS/Makefile	/^DIST          = \/home\/ming\/src\/qt\/qt4.8.5\/__install\/x86\/mkspecs\/common\/unix.conf \\$/;"	m
-INCPATH	QT/GPS/Makefile	/^INCPATH       = -I\/home\/ming\/src\/qt\/qt4.8.5\/__install\/x86\/mkspecs\/linux-g++ -I. -I\/home\/ming\/src\/qt\/qt4.8.5\/__install\/x86\/include\/QtCore -I\/home\/ming\/src\/qt\/qt4.8.5\/__install\/x86\/include\/QtGui -I\/home\/ming\/src\/qt\/qt4.8.5\/__install\/x86\/include -I. -I.$/;"	m
-INSTALL_DIR	QT/GPS/Makefile	/^INSTALL_DIR   = $(COPY_DIR)$/;"	m
-INSTALL_FILE	QT/GPS/Makefile	/^INSTALL_FILE  = install -m 644 -p$/;"	m
-INSTALL_PROGRAM	QT/GPS/Makefile	/^INSTALL_PROGRAM = install -m 755 -p$/;"	m
-LFLAGS	QT/GPS/Makefile	/^LFLAGS        = -Wl,-O1 -Wl,-rpath,\/home\/ming\/src\/qt\/qt4.8.5\/__install\/x86\/lib$/;"	m
-LIBS	QT/GPS/Makefile	/^LIBS          = $(SUBLIBS)  -L\/home\/ming\/src\/qt\/qt4.8.5\/__install\/x86\/\/lib -lQtGui -L\/home\/ming\/src\/qt\/qt4.8.5\/__install\/x86\/\/lib -L\/usr\/X11R6\/lib -lQtCore -lpthread $/;"	m
-LINK	QT/GPS/Makefile	/^LINK          = g++$/;"	m
-MKDIR	QT/GPS/Makefile	/^MKDIR         = mkdir -p$/;"	m
-MOVE	QT/GPS/Makefile	/^MOVE          = mv -f$/;"	m
-OBJECTS	QT/GPS/Makefile	/^OBJECTS       = main.o \\$/;"	m
-OBJECTS_DIR	QT/GPS/Makefile	/^OBJECTS_DIR   = .\/$/;"	m
-QMAKE	QT/GPS/Makefile	/^QMAKE         = \/home\/ming\/src\/qt\/qt4.8.5\/__install\/x86\/bin\/qmake$/;"	m
-QMAKE_TARGET	QT/GPS/Makefile	/^QMAKE_TARGET  = GPS$/;"	m
-RANLIB	QT/GPS/Makefile	/^RANLIB        = $/;"	m
-SED	QT/GPS/Makefile	/^SED           = sed$/;"	m
-SOURCES	QT/GPS/Makefile	/^SOURCES       = main.cpp \\$/;"	m
-STRIP	QT/GPS/Makefile	/^STRIP         = strip$/;"	m
-SYMLINK	QT/GPS/Makefile	/^SYMLINK       = ln -f -s$/;"	m
-TAR	QT/GPS/Makefile	/^TAR           = tar -cf$/;"	m
-TARGET	QT/GPS/Makefile	/^TARGET        = GPS$/;"	m
-main	QT/GPS/main.cpp	/^int main(int argc, char *argv[])$/;"	f
-MainWindow	QT/GPS/mainwindow.cpp	/^MainWindow::MainWindow(QWidget *parent) :$/;"	f	class:MainWindow
-~MainWindow	QT/GPS/mainwindow.cpp	/^MainWindow::~MainWindow()$/;"	f	class:MainWindow
-MAINWINDOW_H	QT/GPS/mainwindow.h	2;"	d
-MainWindow	QT/GPS/mainwindow.h	/^class MainWindow : public QMainWindow$/;"	c
-Ui	QT/GPS/mainwindow.h	/^namespace Ui {$/;"	n
-ui	QT/GPS/mainwindow.h	/^    Ui::MainWindow *ui;$/;"	m	class:MainWindow
-getStaticMetaObject	QT/GPS/moc_mainwindow.cpp	/^const QMetaObject &MainWindow::getStaticMetaObject() { return staticMetaObject; }$/;"	f	class:MainWindow
-metaObject	QT/GPS/moc_mainwindow.cpp	/^const QMetaObject *MainWindow::metaObject() const$/;"	f	class:MainWindow
-qt_meta_data_MainWindow	QT/GPS/moc_mainwindow.cpp	/^static const uint qt_meta_data_MainWindow[] = {$/;"	v	file:
-qt_meta_stringdata_MainWindow	QT/GPS/moc_mainwindow.cpp	/^static const char qt_meta_stringdata_MainWindow[] = {$/;"	v	file:
-qt_metacall	QT/GPS/moc_mainwindow.cpp	/^int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)$/;"	f	class:MainWindow
-qt_metacast	QT/GPS/moc_mainwindow.cpp	/^void *MainWindow::qt_metacast(const char *_clname)$/;"	f	class:MainWindow
-qt_static_metacall	QT/GPS/moc_mainwindow.cpp	/^void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)$/;"	f	class:MainWindow
-staticMetaObject	QT/GPS/moc_mainwindow.cpp	/^const QMetaObject MainWindow::staticMetaObject = {$/;"	m	class:MainWindow	file:
-staticMetaObjectExtraData	QT/GPS/moc_mainwindow.cpp	/^const QMetaObjectExtraData MainWindow::staticMetaObjectExtraData = {$/;"	m	class:MainWindow	file:
-MainWindow	QT/GPS/ui_mainwindow.h	/^    class MainWindow: public Ui_MainWindow {};$/;"	c	namespace:Ui
-UI_MAINWINDOW_H	QT/GPS/ui_mainwindow.h	10;"	d
-Ui	QT/GPS/ui_mainwindow.h	/^namespace Ui {$/;"	n
-Ui_MainWindow	QT/GPS/ui_mainwindow.h	/^class Ui_MainWindow$/;"	c
-centralWidget	QT/GPS/ui_mainwindow.h	/^    QWidget *centralWidget;$/;"	m	class:Ui_MainWindow
-date	QT/GPS/ui_mainwindow.h	/^    QLabel *date;$/;"	m	class:Ui_MainWindow
-day	QT/GPS/ui_mainwindow.h	/^    QLabel *day;$/;"	m	class:Ui_MainWindow
-horizontalLayout	QT/GPS/ui_mainwindow.h	/^    QHBoxLayout *horizontalLayout;$/;"	m	class:Ui_MainWindow
-horizontalLayout_2	QT/GPS/ui_mainwindow.h	/^    QHBoxLayout *horizontalLayout_2;$/;"	m	class:Ui_MainWindow
-horizontalLayout_3	QT/GPS/ui_mainwindow.h	/^    QHBoxLayout *horizontalLayout_3;$/;"	m	class:Ui_MainWindow
-horizontalLayout_4	QT/GPS/ui_mainwindow.h	/^    QHBoxLayout *horizontalLayout_4;$/;"	m	class:Ui_MainWindow
-horizontalLayout_5	QT/GPS/ui_mainwindow.h	/^    QHBoxLayout *horizontalLayout_5;$/;"	m	class:Ui_MainWindow
-horizontalLayout_6	QT/GPS/ui_mainwindow.h	/^    QHBoxLayout *horizontalLayout_6;$/;"	m	class:Ui_MainWindow
-horizontalSpacer	QT/GPS/ui_mainwindow.h	/^    QSpacerItem *horizontalSpacer;$/;"	m	class:Ui_MainWindow
-horizontalSpacer_2	QT/GPS/ui_mainwindow.h	/^    QSpacerItem *horizontalSpacer_2;$/;"	m	class:Ui_MainWindow
-horizontalSpacer_3	QT/GPS/ui_mainwindow.h	/^    QSpacerItem *horizontalSpacer_3;$/;"	m	class:Ui_MainWindow
-hour	QT/GPS/ui_mainwindow.h	/^    QLabel *hour;$/;"	m	class:Ui_MainWindow
-label_10	QT/GPS/ui_mainwindow.h	/^    QLabel *label_10;$/;"	m	class:Ui_MainWindow
-label_11	QT/GPS/ui_mainwindow.h	/^    QLabel *label_11;$/;"	m	class:Ui_MainWindow
-label_12	QT/GPS/ui_mainwindow.h	/^    QLabel *label_12;$/;"	m	class:Ui_MainWindow
-label_13	QT/GPS/ui_mainwindow.h	/^    QLabel *label_13;$/;"	m	class:Ui_MainWindow
-label_14	QT/GPS/ui_mainwindow.h	/^    QLabel *label_14;$/;"	m	class:Ui_MainWindow
-label_2	QT/GPS/ui_mainwindow.h	/^    QLabel *label_2;$/;"	m	class:Ui_MainWindow
-label_3	QT/GPS/ui_mainwindow.h	/^    QLabel *label_3;$/;"	m	class:Ui_MainWindow
-label_4	QT/GPS/ui_mainwindow.h	/^    QLabel *label_4;$/;"	m	class:Ui_MainWindow
-label_6	QT/GPS/ui_mainwindow.h	/^    QLabel *label_6;$/;"	m	class:Ui_MainWindow
-label_9	QT/GPS/ui_mainwindow.h	/^    QLabel *label_9;$/;"	m	class:Ui_MainWindow
-lati_dregee	QT/GPS/ui_mainwindow.h	/^    QLabel *lati_dregee;$/;"	m	class:Ui_MainWindow
-lati_minute	QT/GPS/ui_mainwindow.h	/^    QLabel *lati_minute;$/;"	m	class:Ui_MainWindow
-lati_second	QT/GPS/ui_mainwindow.h	/^    QLabel *lati_second;$/;"	m	class:Ui_MainWindow
-latitude	QT/GPS/ui_mainwindow.h	/^    QLabel *latitude;$/;"	m	class:Ui_MainWindow
-line	QT/GPS/ui_mainwindow.h	/^    QFrame *line;$/;"	m	class:Ui_MainWindow
-line_2	QT/GPS/ui_mainwindow.h	/^    QFrame *line_2;$/;"	m	class:Ui_MainWindow
-line_3	QT/GPS/ui_mainwindow.h	/^    QFrame *line_3;$/;"	m	class:Ui_MainWindow
-line_4	QT/GPS/ui_mainwindow.h	/^    QFrame *line_4;$/;"	m	class:Ui_MainWindow
-line_5	QT/GPS/ui_mainwindow.h	/^    QFrame *line_5;$/;"	m	class:Ui_MainWindow
-line_6	QT/GPS/ui_mainwindow.h	/^    QFrame *line_6;$/;"	m	class:Ui_MainWindow
-long_dregee	QT/GPS/ui_mainwindow.h	/^    QLabel *long_dregee;$/;"	m	class:Ui_MainWindow
-long_minute	QT/GPS/ui_mainwindow.h	/^    QLabel *long_minute;$/;"	m	class:Ui_MainWindow
-long_second	QT/GPS/ui_mainwindow.h	/^    QLabel *long_second;$/;"	m	class:Ui_MainWindow
-longitude	QT/GPS/ui_mainwindow.h	/^    QLabel *longitude;$/;"	m	class:Ui_MainWindow
-menuBar	QT/GPS/ui_mainwindow.h	/^    QMenuBar *menuBar;$/;"	m	class:Ui_MainWindow
-minute	QT/GPS/ui_mainwindow.h	/^    QLabel *minute;$/;"	m	class:Ui_MainWindow
-month	QT/GPS/ui_mainwindow.h	/^    QLabel *month;$/;"	m	class:Ui_MainWindow
-pushButton	QT/GPS/ui_mainwindow.h	/^    QPushButton *pushButton;$/;"	m	class:Ui_MainWindow
-pushButton_2	QT/GPS/ui_mainwindow.h	/^    QPushButton *pushButton_2;$/;"	m	class:Ui_MainWindow
-pushButton_3	QT/GPS/ui_mainwindow.h	/^    QPushButton *pushButton_3;$/;"	m	class:Ui_MainWindow
-retranslateUi	QT/GPS/ui_mainwindow.h	/^    void retranslateUi(QMainWindow *MainWindow)$/;"	f	class:Ui_MainWindow
-second	QT/GPS/ui_mainwindow.h	/^    QLabel *second;$/;"	m	class:Ui_MainWindow
-setupUi	QT/GPS/ui_mainwindow.h	/^    void setupUi(QMainWindow *MainWindow)$/;"	f	class:Ui_MainWindow
-time	QT/GPS/ui_mainwindow.h	/^    QLabel *time;$/;"	m	class:Ui_MainWindow
-verticalLayout	QT/GPS/ui_mainwindow.h	/^    QVBoxLayout *verticalLayout;$/;"	m	class:Ui_MainWindow
-verticalLayout_2	QT/GPS/ui_mainwindow.h	/^    QVBoxLayout *verticalLayout_2;$/;"	m	class:Ui_MainWindow
-widget	QT/GPS/ui_mainwindow.h	/^    QWidget *widget;$/;"	m	class:Ui_MainWindow
-widget1	QT/GPS/ui_mainwindow.h	/^    QWidget *widget1;$/;"	m	class:Ui_MainWindow
-year	QT/GPS/ui_mainwindow.h	/^    QLabel *year;$/;"	m	class:Ui_MainWindow
-main	QT/GPS_CONSOLE/main.cpp	/^int main(int argc, char *argv[])$/;"	f
-AR	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^AR            = ar cqs$/;"	m
-CC	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^CC            = gcc$/;"	m
-CFLAGS	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^CFLAGS        = -pipe -g -Wall -W -D_REENTRANT $(DEFINES)$/;"	m
-CHK_DIR_EXISTS	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^CHK_DIR_EXISTS= test -d$/;"	m
-COMPRESS	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^COMPRESS      = gzip -9f$/;"	m
-COPY	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^COPY          = cp -f$/;"	m
-COPY_DIR	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^COPY_DIR      = $(COPY) -r$/;"	m
-COPY_FILE	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^COPY_FILE     = $(COPY)$/;"	m
-CXX	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^CXX           = g++$/;"	m
-CXXFLAGS	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^CXXFLAGS      = -pipe -g -Wall -W -D_REENTRANT $(DEFINES)$/;"	m
-DEFINES	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^DEFINES       = -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED$/;"	m
-DEL_DIR	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^DEL_DIR       = rmdir$/;"	m
-DEL_FILE	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^DEL_FILE      = rm -f$/;"	m
-DESTDIR	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^DESTDIR       = $/;"	m
-DIST	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^DIST          = \/usr\/local\/Trolltech\/Qt-4.5.3\/mkspecs\/common\/g++.conf \\$/;"	m
-INCPATH	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^INCPATH       = -I\/usr\/local\/Trolltech\/Qt-4.5.3\/mkspecs\/linux-g++ -I..\/GPS -I\/usr\/local\/Trolltech\/Qt-4.5.3\/include\/QtCore -I\/usr\/local\/Trolltech\/Qt-4.5.3\/include\/QtGui -I\/usr\/local\/Trolltech\/Qt-4.5.3\/include -I. -I. -I..\/GPS -I.$/;"	m
-INSTALL_DIR	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^INSTALL_DIR   = $(COPY_DIR)$/;"	m
-INSTALL_FILE	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^INSTALL_FILE  = install -m 644 -p$/;"	m
-INSTALL_PROGRAM	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^INSTALL_PROGRAM = install -m 755 -p$/;"	m
-LFLAGS	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^LFLAGS        = -Wl,-rpath,\/usr\/local\/Trolltech\/Qt-4.5.3\/lib$/;"	m
-LIBS	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^LIBS          = $(SUBLIBS)  -L\/usr\/local\/Trolltech\/Qt-4.5.3\/lib -lQtGui -L\/usr\/local\/Trolltech\/Qt-4.5.3\/lib -L\/usr\/X11R6\/lib -pthread -lpng -lfreetype -lgobject-2.0 -lSM -lICE -pthread -pthread -lXrender -lfontconfig -lXext -lX11 -lQtCore -lz -lm -pthread -lgthread-2.0 -lrt -lglib-2.0 -ldl -lpthread$/;"	m
-LINK	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^LINK          = g++$/;"	m
-MKDIR	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^MKDIR         = mkdir -p$/;"	m
-MOVE	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^MOVE          = mv -f$/;"	m
-OBJECTS	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^OBJECTS       = main.o \\$/;"	m
-OBJECTS_DIR	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^OBJECTS_DIR   = .\/$/;"	m
-QMAKE	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^QMAKE         = \/usr\/local\/Trolltech\/Qt-4.5.3\/bin\/qmake$/;"	m
-QMAKE_TARGET	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^QMAKE_TARGET  = GPS$/;"	m
-RANLIB	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^RANLIB        = $/;"	m
-SED	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^SED           = sed$/;"	m
-SOURCES	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^SOURCES       = ..\/GPS\/main.cpp \\$/;"	m
-SYMLINK	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^SYMLINK       = ln -sf$/;"	m
-TAR	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^TAR           = tar -cf$/;"	m
-TARGET	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^TARGET        = GPS$/;"	m
-metaObject	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/moc_mainwindow.cpp	/^const QMetaObject *MainWindow::metaObject() const$/;"	f	class:MainWindow
-qt_meta_data_MainWindow	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/moc_mainwindow.cpp	/^static const uint qt_meta_data_MainWindow[] = {$/;"	v	file:
-qt_meta_stringdata_MainWindow	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/moc_mainwindow.cpp	/^static const char qt_meta_stringdata_MainWindow[] = {$/;"	v	file:
-qt_metacall	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/moc_mainwindow.cpp	/^int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)$/;"	f	class:MainWindow
-qt_metacast	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/moc_mainwindow.cpp	/^void *MainWindow::qt_metacast(const char *_clname)$/;"	f	class:MainWindow
-staticMetaObject	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/moc_mainwindow.cpp	/^const QMetaObject MainWindow::staticMetaObject = {$/;"	m	class:MainWindow	file:
-MainWindow	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/ui_mainwindow.h	/^    class MainWindow: public Ui_MainWindow {};$/;"	c	namespace:Ui
-UI_MAINWINDOW_H	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/ui_mainwindow.h	11;"	d
-Ui	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/ui_mainwindow.h	/^namespace Ui {$/;"	n
-Ui_MainWindow	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/ui_mainwindow.h	/^class Ui_MainWindow$/;"	c
-centralWidget	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/ui_mainwindow.h	/^    QWidget *centralWidget;$/;"	m	class:Ui_MainWindow
-label	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/ui_mainwindow.h	/^    QLabel *label;$/;"	m	class:Ui_MainWindow
-mainToolBar	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/ui_mainwindow.h	/^    QToolBar *mainToolBar;$/;"	m	class:Ui_MainWindow
-menuBar	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/ui_mainwindow.h	/^    QMenuBar *menuBar;$/;"	m	class:Ui_MainWindow
-pushButton	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/ui_mainwindow.h	/^    QPushButton *pushButton;$/;"	m	class:Ui_MainWindow
-retranslateUi	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/ui_mainwindow.h	/^    void retranslateUi(QMainWindow *MainWindow)$/;"	f	class:Ui_MainWindow
-setupUi	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/ui_mainwindow.h	/^    void setupUi(QMainWindow *MainWindow)$/;"	f	class:Ui_MainWindow
-statusBar	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/ui_mainwindow.h	/^    QStatusBar *statusBar;$/;"	m	class:Ui_MainWindow
-verticalScrollBar	QT/build-GPS-Desktop_Qt_4_5_3_GCC_32bit-Debug/ui_mainwindow.h	/^    QScrollBar *verticalScrollBar;$/;"	m	class:Ui_MainWindow
-AR	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^AR            = ar cqs$/;"	m
-CC	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^CC            = gcc$/;"	m
-CFLAGS	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^CFLAGS        = -pipe -g -Wall -W -D_REENTRANT $(DEFINES)$/;"	m
-CHK_DIR_EXISTS	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^CHK_DIR_EXISTS= test -d$/;"	m
-COMPRESS	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^COMPRESS      = gzip -9f$/;"	m
-COPY	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^COPY          = cp -f$/;"	m
-COPY_DIR	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^COPY_DIR      = $(COPY) -r$/;"	m
-COPY_FILE	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^COPY_FILE     = $(COPY)$/;"	m
-CXX	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^CXX           = g++$/;"	m
-CXXFLAGS	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^CXXFLAGS      = -pipe -g -Wall -W -D_REENTRANT $(DEFINES)$/;"	m
-DEFINES	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^DEFINES       = -DQT_CORE_LIB -DQT_SHARED$/;"	m
-DEL_DIR	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^DEL_DIR       = rmdir$/;"	m
-DEL_FILE	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^DEL_FILE      = rm -f$/;"	m
-DESTDIR	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^DESTDIR       = $/;"	m
-DIST	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^DIST          = \/usr\/local\/Trolltech\/Qt-4.5.3\/mkspecs\/common\/g++.conf \\$/;"	m
-INCPATH	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^INCPATH       = -I\/usr\/local\/Trolltech\/Qt-4.5.3\/mkspecs\/linux-g++ -I..\/GPS_CONSOLE -I\/usr\/local\/Trolltech\/Qt-4.5.3\/include\/QtCore -I\/usr\/local\/Trolltech\/Qt-4.5.3\/include -I. -I..\/GPS_CONSOLE -I.$/;"	m
-INSTALL_DIR	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^INSTALL_DIR   = $(COPY_DIR)$/;"	m
-INSTALL_FILE	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^INSTALL_FILE  = install -m 644 -p$/;"	m
-INSTALL_PROGRAM	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^INSTALL_PROGRAM = install -m 755 -p$/;"	m
-LFLAGS	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^LFLAGS        = -Wl,-rpath,\/usr\/local\/Trolltech\/Qt-4.5.3\/lib$/;"	m
-LIBS	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^LIBS          = $(SUBLIBS)  -L\/usr\/local\/Trolltech\/Qt-4.5.3\/lib -lQtCore -L\/usr\/local\/Trolltech\/Qt-4.5.3\/lib -lz -lm -pthread -lgthread-2.0 -lrt -lglib-2.0 -ldl -lpthread$/;"	m
-LINK	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^LINK          = g++$/;"	m
-MKDIR	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^MKDIR         = mkdir -p$/;"	m
-MOVE	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^MOVE          = mv -f$/;"	m
-OBJECTS	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^OBJECTS       = main.o \\$/;"	m
-OBJECTS_DIR	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^OBJECTS_DIR   = .\/$/;"	m
-QMAKE	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^QMAKE         = \/usr\/local\/Trolltech\/Qt-4.5.3\/bin\/qmake$/;"	m
-QMAKE_TARGET	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^QMAKE_TARGET  = GPS_CONSOLE$/;"	m
-RANLIB	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^RANLIB        = $/;"	m
-SED	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^SED           = sed$/;"	m
-SOURCES	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^SOURCES       = ..\/GPS_CONSOLE\/main.cpp \\$/;"	m
-SYMLINK	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^SYMLINK       = ln -sf$/;"	m
-TAR	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^TAR           = tar -cf$/;"	m
-TARGET	QT/build-GPS_CONSOLE-Desktop_Qt_4_5_3_GCC_32bit-Debug/Makefile	/^TARGET        = GPS_CONSOLE$/;"	m
+closeGPRS	gprs.c	/^int closeGPRS(int fd)$/;"	f
+doub2unico	gprs.c	/^void doub2unico(double db,char ch[])$/;"	f
+gps_is_off	gprs.c	/^void gps_is_off(char ch[])$/;"	f
+gps_is_on	gprs.c	/^void gps_is_on(char ch[])$/;"	f
+int2unico	gprs.c	/^void int2unico(int num, char ch[])$/;"	f
+jingdu	gprs.c	/^void jingdu(char c,int d,int f,double m,char ch[])$/;"	f
+num_unicode	gprs.c	/^static const char *num_unicode[10]={$/;"	v	file:
+openGPRS	gprs.c	/^int openGPRS(int fd)$/;"	f
+receive_en_message	gprs.c	/^int receive_en_message(int fd)$/;"	f
+s_f_m	gprs.c	/^void s_f_m(int s,int f,int m,char ch[])$/;"	f
+send_at	gprs.c	/^void send_at(int fd)$/;"	f
+send_at_cmgf	gprs.c	/^void send_at_cmgf(int fd,char *c)$/;"	f
+send_at_cmgs	gprs.c	/^void send_at_cmgs(int fd,char *cmgs,char *message)$/;"	f
+send_at_csca	gprs.c	/^void send_at_csca(int fd)$/;"	f
+send_at_cscs_ucs2	gprs.c	/^void send_at_cscs_ucs2(int fd)$/;"	f
+send_zh_message	gprs.c	/^int send_zh_message(int fd) $/;"	f
+serial_init	gprs.c	/^int serial_init(int fd) $/;"	f
+sudu	gprs.c	/^void sudu(double spe,char ch[])$/;"	f
+weidu	gprs.c	/^void weidu(char c,int d,int f,double m,char ch[])$/;"	f
+y_m_d	gprs.c	/^void y_m_d(int y,int m,int d,char ch[])$/;"	f
+doub2unico	gprs2.c	/^void doub2unico(double db,unsigned char ch[])$/;"	f
+gps_is_off	gprs2.c	/^void gps_is_off(char ch[])$/;"	f
+gps_is_on	gprs2.c	/^void gps_is_on(char ch[])$/;"	f
+int2unico	gprs2.c	/^void int2unico(int num,unsigned char ch[])$/;"	f
+jingdu	gprs2.c	/^void jingdu(char c,int d,int f,double m,unsigned char ch[])$/;"	f
+main	gprs2.c	/^int main() $/;"	f
+num_unicode	gprs2.c	/^static const char *num_unicode[10]={$/;"	v	file:
+receive_en_message	gprs2.c	/^int receive_en_message(int fd)$/;"	f
+s_f_m	gprs2.c	/^void s_f_m(int s,int f,int m,unsigned char ch[])$/;"	f
+send_at	gprs2.c	/^void send_at(int fd)$/;"	f
+send_at_cmgf	gprs2.c	/^void send_at_cmgf(int fd,char *c)$/;"	f
+send_at_cmgs	gprs2.c	/^void send_at_cmgs(int fd,char *cmgs,char *message)$/;"	f
+send_at_csca	gprs2.c	/^void send_at_csca(int fd)$/;"	f
+send_at_cscs_ucs2	gprs2.c	/^void send_at_cscs_ucs2(int fd)$/;"	f
+send_zh_message	gprs2.c	/^int send_zh_message(int fd) $/;"	f
+serial_init	gprs2.c	/^int serial_init(int fd) $/;"	f
+sudu	gprs2.c	/^void sudu(double spe,unsigned char ch[])$/;"	f
+weidu	gprs2.c	/^void weidu(char c,int d,int f,double m,unsigned char ch[])$/;"	f
+y_m_d	gprs2.c	/^void y_m_d(int y,int m,int d,unsigned char ch[])$/;"	f
 GPGGA_analysis	gps.c	/^int GPGGA_analysis(char *buf, struct gpgga_data *data)$/;"	f
 GPGLL_analysis	gps.c	/^int GPGLL_analysis(char *buf, struct gpgll_data *data)$/;"	f
 GPGSA_analysis	gps.c	/^int GPGSA_analysis(char *buf, struct gpgsa_data *data)$/;"	f
 GPGSV_analysis	gps.c	/^int GPGSV_analysis(char *buf, struct gpgsv_data *data)$/;"	f
 GPRMC_analysis	gps.c	/^int GPRMC_analysis(char *buf, struct gprmc_data *data)$/;"	f
+GPTXT_analysis	gps.c	/^int GPTXT_analysis(char *buf, struct gptxt_data *data)$/;"	f
 GPVTG_analysis	gps.c	/^int GPVTG_analysis(char *buf, struct gpvtg_data *data)$/;"	f
-PRINT_COMMAND	gps.c	1;"	d	file:
 closeGPS	gps.c	/^int closeGPS(int fd)$/;"	f
-getchecksum	gps.c	/^char getchecksum(char *command, char *c1, char *c2)$/;"	f
+getchecksum	gps.c	/^int getchecksum(char *command, char *c1, char *c2)$/;"	f
 getposition	gps.c	/^void getposition()$/;"	f
 getspeed	gps.c	/^void getspeed()$/;"	f
 gettime	gps.c	/^void gettime()$/;"	f
@@ -215,14 +59,18 @@ gpgll	gps.c	/^struct gpgll_data gpgll;$/;"	v	typeref:struct:gpgll_data
 gpgsa	gps.c	/^struct gpgsa_data gpgsa;$/;"	v	typeref:struct:gpgsa_data
 gpgsv	gps.c	/^struct gpgsv_data gpgsv;$/;"	v	typeref:struct:gpgsv_data
 gprmc	gps.c	/^struct gprmc_data gprmc;$/;"	v	typeref:struct:gprmc_data
+gptxt	gps.c	/^struct gptxt_data gptxt;$/;"	v	typeref:struct:gptxt_data
 gpvtg	gps.c	/^struct gpvtg_data gpvtg;$/;"	v	typeref:struct:gpvtg_data
 openGPS	gps.c	/^int openGPS(char *dev)$/;"	f
+printCommand	gps.c	/^int printCommand(void)$/;"	f
+printData	gps.c	/^int printData(void)$/;"	f
+printGPGGA	gps.c	/^int printGPGGA(void)$/;"	f
 printGPGSA	gps.c	/^int printGPGSA(void)$/;"	f
 printGPGSV	gps.c	/^int printGPGSV(void)$/;"	f
 printGPRMC	gps.c	/^int printGPRMC(void)$/;"	f
-printGPS	gps.c	/^int printGPS(void)$/;"	f
-readGPS	gps.c	/^int readGPS(int fd, char *buf)$/;"	f
+readGPS	gps.c	/^int readGPS(int fd)$/;"	f
 _GPS_H_	gps.h	2;"	d
+altitude	gps.h	/^	double altitude;$/;"	m	struct:gpgga_data
 az0	gps.h	/^	char az0[4];\/\/Azimuth, range 0..359$/;"	m	struct:gpgsv_data
 az1	gps.h	/^	char az1[4];\/\/Azimuth, range 0..359$/;"	m	struct:gpgsv_data
 az2	gps.h	/^	char az2[4];\/\/Azimuth, range 0..359$/;"	m	struct:gpgsv_data
@@ -232,8 +80,20 @@ cno1	gps.h	/^	char cno1[3];\/\/C\/N0, range 0..99, null when not tracking$/;"	m	
 cno2	gps.h	/^	char cno2[3];\/\/C\/N0, range 0..99, null when not tracking$/;"	m	struct:gpgsv_data
 cno3	gps.h	/^	char cno3[3];\/\/C\/N0, range 0..99, null when not tracking$/;"	m	struct:gpgsv_data
 cog	gps.h	/^	char cog[6];$/;"	m	struct:gprmc_data
+command	gps.h	/^	char command[100];$/;"	m	struct:gpgga_data
+command	gps.h	/^	char command[100];$/;"	m	struct:gpgll_data
+command	gps.h	/^	char command[100];$/;"	m	struct:gpgsa_data
+command	gps.h	/^	char command[100];$/;"	m	struct:gprmc_data
+command	gps.h	/^	char command[100];$/;"	m	struct:gptxt_data
+command	gps.h	/^	char command[100];$/;"	m	struct:gpvtg_data
+command0	gps.h	/^	char command0[100];$/;"	m	struct:gpgsv_data
+command1	gps.h	/^	char command1[100];$/;"	m	struct:gpgsv_data
+command2	gps.h	/^	char command2[100];$/;"	m	struct:gpgsv_data
+command3	gps.h	/^	char command3[100];$/;"	m	struct:gpgsv_data
+command4	gps.h	/^	char command4[100];$/;"	m	struct:gpgsv_data
 cs	gps.h	/^	char cs[3];$/;"	m	struct:gpgga_data
 cs	gps.h	/^	char cs[3];$/;"	m	struct:gpgll_data
+cs	gps.h	/^	char cs[3];$/;"	m	struct:gptxt_data
 cs	gps.h	/^	char cs[3];$/;"	m	struct:gpvtg_data
 cs	gps.h	/^	char cs[3];\/\/Checksum$/;"	m	struct:gpgsv_data
 cs	gps.h	/^	char cs[3];\/\/checksum$/;"	m	struct:gpgsa_data
@@ -251,9 +111,10 @@ gpgll_data	gps.h	/^struct gpgll_data$/;"	s
 gpgsa_data	gps.h	/^struct gpgsa_data$/;"	s
 gpgsv_data	gps.h	/^struct gpgsv_data$/;"	s
 gprmc_data	gps.h	/^struct gprmc_data$/;"	s
+gptxt_data	gps.h	/^struct gptxt_data$/;"	s
 gpvtg_data	gps.h	/^struct gpvtg_data$/;"	s
 h	gps.h	/^	double h;$/;"	m	struct:gpgsa_data
-hdop	gps.h	/^	char hdop[5];$/;"	m	struct:gpgsa_data
+hdop	gps.h	/^	char hdop[6];$/;"	m	struct:gpgsa_data
 hour	gps.h	/^	int hour;$/;"	m	struct:gprmc_data
 id	gps.h	/^	int id[14];$/;"	m	struct:gpgsa_data
 id	gps.h	/^	int id[50];\/\/卫星编号$/;"	m	struct:gpgsv_data
@@ -270,12 +131,15 @@ minute	gps.h	/^	int minute;$/;"	m	struct:gprmc_data
 mode	gps.h	/^	char mode;$/;"	m	struct:gprmc_data
 month	gps.h	/^	int month;$/;"	m	struct:gprmc_data
 msgno	gps.h	/^	char msgno;\/\/Number of this message$/;"	m	struct:gpgsv_data
+msl	gps.h	/^	char msl[10];$/;"	m	struct:gpgga_data
 n	gps.h	/^	char n;$/;"	m	struct:gprmc_data
 no	gps.h	/^	int no;\/\/可见卫星数目$/;"	m	struct:gpgsv_data
 nomsg	gps.h	/^	char nomsg;\/\/Number of messages$/;"	m	struct:gpgsv_data
+nosv	gps.h	/^	char nosv[3];$/;"	m	struct:gpgga_data
 nosv	gps.h	/^	char nosv[3];\/\/Satellites in View$/;"	m	struct:gpgsv_data
+number	gps.h	/^	int number;$/;"	m	struct:gpgga_data
 p	gps.h	/^	double p;$/;"	m	struct:gpgsa_data
-pdop	gps.h	/^	char pdop[5];$/;"	m	struct:gpgsa_data
+pdop	gps.h	/^	char pdop[6];$/;"	m	struct:gpgsa_data
 second	gps.h	/^	int second;$/;"	m	struct:gprmc_data
 smode	gps.h	/^	char smode;\/\/smode$/;"	m	struct:gpgsa_data
 spd	gps.h	/^	char spd[6];$/;"	m	struct:gprmc_data
@@ -287,27 +151,34 @@ sv2	gps.h	/^	char sv2[3];\/\/Satellite ID$/;"	m	struct:gpgsv_data
 sv3	gps.h	/^	char sv3[3];\/\/Satellite ID$/;"	m	struct:gpgsv_data
 utc	gps.h	/^	char utc[10];$/;"	m	struct:gprmc_data
 v	gps.h	/^	double v;$/;"	m	struct:gpgsa_data
-vdop	gps.h	/^	char vdop[5];$/;"	m	struct:gpgsa_data
+vdop	gps.h	/^	char vdop[6];$/;"	m	struct:gpgsa_data
 year	gps.h	/^	int year;$/;"	m	struct:gprmc_data
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 cfg	serial.c	/^int cfg(int fd, const char *buf)$/;"	f
 cfg_ack_check	serial.c	/^u_int8_t cfg_ack_check(int fd)$/;"	f
+cfg_cfg_save	serial.c	/^const char cfg_cfg_save[] =     {0xB5, 0x62, 0x06, 0x09, 0x0D, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x04, 0x1E, 0xAC};$/;"	v
 cfg_msg_GPGGA_off	serial.c	/^const char cfg_msg_GPGGA_off[]= {0xB5, 0x62, 0x06, 0x01, 0x08, 0x00, 0xF0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x23};$/;"	v
 cfg_msg_GPGGA_on	serial.c	/^const char cfg_msg_GPGGA_on[]=  {0xB5, 0x62, 0x06, 0x01, 0x08, 0x00, 0xF0, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x28};$/;"	v
 cfg_msg_GPGLL_off	serial.c	/^const char cfg_msg_GPGLL_off[]= {0xB5, 0x62, 0x06, 0x01, 0x08, 0x00, 0xF0, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x2A};$/;"	v
 cfg_msg_GPGLL_on	serial.c	/^const char cfg_msg_GPGLL_on[] = {0xB5, 0x62, 0x06, 0x01, 0x08, 0x00, 0xF0, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x01, 0x2F};$/;"	v
+cfg_msg_GPVTG_off	serial.c	/^const char cfg_msg_GPVTG_off[]= {0xB5, 0x62, 0x06, 0x01, 0x08, 0x00, 0xF0, 0x05, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x04, 0x46};$/;"	v
+cfg_msg_GPVTG_on	serial.c	/^const char cfg_msg_GPVTG_on[] = {0xB5, 0x62, 0x06, 0x01, 0x08, 0x00, 0xF0, 0x05, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x05, 0x4B};$/;"	v
 cfg_rate_1000	serial.c	/^const char cfg_rate_1000[]    = {0xB5, 0x62, 0x06, 0x08, 0x06, 0x00, 0xE8, 0x03, 0x01, 0x00, 0x01, 0x00, 0x01, 0x39};$/;"	v
 cfg_rate_10000	serial.c	/^const char cfg_rate_10000[]   = {0xB5, 0x62, 0x06, 0x08, 0x06, 0x00, 0x10, 0x27, 0x01, 0x00, 0x01, 0x00, 0x4D, 0xDD};$/;"	v
 cfg_rate_200	serial.c	/^const char cfg_rate_200[]     = {0xB5, 0x62, 0x06, 0x08, 0x06, 0x00, 0xC8, 0x00, 0x01, 0x00, 0x01, 0x00, 0xDE, 0x6A};$/;"	v
 cfg_rate_2000	serial.c	/^const char cfg_rate_2000[]    = {0xB5, 0x62, 0x06, 0x08, 0x06, 0x00, 0xD0, 0x07, 0x01, 0x00, 0x01, 0x00, 0xED, 0xBD};$/;"	v
 cfg_rate_500	serial.c	/^const char cfg_rate_500[]     = {0xB5, 0x62, 0x06, 0x08, 0x06, 0x00, 0xF4, 0x01, 0x01, 0x00, 0x01, 0x00, 0x0B, 0x77};$/;"	v
+cfg_rst_cs_start	serial.c	/^const char cfg_rst_cs_start[] = {0xB5, 0x62, 0x06, 0x04, 0x04, 0x00, 0xFF, 0x07, 0x09, 0x00, 0x1D, 0x87};$/;"	v
+cfg_rst_cs_stop	serial.c	/^const char cfg_rst_cs_stop[]  = {0xB5, 0x62, 0x06, 0x04, 0x04, 0x00, 0xFF, 0x07, 0x08, 0x00, 0x1C, 0x85};$/;"	v
 cfg_rst_cs_wd	serial.c	/^const char cfg_rst_cs_wd[]    = {0xB5, 0x62, 0x06, 0x04, 0x04, 0x00, 0xFF, 0x07, 0x00, 0x00, 0x14, 0x75};$/;"	v
+cfg_rst_prt_38400	serial.c	/^const char cfg_rst_prt_38400[] = {0xB5, 0x62, 0x06, 0x00, 0x14, 0x00, 0x01, 0x00, 0x00, 0x00, 0xD0, 0x08, 0x00, 0x00, 0x00, 0x96, 0x00, 0x00, 0x03, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x8F, 0x70};$/;"	v
+cfg_rst_prt_9600	serial.c	/^const char cfg_rst_prt_9600[]  = {0xB5, 0x62, 0x06, 0x00, 0x14, 0x00, 0x01, 0x00, 0x00, 0x00, 0xD0, 0x08, 0x00, 0x00, 0x80, 0x25, 0x00, 0x00, 0x03, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x9E, 0x95};$/;"	v
 close_serial	serial.c	/^int close_serial(int fd)$/;"	f
-init_serial	serial.c	/^int init_serial(int fd)$/;"	f
+init_serial	serial.c	/^int init_serial(int fd, int prt)$/;"	f
 open_serial	serial.c	/^int open_serial(char *dev)$/;"	f
 read_serial	serial.c	/^int read_serial(int fd, char *buf)$/;"	f
+rxd_buf	serial.c	/^char rxd_buf[512];\/\/接收缓冲区$/;"	v
 _SERIAL_H_	serial.h	2;"	d
 arm1	test.c	1;"	d	file:
 main	test.c	/^int main()$/;"	f
 main	test.c	/^int main(int argc, char const *argv[])$/;"	f
-GPVTG_analysis	tmp.c	/^int GPVTG_analysis(char *buf, struct gpvtg_data *data)$/;"	f

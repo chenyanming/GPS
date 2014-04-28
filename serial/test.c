@@ -16,12 +16,20 @@
 #include <termios.h>
 #include "serial.h"
 #include "gps.h"
+#include "gprs.h"
+
+extern int GPRMC_analysis(char *buf, struct gprmc_data *data);
+extern int GPGSV_analysis(char *buf, struct gpgsv_data *data);
+extern int GPGSA_analysis(char *buf, struct gpgsa_data *data);
+extern int GPGGA_analysis(char *buf, struct gpgga_data *data);
 
 #ifdef arm1
 int main(int argc, char const *argv[])
 {
-	int fd;
-	fd = openGPS("/dev/tq2440_serial1");
+	int fd, fd1, rev;
+	char rxd_buf[4000];
+	//fd = openGPS("/dev/tq2440_serial1");
+	fd = openGPRS("/dev/tq2440_serial1");
 	//cfg(fd, cfg_rate_200);//不知道是什么原因定位太慢了，加快看看怎样
 	//cfg(fd, cfg_msg_GPGLL_on);
 	//cfg(fd, cfg_msg_GPGGA_on);
@@ -42,7 +50,18 @@ int main(int argc, char const *argv[])
 	init_serial(fd, B38400);//修改串口的波特率为38400
 	cfg(fd, cfg_cfg_save);//保存配置
 */
+	fd1 = open("/mnt/GPS/serial/data.txt", O_RDONLY);
+	rev = read(fd1, rxd_buf, 4000);
+	GPRMC_analysis(rxd_buf, &gprmc);
+	GPGSV_analysis(rxd_buf, &gpgsv);
+	GPGSA_analysis(rxd_buf, &gpgsa);
 
+	if (gprmc.status == 'A')
+	{
+		send_zh_message(fd);
+	}
+
+/*
 	while(1) 
 	{
 		readGPS(fd);
@@ -53,8 +72,9 @@ int main(int argc, char const *argv[])
 		fflush(stdout);//配合QT使用，应该是清除缓冲区吧，这样才可以正常输出。
 	}
 	closeGPS(fd);
+*/	
+	closeGPRS(fd);
 	return 0;
-	
 }
 #endif
 
