@@ -11,6 +11,8 @@ GPGSV_analysis	gps.c	/^int GPGSV_analysis(char *buf, struct gpgsv_data *data)$/;
 GPRMC_analysis	gps.c	/^int GPRMC_analysis(char *buf, struct gprmc_data *data)$/;"	f
 GPTXT_analysis	gps.c	/^int GPTXT_analysis(char *buf, struct gptxt_data *data)$/;"	f
 GPVTG_analysis	gps.c	/^int GPVTG_analysis(char *buf, struct gpvtg_data *data)$/;"	f
+MyGPRS	test.c	/^void *MyGPRS(int *fd)$/;"	f
+MyGPS	test.c	/^void *MyGPS(int *fd)$/;"	f
 _GPS_H_	gps.h	2;"	d
 _SERIAL_H_	serial.h	2;"	d
 altitude	gps.h	/^	double altitude;$/;"	m	struct:gpgga_data
@@ -66,8 +68,8 @@ cs	gps.h	/^	char cs[3];\/\/checksum$/;"	m	struct:gpgsa_data
 cs	gps.h	/^	char cs[4];$/;"	m	struct:gprmc_data
 date	gps.h	/^	char date[7];$/;"	m	struct:gprmc_data
 day	gps.h	/^	int day;$/;"	m	struct:gprmc_data
+delete_first_message	gprs.c	/^void delete_first_message(int fd)$/;"	f
 doub2unico	gprs.c	/^void doub2unico(double db,char ch[])$/;"	f
-doub2unico	gprs2.c	/^void doub2unico(double db,unsigned char ch[])$/;"	f
 e	gps.h	/^	char e;$/;"	m	struct:gprmc_data
 elv0	gps.h	/^	char elv0[3];\/\/Elevation, range 0..90$/;"	m	struct:gpgsv_data
 elv1	gps.h	/^	char elv1[3];\/\/Elevation, range 0..90$/;"	m	struct:gpgsv_data
@@ -89,9 +91,7 @@ gpgsv_data	gps.h	/^struct gpgsv_data$/;"	s
 gprmc	gps.c	/^struct gprmc_data gprmc;$/;"	v	typeref:struct:gprmc_data
 gprmc_data	gps.h	/^struct gprmc_data$/;"	s
 gps_is_off	gprs.c	/^void gps_is_off(char ch[])$/;"	f
-gps_is_off	gprs2.c	/^void gps_is_off(char ch[])$/;"	f
 gps_is_on	gprs.c	/^void gps_is_on(char ch[])$/;"	f
-gps_is_on	gprs2.c	/^void gps_is_on(char ch[])$/;"	f
 gptxt	gps.c	/^struct gptxt_data gptxt;$/;"	v	typeref:struct:gptxt_data
 gptxt_data	gps.h	/^struct gptxt_data$/;"	s
 gpvtg	gps.c	/^struct gpvtg_data gpvtg;$/;"	v	typeref:struct:gpvtg_data
@@ -103,9 +103,7 @@ id	gps.h	/^	int id[14];$/;"	m	struct:gpgsa_data
 id	gps.h	/^	int id[50];\/\/卫星编号$/;"	m	struct:gpgsv_data
 init_serial	serial.c	/^int init_serial(int fd, int prt)$/;"	f
 int2unico	gprs.c	/^void int2unico(int num, char ch[])$/;"	f
-int2unico	gprs2.c	/^void int2unico(int num,unsigned char ch[])$/;"	f
 jingdu	gprs.c	/^void jingdu(char c,int d,int f,double m,char ch[])$/;"	f
-jingdu	gprs2.c	/^void jingdu(char c,int d,int f,double m,unsigned char ch[])$/;"	f
 kmph	gps.h	/^	double kmph;$/;"	m	struct:gprmc_data
 lati_degree	gps.h	/^	int lati_degree;$/;"	m	struct:gprmc_data
 lati_minute	gps.h	/^	int lati_minute;$/;"	m	struct:gprmc_data
@@ -115,7 +113,7 @@ long_degree	gps.h	/^	int long_degree;$/;"	m	struct:gprmc_data
 long_minute	gps.h	/^	int long_minute;$/;"	m	struct:gprmc_data
 long_second	gps.h	/^	double long_second;$/;"	m	struct:gprmc_data
 longitude	gps.h	/^	char longitude[12];$/;"	m	struct:gprmc_data
-main	gprs2.c	/^int main() $/;"	f
+main	test.c	/^int main() $/;"	f
 main	test.c	/^int main()$/;"	f
 main	test.c	/^int main(int argc, char const *argv[])$/;"	f
 minute	gps.h	/^	int minute;$/;"	m	struct:gprmc_data
@@ -129,9 +127,8 @@ nomsg	gps.h	/^	char nomsg;\/\/Number of messages$/;"	m	struct:gpgsv_data
 nosv	gps.h	/^	char nosv[3];$/;"	m	struct:gpgga_data
 nosv	gps.h	/^	char nosv[3];\/\/Satellites in View$/;"	m	struct:gpgsv_data
 num_unicode	gprs.c	/^static const char *num_unicode[10]={$/;"	v	file:
-num_unicode	gprs2.c	/^static const char *num_unicode[10]={$/;"	v	file:
 number	gps.h	/^	int number;$/;"	m	struct:gpgga_data
-openGPRS	gprs.c	/^int openGPRS(int fd)$/;"	f
+openGPRS	gprs.c	/^int openGPRS(char *dev)$/;"	f
 openGPS	gps.c	/^int openGPS(char *dev)$/;"	f
 open_serial	serial.c	/^int open_serial(char *dev)$/;"	f
 p	gps.h	/^	double p;$/;"	m	struct:gpgsa_data
@@ -144,31 +141,22 @@ printGPGSV	gps.c	/^int printGPGSV(void)$/;"	f
 printGPRMC	gps.c	/^int printGPRMC(void)$/;"	f
 readGPS	gps.c	/^int readGPS(int fd)$/;"	f
 read_serial	serial.c	/^int read_serial(int fd, char *buf)$/;"	f
-receive_en_message	gprs.c	/^int receive_en_message(int fd)$/;"	f
-receive_en_message	gprs2.c	/^int receive_en_message(int fd)$/;"	f
+receive_zh_message	gprs.c	/^int receive_zh_message(int fd)$/;"	f
 rxd_buf	serial.c	/^char rxd_buf[512];\/\/接收缓冲区$/;"	v
 s_f_m	gprs.c	/^void s_f_m(int s,int f,int m,char ch[])$/;"	f
-s_f_m	gprs2.c	/^void s_f_m(int s,int f,int m,unsigned char ch[])$/;"	f
 second	gps.h	/^	int second;$/;"	m	struct:gprmc_data
 send_at	gprs.c	/^void send_at(int fd)$/;"	f
-send_at	gprs2.c	/^void send_at(int fd)$/;"	f
 send_at_cmgf	gprs.c	/^void send_at_cmgf(int fd,char *c)$/;"	f
-send_at_cmgf	gprs2.c	/^void send_at_cmgf(int fd,char *c)$/;"	f
 send_at_cmgs	gprs.c	/^void send_at_cmgs(int fd,char *cmgs,char *message)$/;"	f
-send_at_cmgs	gprs2.c	/^void send_at_cmgs(int fd,char *cmgs,char *message)$/;"	f
 send_at_csca	gprs.c	/^void send_at_csca(int fd)$/;"	f
-send_at_csca	gprs2.c	/^void send_at_csca(int fd)$/;"	f
 send_at_cscs_ucs2	gprs.c	/^void send_at_cscs_ucs2(int fd)$/;"	f
-send_at_cscs_ucs2	gprs2.c	/^void send_at_cscs_ucs2(int fd)$/;"	f
-send_zh_message	gprs.c	/^int send_zh_message(int fd) $/;"	f
-send_zh_message	gprs2.c	/^int send_zh_message(int fd) $/;"	f
+send_error	gprs.c	/^int send_error(int fd) $/;"	f
+send_position	gprs.c	/^int send_position(int fd) $/;"	f
 serial_init	gprs.c	/^int serial_init(int fd) $/;"	f
-serial_init	gprs2.c	/^int serial_init(int fd) $/;"	f
 smode	gps.h	/^	char smode;\/\/smode$/;"	m	struct:gpgsa_data
 spd	gps.h	/^	char spd[6];$/;"	m	struct:gprmc_data
 status	gps.h	/^	char status;$/;"	m	struct:gprmc_data
 sudu	gprs.c	/^void sudu(double spe,char ch[])$/;"	f
-sudu	gprs2.c	/^void sudu(double spe,unsigned char ch[])$/;"	f
 sv	gps.h	/^	char sv[30];\/\/satellite number$/;"	m	struct:gpgsa_data
 sv0	gps.h	/^	char sv0[3];\/\/Satellite ID$/;"	m	struct:gpgsv_data
 sv1	gps.h	/^	char sv1[3];\/\/Satellite ID$/;"	m	struct:gpgsv_data
@@ -178,7 +166,5 @@ utc	gps.h	/^	char utc[10];$/;"	m	struct:gprmc_data
 v	gps.h	/^	double v;$/;"	m	struct:gpgsa_data
 vdop	gps.h	/^	char vdop[6];$/;"	m	struct:gpgsa_data
 weidu	gprs.c	/^void weidu(char c,int d,int f,double m,char ch[])$/;"	f
-weidu	gprs2.c	/^void weidu(char c,int d,int f,double m,unsigned char ch[])$/;"	f
 y_m_d	gprs.c	/^void y_m_d(int y,int m,int d,char ch[])$/;"	f
-y_m_d	gprs2.c	/^void y_m_d(int y,int m,int d,unsigned char ch[])$/;"	f
 year	gps.h	/^	int year;$/;"	m	struct:gprmc_data

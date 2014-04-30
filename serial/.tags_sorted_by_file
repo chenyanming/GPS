@@ -4,44 +4,27 @@
 !_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 closeGPRS	gprs.c	/^int closeGPRS(int fd)$/;"	f
+delete_first_message	gprs.c	/^void delete_first_message(int fd)$/;"	f
 doub2unico	gprs.c	/^void doub2unico(double db,char ch[])$/;"	f
 gps_is_off	gprs.c	/^void gps_is_off(char ch[])$/;"	f
 gps_is_on	gprs.c	/^void gps_is_on(char ch[])$/;"	f
 int2unico	gprs.c	/^void int2unico(int num, char ch[])$/;"	f
 jingdu	gprs.c	/^void jingdu(char c,int d,int f,double m,char ch[])$/;"	f
 num_unicode	gprs.c	/^static const char *num_unicode[10]={$/;"	v	file:
-openGPRS	gprs.c	/^int openGPRS(int fd)$/;"	f
-receive_en_message	gprs.c	/^int receive_en_message(int fd)$/;"	f
+openGPRS	gprs.c	/^int openGPRS(char *dev)$/;"	f
+receive_zh_message	gprs.c	/^int receive_zh_message(int fd)$/;"	f
 s_f_m	gprs.c	/^void s_f_m(int s,int f,int m,char ch[])$/;"	f
 send_at	gprs.c	/^void send_at(int fd)$/;"	f
 send_at_cmgf	gprs.c	/^void send_at_cmgf(int fd,char *c)$/;"	f
 send_at_cmgs	gprs.c	/^void send_at_cmgs(int fd,char *cmgs,char *message)$/;"	f
 send_at_csca	gprs.c	/^void send_at_csca(int fd)$/;"	f
 send_at_cscs_ucs2	gprs.c	/^void send_at_cscs_ucs2(int fd)$/;"	f
-send_zh_message	gprs.c	/^int send_zh_message(int fd) $/;"	f
+send_error	gprs.c	/^int send_error(int fd) $/;"	f
+send_position	gprs.c	/^int send_position(int fd) $/;"	f
 serial_init	gprs.c	/^int serial_init(int fd) $/;"	f
 sudu	gprs.c	/^void sudu(double spe,char ch[])$/;"	f
 weidu	gprs.c	/^void weidu(char c,int d,int f,double m,char ch[])$/;"	f
 y_m_d	gprs.c	/^void y_m_d(int y,int m,int d,char ch[])$/;"	f
-doub2unico	gprs2.c	/^void doub2unico(double db,unsigned char ch[])$/;"	f
-gps_is_off	gprs2.c	/^void gps_is_off(char ch[])$/;"	f
-gps_is_on	gprs2.c	/^void gps_is_on(char ch[])$/;"	f
-int2unico	gprs2.c	/^void int2unico(int num,unsigned char ch[])$/;"	f
-jingdu	gprs2.c	/^void jingdu(char c,int d,int f,double m,unsigned char ch[])$/;"	f
-main	gprs2.c	/^int main() $/;"	f
-num_unicode	gprs2.c	/^static const char *num_unicode[10]={$/;"	v	file:
-receive_en_message	gprs2.c	/^int receive_en_message(int fd)$/;"	f
-s_f_m	gprs2.c	/^void s_f_m(int s,int f,int m,unsigned char ch[])$/;"	f
-send_at	gprs2.c	/^void send_at(int fd)$/;"	f
-send_at_cmgf	gprs2.c	/^void send_at_cmgf(int fd,char *c)$/;"	f
-send_at_cmgs	gprs2.c	/^void send_at_cmgs(int fd,char *cmgs,char *message)$/;"	f
-send_at_csca	gprs2.c	/^void send_at_csca(int fd)$/;"	f
-send_at_cscs_ucs2	gprs2.c	/^void send_at_cscs_ucs2(int fd)$/;"	f
-send_zh_message	gprs2.c	/^int send_zh_message(int fd) $/;"	f
-serial_init	gprs2.c	/^int serial_init(int fd) $/;"	f
-sudu	gprs2.c	/^void sudu(double spe,unsigned char ch[])$/;"	f
-weidu	gprs2.c	/^void weidu(char c,int d,int f,double m,unsigned char ch[])$/;"	f
-y_m_d	gprs2.c	/^void y_m_d(int y,int m,int d,unsigned char ch[])$/;"	f
 GPGGA_analysis	gps.c	/^int GPGGA_analysis(char *buf, struct gpgga_data *data)$/;"	f
 GPGLL_analysis	gps.c	/^int GPGLL_analysis(char *buf, struct gpgll_data *data)$/;"	f
 GPGSA_analysis	gps.c	/^int GPGSA_analysis(char *buf, struct gpgsa_data *data)$/;"	f
@@ -179,6 +162,9 @@ open_serial	serial.c	/^int open_serial(char *dev)$/;"	f
 read_serial	serial.c	/^int read_serial(int fd, char *buf)$/;"	f
 rxd_buf	serial.c	/^char rxd_buf[512];\/\/接收缓冲区$/;"	v
 _SERIAL_H_	serial.h	2;"	d
+MyGPRS	test.c	/^void *MyGPRS(int *fd)$/;"	f
+MyGPS	test.c	/^void *MyGPS(int *fd)$/;"	f
 arm1	test.c	1;"	d	file:
+main	test.c	/^int main() $/;"	f
 main	test.c	/^int main()$/;"	f
 main	test.c	/^int main(int argc, char const *argv[])$/;"	f

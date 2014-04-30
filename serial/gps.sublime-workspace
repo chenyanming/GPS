@@ -4,6 +4,34 @@
 		"selected_items":
 		[
 			[
+				"re",
+				"reply	char[]"
+			],
+			[
+				"pfd",
+				"p_fd_gprs	int"
+			],
+			[
+				"read",
+				"readGPS(int fd)	int"
+			],
+			[
+				"pthreadcreate",
+				"pthread_create(pthread_t *restrict __newthread, const pthread_attr_t *restrict __attr, void *(*__start_routine)(void *), void *restrict __arg)	int"
+			],
+			[
+				"phrcreate",
+				"pthread_create(pthread_t *restrict __newthread, const pthread_attr_t *restrict __attr, void *(*__start_routine)(void *), void *restrict __arg)	int"
+			],
+			[
+				"pth",
+				"pthread_t	typedef"
+			],
+			[
+				"str",
+				"strlen(const char *__s)	size_t"
+			],
+			[
 				"close",
 				"close(int __fd)	int"
 			],
@@ -76,10 +104,6 @@
 				"Ublox_Cfg_Ack_Check	u_int8_t"
 			],
 			[
-				"read",
-				"read(int __fd, void *__buf, size_t __nbytes)	ssize_t"
-			],
-			[
 				"uint",
 				"u_int16_t	typedef"
 			],
@@ -114,10 +138,6 @@
 			[
 				"open",
 				"open(const char *__file, int __oflag, ...)	int"
-			],
-			[
-				"re",
-				"receive_buf	char [2048]"
 			],
 			[
 				"rev",
@@ -200,10 +220,21 @@
 	"buffers":
 	[
 		{
+			"contents": "#define arm1\n//#define gprs\n//#define x86\n#include <sys/time.h>\n\n#include <sys/types.h>\n#include <sys/stat.h>\n#include <fcntl.h>\n\n#include <unistd.h>\n\n#include <stdio.h>\n\n#include <string.h>\n\n#include <termios.h>\n\n#include <pthread.h>\n\n#include \"serial.h\"\n#include \"gps.h\"\n#include \"gprs.h\"\n\nvoid *MyGPS(int *fd);\nvoid *MyGPRS(int *fd);\n\n#ifdef arm1\nint main(int argc, char const *argv[])\n{\n	int fd_gprs, fd_gps;\n	pthread_t gps_thread, gprs_thread;\n	int gps_ret, gprs_ret;\n	int *p_fd_gps = &fd_gps;\n	int *p_fd_gprs = &fd_gprs;\n\n	fd_gps = openGPS(\"/dev/tq2440_serial2\");\n	fd_gprs = openGPRS(\"/dev/tq2440_serial1\");\n	gps_ret = pthread_create(&gps_thread, NULL, (void *)MyGPS, (int *)p_fd_gps);\n	if (gps_ret)\n	{\n		printf(\"create MyGPS error!\\n\");\n	}\n	gprs_ret = pthread_create(&gprs_thread, NULL, (void *)MyGPRS, (int *)p_fd_gprs);\n	if (gprs_ret)\n	{\n		printf(\"create MyGPRS error!\\n\");\n	}\n	//cfg(fd, cfg_rate_200);//不知道是什么原因定位太慢了，加快看看怎样\n	//cfg(fd, cfg_msg_GPGLL_on);\n	//cfg(fd, cfg_msg_GPGGA_on);\n	//cfg(fd, cfg_msg_GPVTG_on);\n	//cfg(fd, cfg_cfg_save);//保存配置\n\n/*\n**	这部分代码用于保存配置到EEPROME的，要修改配置就根据需要配置，然后运行\n**	已经设置了波特率为38400,原本为9600\n**	关闭了GPGLL, GPGGA, GPVTG\n**	其他还是采用默认配置\n\n	cfg(fd, cfg_rate_1000);//1Hz为默认配置\n	cfg(fd, cfg_msg_GPGLL_off);//关闭GPGLL\n	cfg(fd, cfg_msg_GPGGA_off);//关闭GPGGA\n	cfg(fd, cfg_msg_GPVTG_off);//关闭GPVTG\n	cfg(fd, cfg_rst_prt_38400);//修改GPS模块的波特率为38400\n	init_serial(fd, B38400);//修改串口的波特率为38400\n	cfg(fd, cfg_cfg_save);//保存配置\n*/\n	/*\n	fd1 = open(\"/mnt/GPS/serial/data.txt\", O_RDONLY);\n	rev = read(fd1, rxd_buf, 4000);\n	GPRMC_analysis(rxd_buf, &gprmc);\n	GPGSV_analysis(rxd_buf, &gpgsv);\n	GPGSA_analysis(rxd_buf, &gpgsa);\n	*/\n\n\n	while(1) \n	{\n	}\n\n	closeGPS(fd_gps);\n	closeGPRS(fd_gprs);\n	return 0;\n}\n\n\n\nvoid *MyGPS(int *fd)\n{\n	//int *gps;\n	//gps = (int *)fd;\n	int i = 0;\n	while(1)\n	{\n		readGPS(*fd);\n		printf(\"====================================================\\n\");\n		printCommand();\n		printData();\n		sleep(1);\n		if (gprmc.status == 'A')\n		{\n			if (i == 0)\n				{\n				i++;\n				send_position(*fd);\n			}\n		}\n		fflush(stdout);//配合QT使用，应该是清除缓冲区吧，这样才可以正常输出。\n	}\n}\n\nvoid *MyGPRS(int *fd)\n{\n	int ret;\n	while(1)\n	{\n		ret = receive_zh_message(*fd);\n		switch (ret)\n		{\n			case 1:\n				printf(\"获取当前位置中......\\n\");\n				if (gprmc.status == 'A')\n				{\n					send_position(*fd);\n				}\n				else\n				{\n					send_error(*fd);\n				}\n				break;\n			case 2:\n				break;\n			default:\n				break;\n		}\n		sleep(1);\n		fflush(stdout);//配合QT使用，应该是清除缓冲区吧，这样才可以正常输出。\n	}\n}\n\n#endif\n\n\n#ifdef gprs\nextern int serial_init(int fd);\nextern int receive_zh_message(int fd);\nint main() \n{ \n	int fd1; \n	char choice;\n	//fd1 = open( \"/dev/s3c2410_serial1\", O_RDWR|O_NOCTTY|O_NDELAY);\n	fd1 = open( \"/dev/tq2440_serial1\", O_RDWR|O_NOCTTY|O_NDELAY);\n	//fd2 = openGPS(\"/dev/tq2440_serial1\");\n	//以读写形式打开\n  //O_NOCTTY:使用本参数时，若文件为终端，那么该终端\n  //不会成为调用open()的那个进程的控制终端\n	if (-1 == fd1)\n	{ \n		perror(\"Can't Open Serial Port\"); \n	}\n	\n        printf(\"fd1=%d\\n\",fd1);\n	if(serial_init(fd1)==-1)\n	{\n			perror(\"serial error\\n\");\n			return 1;\n	}\n	while(1)\n	{\n		printf(\"enter your selete :              \\n\");\n		//printf(\"1.send      chinese message.\\n\");\n		printf(\"2.receive  english  message.\\n\");\n		printf(\"3.exit.                                  \\n\");\n	\n		choice = getchar();\n		switch(choice)\n		{\n			//case '1': send_zh_message(fd1);\n			//break;\n			case '2': receive_zh_message(fd1);\n			break;\n			case '3':break;\n			default :break;\n		}\n		\n	}\n	close(fd1);\n	//closeGPS(fd2);\n	return 0;\n}\n#endif\n\n\n\n#ifdef arm2\nint main()\n{\n	int fd, rev, i = 1;\n	char rxd_buf[4000];\n	fd = open(\"/mnt/2.serial/real.txt\", O_RDONLY);\n	rev = read(fd, rxd_buf, 4000);\n	if (rev == 0)\n	{\n		i = 0;\n	}\n	GPRMC_analysis(rxd_buf, &gprmc);\n	GPGSV_analysis(rxd_buf, &gpgsv);\n	GPGSA_analysis(rxd_buf, &gpgsa);\n	printGPRMC();\n	printGPGSV();\n	printGPGSA();\n	close(fd);\n	return 0;\n}\n#endif\n\n#ifdef x86\n\nextern int GPRMC_analysis(char *buf, struct gprmc_data *data);\nextern int GPGSV_analysis(char *buf, struct gpgsv_data *data);\nextern int GPGSA_analysis(char *buf, struct gpgsa_data *data);\nextern int GPGGA_analysis(char *buf, struct gpgga_data *data);\n\nint main()\n{\n	int fd, rev, i = 1;\n	char rxd_buf[4000];\n	fd = open(\"/home/ming/Project/kernel_module/tq2440/GPS/serial/real.txt\", O_RDONLY);\n	rev = read(fd, rxd_buf, 4000);\n	if (rev == 0)\n	{\n		i = 0;\n	}\n	GPRMC_analysis(rxd_buf, &gprmc);\n	GPGSV_analysis(rxd_buf, &gpgsv);\n	GPGSA_analysis(rxd_buf, &gpgsa);\n	GPGGA_analysis(rxd_buf, &gpgga);\n	printCommand();\n	printData();\n	close(fd);\n	return 0;\n}\n#endif\n\n\n",
 			"file": "test.c",
+			"file_size": 4885,
+			"file_write_time": 1398840088000000,
 			"settings":
 			{
-				"buffer_size": 2801,
+				"buffer_size": 4462,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "gps.c",
+			"settings":
+			{
+				"buffer_size": 27431,
 				"line_ending": "Unix"
 			}
 		},
@@ -211,28 +242,16 @@
 			"file": "gprs.h",
 			"settings":
 			{
-				"buffer_size": 98,
+				"buffer_size": 208,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "#include <termios.h>\n#include <stdio.h>\n#include <stdlib.h>\n#include <unistd.h>\n#include <fcntl.h>\n#include <string.h>\n#include <sys/types.h>\n#include <sys/stat.h>\n\n//#include \"serial.h\"\n#include \"gps.h\"\n\n/*unicode 0106¦000100”750100·370106¦010106¥990106¥950106¥900106§820„30†9010¡ë00106¥95010¡ë30„30†8¡§0„90106¦080106¥96*/\nstatic const char *num_unicode[10]={\n    \"0030\",/*0*/\n    \"0031\",/*1*/\n    \"0032\",/*2*/\n    \"0033\",/*3*/\n    \"0034\",/*4*/\n    \"0035\",/*5*/\n    \"0036\",/*6*/\n    \"0037\",/*7*/\n    \"0038\",/*8*/\n    \"0039\",/*9*/\n};\n\n//0106¥95010¡­0int0100·340100·310106¦080106§850106¥96010¡ë60100·370106¦01unicode0106¦000100”750„30†8¡§0„90106¦080106¥96010¡­50106¥74010¡­70100”73010¡­80106¥95ch0106¦080106§850„30†9¡§0„7\nvoid int2unico(int num, char ch[])\n{\n	int n,n1,n2,n3,n4;\n	if(num<100)\n	{\n		n1=num/10;\n		n2=num%10;\n		if (n1 > 0)\n		{\n			strcat(ch,num_unicode[n1]);\n			strcat(ch,num_unicode[n2]);\n		}\n		else if (n1 == 0)\n		{\n			strcat(ch,num_unicode[n2]);\n		}\n		printf(\"ch1=%s\\n\",ch);\n		//*ch[1]=*num_unicode[n2];\n	}\n	else if(2000<num<10000)\n	{\n		n1=num/1000;\n		n  =num%1000;\n		n2=n/100;\n		n  =n%100;\n		n3=n/10;\n		n4=n%10;\n		if(n1>=1)\n		 strcat(ch,num_unicode[n1]);\n		strcat(ch,num_unicode[n2]);\n		strcat(ch,num_unicode[n3]);\n		strcat(ch,num_unicode[n4]);\n		printf(\"ch2=%s\\n\",ch);\n		//*ch[1]=*num_unicode[n2];\n	}\n	\n}\n\n//0106¥95010¡­0double0100·340100·310106¦080106§850106¥96010¡ë60100·370106¦01unicode0106¦000100”750„30†8¡§0„90106¦080106¥96010¡­50106¥74010¡­70100”73010¡­80106¥95ch0106¦080106§850„30†9¡§0„7\nvoid doub2unico(double db,char ch[])\n{\n	int i1,i2;\n	//char *dian=\"002E\";//0100·340106¥730106¦080106§85010¡­80100”70\n	double db1;\n	i1=db;\n	db1=db-i1;\n	int2unico(i1,ch);\n\n	if (db1 < 0.1)\n	{\n		strcat(ch,\"002E\");\n		strcat(ch,\"0030\");\n	}\n	else if (db1 >= 0.1)\n	{\n		strcat(ch,\"002E\");\n	}\n	i2=db1*1000;\n	int2unico(i2,ch);\n}\n\n//y0106¦02¡§0†2m0100·380106¦00d0106¦060100·39\nvoid y_m_d(int y,int m,int d,char ch[])\n{\n	/*0106¦02¡§0†20100·380106¦000106¦060100·39        5E74 6708 65E5  */\n	//char *douhao=\"002C\";//010¡­90106¥920106¥920106¦03\n	int2unico(y,ch);\n	strcat(ch,\"5E74\");\n	int2unico(m,ch);\n	strcat(ch,\"6708\");\n	int2unico(d,ch);\n	strcat(ch,\"65E5\");\n	//strcat(ch,douhao);\n}\n\n//s0106¦080„30†8f0„3¡è010¡ë0m0106¦010100”75\nvoid s_f_m(int s,int f,int m,char ch[])\n{\n	/*4.0106¦080„30†80„3¡è010¡ë00106¦010100”75        65F6 5206 79D2*/\n	//char *douhao=\"002C\";//010¡­90106¥920106¥920106¦03\n	int2unico(s,ch);\n	strcat(ch,\"65F6\");\n	int2unico(f,ch);\n	strcat(ch,\"5206\");\n	int2unico(m,ch);\n	strcat(ch,\"79D2\");\n	//strcat(ch,douhao);\n}\n\n//(010¡­9010¡­00100·320„30‡0)0106¥96010¡­2d0106¥730100”70f '   m\"\nvoid jingdu(char c,int d,int f,double m,char ch[])\n{\n	/*1.0106¥96010¡­27ECF */\n	//char *s=\"7ECF\";\n	//char *douhao=\"002C\";//010¡­90106¥920106¥920106¦03\n	//char *s1[2]={\"4E1C\",\"897F\"};//010¡­9010¡­00100·320„30‡0\n	if(c=='E')\n		//strcat(ch,s1[0]);//010¡­9010¡­0\n		strcat(ch,\"4E1C\");//010¡­9010¡­0\n	else if(c=='W')\n		//strcat(ch,s1[1]);//0100·320„30‡0\n		strcat(ch,\"897F\");//010¡­9010¡­0\n	else if(c=='W')\n	strcat(ch,\"7ECF\");\n	//strcat(ch,s);\n	int2unico(d,ch);\n	strcat(ch,\"00B0\");\n	int2unico(f,ch);\n	strcat(ch,\"0027\");\n	doub2unico(m,ch);\n	strcat(ch,\"0020\");\n	//strcat(ch,douhao);\n}\n\n//(0106¦020100·330„30†80„30†8)0100·32010¡­6d0106¥730100”70f '   m\"\nvoid weidu(char c,int d,int f,double m,char ch[])\n{\n	/*1.0100·32010¡­67EAC */\n	char *s=\"7EAC\";\n	//char *douhao=\"002C\";//010¡­90106¥920106¥920106¦03\n	char *s1[2]={\"5357\",\"5317\"};//0106¦020100·330„30†80„30†8\n	if(c=='S')\n		strcat(ch,s1[0]);//0106¦020100·33\n	else if(c=='N')\n		strcat(ch,s1[1]);//0„30†80„30†8\n	strcat(ch,s);\n	int2unico(d,ch);\n	strcat(ch,\"00B0\");//0106¥730100”70\n	int2unico(f,ch);\n	strcat(ch,\"0027\");// '\n	doub2unico(m,ch);\n	strcat(ch,\"0020\");//\"\n	//strcat(ch,douhao);\n}\n\n//0106¦09010¡ë2010¡­90106¦06spe    km/h\nvoid sudu(double spe,char ch[])\n{\n	/*0106¦09010¡ë2010¡­90106¦06901F  5EA6 */\n	char *s=\"901F5EA6\";\n	/* km/h     006B006D002F0068*/\n	char *s1=\"006B006D002F0068\";\n	//char *douhao=\"002C\";//010¡­90106¥920106¥920106¦03\n	strcat(ch,s);\n	doub2unico(spe,ch);\n	strcat(ch,s1);\n	//strcat(ch,douhao);\n	\n}\n\n//gps0100·38010¡ë30106¥910„3¨¨0„30†90„30‡0\nvoid gps_is_on(char ch[])\n{\n	/*gps0100·38010¡ë30106¥910„3¨¨0„30†90„30‡000670070007357285DE54F5C*/\n	char *s=\"00670070007357285DE54F5C\";\n	char *douhao=\"002C\";//010¡­90106¥920106¥920106¦03\n	strcat(ch,s);\n	strcat(ch,douhao);\n}\n\n//gps010¡­50106¥930100·38010¡ë30106¥910„3¨¨0„30†90„30‡0\nvoid gps_is_off(char ch[])\n{\n	/*gps010¡­50106¥930100·38010¡ë30106¥910„3¨¨0„30†90„30‡00067007000734E0D57285DE54F5C*/\n	char *s=\"0067007000734E0D57285DE54F5C\";\n	char *douhao=\"002C\";//010¡­90106¥920106¥920106¦03\n	strcat(ch,s);\n	strcat(ch,douhao);\n}\nvoid send_at(int fd)\n{\n	int nread,nwrite;\n	char buff[128]; \n   	 char reply[128];\n	memset(buff,0,sizeof(buff)); \n	strcpy(buff,\"at\\r\"); \n	nwrite = write(fd,buff,strlen(buff)); \n	printf(\"nwrite=%d,%s\\n\",nwrite,buff); \n	memset(reply,0,sizeof(reply)); \n	sleep(1); \n	nread = read(fd,reply,sizeof(nwrite));\n	 printf(\"nread=%d,%s\\n\",nread,reply); \n}\n\n\nvoid send_at_cmgf(int fd,char *c)\n{\n	int nread,nwrite;\n	char buff[128]; \n   	 char reply[128];\n	memset(buff,0,sizeof(buff)); \n	 strcpy(buff,\"AT+CMGF=\");\n                                  \n        strcat(buff,c);  //char *strcat(char *dest, const char *src)\n                                       //0100·370106¦010100·37010¡ë30106¥95010¡­0src0106¦09¡§0…7010¡ë00106¥900100·33¡§¡ã010¡­80106¦020„30†9010¡ë00„3¡è0106§84010¡­7010¡­30106¥970106¥950„30†8010¡­7010¡­80106¥95\n                                       //dest0106¦09¡§0…7010¡ë00106¥900100·33¡§¡ã0„30†9010¡ë00„3¡è0106§84010¡­7010¡­30106¦020106¥780100·32010¡­5\n	 strcat(buff,\"\\r\"); \n	 nwrite = write(fd,buff,strlen(buff));\n	 printf(\"nwrite=%d,%s\\n\",nwrite,buff);\n	 memset(reply,0,sizeof(reply)); \n	 sleep(1);\n	 nread = read(fd,reply,sizeof(reply));\n	 printf(\"nread=%d,%s\\n\",nread,reply);\n}\n\nvoid send_at_cscs_ucs2(int fd)\n{\n	int nread,nwrite; \n	char buff[128];\n	char reply[128];\n	memset(buff,0,sizeof(buff)); \n	strcpy(buff,\"AT+CSCS=\\\"UCS2\\\"\");                         \n	 strcat(buff,\"\\r\"); \n	 nwrite = write(fd,buff,strlen(buff));\n	 printf(\"nwrite=%d,%s\\n\",nwrite,buff);\n	 memset(reply,0,sizeof(reply)); \n	 sleep(1);\n	 nread = read(fd,reply,sizeof(reply));\n	 printf(\"nread=%d,%s\\n\",nread,reply);\n}\n\nvoid send_at_csca(int fd)\n{\n	int nread,nwrite; \n	char buff[128];\n	char reply[128];\n	memset(buff,0,sizeof(buff)); \n	strcpy(buff,\"AT+CSCA=\\\"+8613800200500\\\",145\");                         \n	 strcat(buff,\"\\r\"); \n	 nwrite = write(fd,buff,strlen(buff));\n	 printf(\"nwrite=%d,%s\\n\",nwrite,buff);\n	 memset(reply,0,sizeof(reply)); \n	 sleep(1);\n	 nread = read(fd,reply,sizeof(reply));\n	 printf(\"nread=%d,%s\\n\",nread,reply);\n}\n\nvoid send_at_cmgs(int fd,char *cmgs,char *message)\n{\n	int nread,nwrite; \n	char buff[20000]; \n   	char reply[20000];\n	memset(buff,0,sizeof(buff));\n	 strcpy(buff,\"AT+CMGS=\");\n	strcat(buff,cmgs);\n	 strcat(buff,\"\\r\");\n	 nwrite = write(fd,buff,strlen(buff));\n	 printf(\"nwrite=%d,%s\\n\",nwrite,buff);\n	 memset(reply,0,sizeof(reply)); \n	 sleep(1); \n	 nread = read(fd,reply,sizeof(reply));\n	  printf(\"nread=%d,%s\\n\",nread,reply); \n	  memset(buff,0,sizeof(buff));\n	  strcpy(buff,message);\n	  nwrite = write(fd,buff,strlen(buff));\n	  printf(\"nwrite=%d,%s\\n\",nwrite,buff);\n	  memset(reply,0,sizeof(reply));\n	  sleep(1);\n	  nread = read(fd,reply,sizeof(reply));\n	  printf(\"nread=%d,%s\\n\",nread,reply);\n\n}\n\nint receive_en_message(int fd)\n{ \n   	 int nread,nwrite;\n	 char cmgf[]     = \"1\";\n   	 char buff[128]; \n   	 char reply[128]; \n	 char *addr;\n   	 send_at( fd);//at\n   		\n	 send_at_cmgf(fd,cmgf);//AT+CMGF=1\n        memset(buff,0,sizeof(buff));\n	 strcpy(buff,\"AT+CMGR=1\");//010¡­90106¥990106¦060106¥730106¦09¡§0…70100·370100·340100·340106¦030100·330106¥74\n	                                          \n	 strcat(buff,\"\\r\");   //0100·33¡§¡è010¡­80„30†80100·37010¡ë30„30Š0010¡­70106¥990106¦090106¥93010¡ë1010¡­6010¡­8\n	 nwrite = write(fd,buff,strlen(buff));\n	 printf(\"nwrite=%d,%s\\n\",nwrite,buff);\n	 memset(reply,0,sizeof(reply));\n	 sleep(1);\n	 nread = read(fd,reply,sizeof(reply));\n	if(reply[23]=='U')\n	       addr=&reply[103];\n	else if(reply[23]=='R')\n		addr=&reply[101];\n	\n	 printf(\"nread=%d,%s\\n\",nread,addr);\n	 \n  \n	return 0;\n}\nint send_zh_message(int fd) \n{\n	char cmgf[]     = \"0\";\n	 char cmgs[4]  = {'\\0'}; \n	 char final[20000]={'\\0'};\n	 char tmp[20000]={'\\0'};\n	 int len1,len2; \n	 char ch_c1[3]={'\\0'};\n	 \n	//y_m_d(2014,4,26,tmp);\n	y_m_d(gprmc.year,gprmc.month,gprmc.day,tmp);\n	//s_f_m(21,31,50,tmp);\n	s_f_m(gprmc.hour,gprmc.minute,gprmc.second,tmp);\n	gps_is_on(tmp);\n	//jingdu('E',100,45,25.4587,tmp);\n	jingdu(gprmc.e,gprmc.long_degree,gprmc.long_minute,gprmc.long_second,tmp);\n	//weidu('N',87,47,45.7545,tmp);\n	weidu(gprmc.n,gprmc.lati_degree,gprmc.lati_minute,gprmc.lati_second,tmp);\n	//sudu(45,tmp);\n	sudu(gprmc.kmph,tmp);\n	printf(\"tmp=%s\\n\",tmp);\n	len2=(strlen(tmp))/2;\n	printf(\"strlen(tmp)is %d\\n\",len2);\n	len1 = 15+len2;\n	printf(\"\\n\");\n	\n	ch_c1[0] = len2/16 + '0';\n	ch_c1[1] = len2%16 + '0';\n	ch_c1[2] = 0;\n	//0100·340106¦030100·330106¥74010¡­60„3¨¨010¡­90106¦060100·370106¦010106¥990106¥950100·320106¥930106¦080106§850„30†8¡§0„90106¦080106¥960106¥75010¡­10106¥900106§820106¦080106§85010¡­80106¦02010¡­50106¥910010¡­70100·390106¥910106¥930106¥990106¥950100·320106¥930106¦080106§85\n	 if(ch_c1[1]<1) \n	 {\n		//3135936713F5\n		strcat(final,\"0011000D91683135936713F50008010\");//010¡­50106¥910(10106¥92¡§0…30106¦010100”73010¡­80106¦020)\n	  }\n	 else\n	 	strcat(final,\"0011000D91683135936713F5000801\");//010¡­50106¥93010¡­50106¥910106¥990100”70\n	strcat(final,ch_c1);\n	 printf(\"ch_c1 = %s\\n\", ch_c1);\n	strcat(final,tmp);\n	printf(\"final = %s\\n\", final);\n	 strcat(final,\"\\x1A\");\n	 sprintf(cmgs,\"%d\",len1);//0106¥95010¡­0len0100·34010¡­7010¡­80106¥95cmgs0106¥980100”77\n	 send_at(fd);\n	 send_at_cmgf(fd,cmgf);\n	 send_at_cscs_ucs2(fd);\n	 send_at_csca(fd);\n	 send_at_cmgs(fd,cmgs,final);\n	 printf(\"\\n\");\n	 return 0;\n}\n\nint serial_init(int fd) \n{ \n	   struct termios options; \n          if(tcgetattr(fd,&options)==-1)\n          {\n                return -1;\n	   }\n		cfmakeraw(&options);//0106¥95010¡­0010¡ë00100·39010¡­90106¦090106¦07¡§¡§010¡ë00106¦010100·320106¥790100·38010¡­20106¦080106¥940106¦020106¥750106¦080106¥95\n	   options.c_cflag |= ( CLOCAL | CREAD ); \n	   options.c_cflag &= ~CSIZE; \n	   options.c_cflag &= ~CRTSCTS; \n	   options.c_cflag |=  CS8; \n	   options.c_cflag &= ~CSTOPB; \n	   options.c_iflag |= IGNPAR; \n	   options.c_oflag = 0; \n	   options.c_lflag = 0; \n	   cfsetispeed  (&options, B9600); \n	   cfsetospeed (&options, B9600);\n	   if(tcsetattr(fd,TCSANOW,&options)==-1)\n	   	return -1;\n	   return 0;\n}\n\nint openGPRS(char *dev)\n{\n	int fd;\n	fd = open(dev, O_RDWR|O_NOCTTY|O_NDELAY);\n	if (-1 == fd)\n	{ \n		perror(\"Can't Open Serial Port\"); \n	}\n        //printf(\"fd=%d\\n\",fd1);\n	if(serial_init(fd)==-1)\n	{\n			perror(\"serial error\\n\");\n			return -1;\n	}\n	return fd;\n}\n\nint closeGPRS(int fd)\n{\n	int flag_close;\n	flag_close = close(fd);\n	if (flag_close == -1)\n	{\n		printf(\"Close the file failed!\\n\");\n	}\n	return 0;\n\n}\n\n#if 0\nint main() \n{ \n	int fd1; \n	char choice;\n	fd1 = open( \"/dev/tq2440_serial1\", O_RDWR|O_NOCTTY|O_NDELAY);\n	//fd2 = openGPS(\"/dev/tq2440_serial1\");\n	//0ˆ60ˆ80…90†90ˆ40…70ˆ40ˆ20‡80†50…7¨°0†70„9\n       //O_NOCTTY:0‡80†10ˆ70‡1¡À0†60…50ˆ20‡80‹50‡8¡À0„50…10‡60‹00ˆ20‡20†40‹60ˆ20„90‰00ˆ90…90‡90„50…10‡20‡50‡10…70†00‡10‰00ˆ90…90‡9\n       //0…50†30†3¨¢0…60‡70ˆ20„90…8¡Â0ˆ70‡1open()0…80‡20‡20‡50†00‹20†50‹30…60ˆ00…80‡20†70‰10‰00‡40‰00ˆ90…90‡9\n	if (-1 == fd1)\n	{ \n		perror(\"Can't Open Serial Port\"); \n	}\n	//send_at_cnmi_2_1(fd);\n        printf(\"fd1=%d\\n\",fd1);\n	if(serial_init(fd1)==-1)\n	{\n			perror(\"serial error\\n\");\n			return 1;\n	}\n	while(1)\n	{\n		printf(\"enter your selete :              \\n\");\n		printf(\"1.send      chinese message.\\n\");\n		printf(\"2.receive  english  message.\\n\");\n		printf(\"3.exit.                                  \\n\");\n	\n		choice = getchar();\n		switch(choice)\n		{\n			case '1': send_zh_message(fd1);\n			break;\n			case '2': receive_en_message(fd1);\n			break;\n			case '3':break;\n			default :break;\n		}\n		//while(1) {\n		\n		//readGPS(fd2);\n		//printf(\"=================================================================================\\n\");\n		//printCommand();\n		//printData();\n		//sleep(1);\n\n		//fflush(stdout);//¨¦¡­0‚30Š20‚60·3QT0Š10†50†70Š4¡±¡§0Š70†40“30Š20†2¡±¨¨0…40„60Š30¹00…40Š30†0¡­¨¦6¾4¡è0Š40†4¡°0Š26¥90…50Š20“30†20Š20‚6¡ì0Š70†40“3¨¨0†76¾40Š30„2¡¤0Š3¡ë0‚30Š20‚50…40Š10†30„60Š30…20„50Š20†00†0¨¨0†6¡°0Š26¦00†20Š0¢ã\n	//}\n		\n	}\n	close(fd1);\n	//closeGPS(fd2);\n	return 0;\n}\n#endif\n\n",
 			"file": "gprs.c",
-			"file_size": 18826,
-			"file_write_time": 1398611322000000,
 			"settings":
 			{
-				"buffer_size": 13463,
-				"line_ending": "Windows",
-				"scratch": true
-			}
-		},
-		{
-			"file": "Makefile",
-			"settings":
-			{
-				"buffer_size": 252,
-				"line_ending": "Unix"
+				"buffer_size": 21334,
+				"line_ending": "Windows"
 			}
 		}
 	],
@@ -376,12 +395,23 @@
 	},
 	"file_history":
 	[
+		"/home/ming/Project/kernel_module/tq2440/GPS/serial/Makefile",
 		"/home/ming/Project/kernel_module/tq2440/GPS/serial/serial.c",
-		"/home/ming/Project/kernel_module/tq2440/GPS/serial/gps.h",
+		"/home/ming/Desktop/gprs_send_receive.c",
+		"/home/ming/Project/kernel_module/tq2440/GPS/serial/gprs.txt",
+		"/home/ming/Desktop/gprs2.c",
 		"/home/ming/Project/kernel_module/tq2440/GPS/serial/gps.c",
+		"/home/ming/Video/国嵌/课程2/第五天（多线程）/实验代码/thread_int.c",
+		"/home/ming/Project/C/function_pointer/main.c",
+		"/home/ming/Video/国嵌/课程2/第五天（多线程）/实验代码/thread_create.c.dump",
+		"/usr/include/pthread.h",
+		"/home/ming/Video/国嵌/课程2/第五天（多线程）/实验代码/thread_create.c",
+		"/home/ming/Project/kernel_module/tq2440/GPS/serial/hello.c",
+		"/home/ming/Project/kernel_module/tq2440/GPS/serial/gprs.c",
+		"/home/ming/Project/kernel_module/tq2440/GPS/serial/gprs_send_receive.c",
+		"/home/ming/Project/kernel_module/tq2440/GPS/serial/gps.h",
 		"/home/ming/Project/kernel_module/tq2440/GPS/serial/gprs3.c",
 		"/home/ming/Project/kernel_module/tq2440/GPS/serial/gprs2.c",
-		"/home/ming/Project/kernel_module/tq2440/GPS/serial/gprs.c",
 		"/home/ming/Project/kernel_module/tq2440/GPS/serial/gps.sublime-project",
 		"/home/ming/Project/stm32/src/main.c",
 		"/home/ming/Project/stm32/src/Makefile",
@@ -492,18 +522,7 @@
 		"/home/ming/src/kernel/linux-2.6.30.4/drivers/serial/s3c2440.c",
 		"/home/ming/src/kernel/linux-2.6.30.4/drivers/serial/samsung.c",
 		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/drivers/serial/s3c2440.c",
-		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/drivers/serial/samsung.c",
-		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/include/linux/console.h",
-		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/drivers/scsi/qla2xxx/qla_def.h",
-		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/drivers/serial/crisv10.c",
-		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/arch/arm/include/asm/termbits.h",
-		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/drivers/s390/char/sclp_con.c",
-		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/arch/alpha/include/asm/termbits.h",
-		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/drivers/serial/serial_core.c",
-		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/drivers/atm/horizon.c",
-		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/arch/arm/plat-s3c/include/plat/regs-serial.h",
-		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/drivers/serial/samsung.h",
-		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/drivers/base/platform.c"
+		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/drivers/serial/samsung.c"
 	],
 	"find":
 	{
@@ -539,6 +558,11 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"select",
+			"tmp1",
+			"send_cmgd_1",
+			"num_unicode",
+			"send_cmgd_1",
 			"comma >",
 			"h",
 			"lcd_string",
@@ -661,12 +685,7 @@
 			"INPCK",
 			"B9600",
 			"buf4",
-			"QWS_DISPLAY",
-			"QWS_MOUSE_PROTO",
-			"mouse0",
-			"mouse",
-			"/dev/mouse0",
-			"dev/event0"
+			"QWS_DISPLAY"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -718,15 +737,15 @@
 					"file": "test.c",
 					"settings":
 					{
-						"buffer_size": 2801,
+						"buffer_size": 4462,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1399,
-								1399
+								1968,
+								1968
 							]
 						],
 						"settings":
@@ -884,25 +903,97 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 980.0,
+						"translation.y": 1961.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "gprs.h",
+					"file": "gps.c",
 					"settings":
 					{
-						"buffer_size": 98,
+						"buffer_size": 27431,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								28,
-								28
+								16007,
+								16007
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/C++/C.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 17598.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "gprs.h",
+					"settings":
+					{
+						"buffer_size": 208,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								97,
+								97
 							]
 						],
 						"settings":
@@ -1065,19 +1156,19 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 3,
 					"file": "gprs.c",
 					"settings":
 					{
-						"buffer_size": 13463,
+						"buffer_size": 21334,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1070,
-								1070
+								11291,
+								11291
 							]
 						],
 						"settings":
@@ -1229,190 +1320,13 @@
 								"Python Django": "Python"
 							},
 							"codeintel_tooltips": "popup",
-							"in_converting": true,
-							"origin_encoding": "GB18030",
-							"revert_to_scratch": true,
+							"origin_encoding": "UTF-8",
 							"sublime_auto_complete": true,
 							"syntax": "Packages/C++/C.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 569.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "Makefile",
-					"settings":
-					{
-						"buffer_size": 252,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								77,
-								77
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close"
-							],
-							"codeintel": true,
-							"codeintel_config":
-							{
-								"JavaScript":
-								{
-									"codeintel_max_recursive_dir_depth": 2.0,
-									"codeintel_scan_files_in_project": false,
-									"javascriptExtraPaths":
-									[
-									]
-								},
-								"PHP":
-								{
-									"codeintel_max_recursive_dir_depth": 5.0,
-									"codeintel_scan_files_in_project": false,
-									"phpExtraPaths":
-									[
-									]
-								},
-								"Python":
-								{
-									"env":
-									{
-									}
-								}
-							},
-							"codeintel_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_live": true,
-							"codeintel_live_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_max_recursive_dir_depth": 10.0,
-							"codeintel_scan_exclude_dir":
-							{
-								"JavaScript":
-								[
-									"/build/",
-									"/min/"
-								]
-							},
-							"codeintel_scan_files_in_project": true,
-							"codeintel_selected_catalogs":
-							[
-								"PyWin32",
-								"jQuery",
-								"Rails"
-							],
-							"codeintel_snippets": true,
-							"codeintel_syntax_map":
-							{
-								"Python Django": "Python"
-							},
-							"codeintel_tooltips": "popup",
-							"origin_encoding": "ASCII",
-							"sublime_auto_complete": true,
-							"syntax": "Packages/Makefile/Makefile.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 3076.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1453,11 +1367,11 @@
 	"menu_visible": true,
 	"output.clang":
 	{
-		"height": 160.0
+		"height": 153.0
 	},
 	"output.exec":
 	{
-		"height": 202.0
+		"height": 86.0
 	},
 	"replace":
 	{
@@ -1484,6 +1398,6 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 179.0,
+	"side_bar_width": 169.0,
 	"status_bar_visible": true
 }
