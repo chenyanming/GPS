@@ -55,7 +55,7 @@ void int2unico(int num, char ch[])
 		n3=n/10;
 		n4=n%10;
 		if(n1>=1)
-		 strcat(ch,num_unicode[n1]);
+			strcat(ch,num_unicode[n1]);
 		strcat(ch,num_unicode[n2]);
 		strcat(ch,num_unicode[n3]);
 		strcat(ch,num_unicode[n4]);
@@ -180,7 +180,7 @@ void sudu(double spe,char ch[])
 void haiba(double h, char ch[])
 {
 	char *s="6d7762d4";//海拔
-	char *s1="006D3002";//m。
+	char *s1="7c733002";//米。
 	strcat(ch,s);
 	doub2unico(h,ch);
 	strcat(ch,s1);
@@ -224,20 +224,18 @@ void send_at_cmgf(int fd,char *c)
 {
 	int nread,nwrite;
 	char buff[128]; 
-   	 char reply[128];
+	char reply[128];
 	memset(buff,0,sizeof(buff)); 
-	 strcpy(buff,"AT+CMGF=");
-                                  
-        strcat(buff,c);  //char *strcat(char *dest, const char *src)
-                                       //0100110010¡¤3701001100160„7010100110010¡¤3701001100„30Š5301001100160„69501001100„30…20src01001100160„7090„3¡ì010¡­701001100„30Š5001001100160„6900100110010¡¤330„3¡ì0„30Š001001100„30…2801001100160„7020106¥730106¥9901001100„30Š500106¥730„3¨¨0100110016¡ì8401001100„30…2701001100„30…2301001100160„69701001100160„6950106¥730106¥9801001100„30…2701001100„30…2801001100160„695
-                                       //dest01001100160„7090„3¡ì010¡­701001100„30Š5001001100160„6900100110010¡¤330„3¡ì0„30Š00106¥730106¥9901001100„30Š500106¥730„3¨¨0100110016¡ì8401001100„30…2701001100„30…2301001100160„70201001100160„6780100110010¡¤3201001100„30…25
-	 strcat(buff,"\r"); 
-	 nwrite = write(fd,buff,strlen(buff));
-	 // printf("nwrite=%d,%s\n",nwrite,buff);
-	 memset(reply,0,sizeof(reply)); 
-	 sleep(1);
-	 nread = read(fd,reply,sizeof(reply));
-	 // printf("nread=%d,%s\n",nread,reply);
+	strcpy(buff,"AT+CMGF=");
+	                      
+	strcat(buff,c);  //char *strcat(char *dest, const char *src)
+	strcat(buff,"\r"); 
+	nwrite = write(fd,buff,strlen(buff));
+	// printf("nwrite=%d,%s\n",nwrite,buff);
+	memset(reply,0,sizeof(reply)); 
+	sleep(1);
+	nread = read(fd,reply,sizeof(reply));
+	// printf("nread=%d,%s\n",nread,reply);
 }
 
 void send_at_cscs_ucs2(int fd)
@@ -247,13 +245,13 @@ void send_at_cscs_ucs2(int fd)
 	char reply[128];
 	memset(buff,0,sizeof(buff)); 
 	strcpy(buff,"AT+CSCS=\"UCS2\"");                         
-	 strcat(buff,"\r"); 
-	 nwrite = write(fd,buff,strlen(buff));
-	 // printf("nwrite=%d,%s\n",nwrite,buff);
-	 memset(reply,0,sizeof(reply)); 
-	 sleep(1);
-	 nread = read(fd,reply,sizeof(reply));
-	 // printf("nread=%d,%s\n",nread,reply);
+	strcat(buff,"\r"); 
+	nwrite = write(fd,buff,strlen(buff));
+	// printf("nwrite=%d,%s\n",nwrite,buff);
+	memset(reply,0,sizeof(reply)); 
+	sleep(1);
+	nread = read(fd,reply,sizeof(reply));
+	// printf("nread=%d,%s\n",nread,reply);
 }
 
 void send_at_csca(int fd)
@@ -263,13 +261,13 @@ void send_at_csca(int fd)
 	char reply[128];
 	memset(buff,0,sizeof(buff)); 
 	strcpy(buff,"AT+CSCA=\"+8613800200500\",145");                         
-	 strcat(buff,"\r"); 
-	 nwrite = write(fd,buff,strlen(buff));
-	 // printf("nwrite=%d,%s\n",nwrite,buff);
-	 memset(reply,0,sizeof(reply)); 
-	 sleep(1);
-	 nread = read(fd,reply,sizeof(reply));
-	 // printf("nread=%d,%s\n",nread,reply);
+	strcat(buff,"\r"); 
+	nwrite = write(fd,buff,strlen(buff));
+	// printf("nwrite=%d,%s\n",nwrite,buff);
+	memset(reply,0,sizeof(reply)); 
+	sleep(1);
+	nread = read(fd,reply,sizeof(reply));
+	// printf("nread=%d,%s\n",nread,reply);
 }
 
 void send_at_cmgs(int fd,char *cmgs,char *message)
@@ -302,14 +300,14 @@ int receive_zh_message(int fd)
 { 
 	// int file;
 	char *msg;
-   int nread,nwrite;
-	 char cmgf[]     = "1";
-   char buff[] = "AT+CMGR=1\r"; 
-   char reply[2000];
-   char tmp[2000],tmp1[2000];
-   // file = open("/mnt/GPS/serial/gprs.txt", O_RDONLY);
-   memset(tmp, 0, sizeof(tmp));
-   ///char to[2000]; 
+	int nread,nwrite;
+	char cmgf[]     = "1";
+	char buff[] = "AT+CMGR=1\r"; 
+	char reply[2000];
+	char tmp[2000],tmp1[2000];
+	// file = open("/mnt/GPS/serial/gprs.txt", O_RDONLY);
+	memset(tmp, 0, sizeof(tmp));
+
 	send_at(fd);//at
    		
 	send_at_cmgf(fd,cmgf);//AT+CMGF=1
@@ -381,12 +379,12 @@ void delete_first_message(int fd)
 
 int send_position(int fd) 
 {
-	char cmgf[]     = "0";
-	 char cmgs[4]  = {'\0'}; 
-	 char final[20000]={'\0'};
-	 char tmp[20000]={'\0'};
-	 int len1,len2; 
-	 char ch_c1[3]={'\0'};
+	char cmgf[] = "0";
+	char cmgs[4] = {'\0'}; 
+	char final[20000]={'\0'};
+	char tmp[20000]={'\0'};
+	int len1,len2; 
+	char ch_c1[3]={'\0'};
 	 
 	//y_m_d(2014,4,26,tmp);
 	y_m_d(gprmc.year,gprmc.month,gprmc.day,tmp);
@@ -412,36 +410,36 @@ int send_position(int fd)
 	ch_c1[1] = len2%16 + '0';
 	ch_c1[2] = 0;
 	//0100110010¡¤3401001100160„7030100110010¡¤3301001100160„67401001100„30…260106¥73¡§¡§01001100„30…2901001100160„7060100110010¡¤3701001100160„70101001100160„69901001100160„6950100110010¡¤3201001100160„69301001100160„7080100110016¡ì850106¥730106¥980„3¡ì0106¥7901001100160„70801001100160„69601001100160„67501001100„30…2101001100160„6900100110016¡ì8201001100160„7080100110016¡ì8501001100„30…2801001100160„70201001100„30…2501001100160„691001001100„30…270100110010¡¤3901001100160„69101001100160„69301001100160„69901001100160„6950100110010¡¤3201001100160„69301001100160„7080100110016¡ì85
-	 if(ch_c1[1]<1) 
-	 {
+	if(ch_c1[1]<1) 
+	{
 		//3135936713F5
 		strcat(final,"0011000D91683135936713F50008010");//01001100„30…2501001100160„6910(101001100160„6920„3¡ì010¡­301001100160„7010100110010¡±7301001100„30…2801001100160„7020)
-	  }
-	 else
-	 	strcat(final,"0011000D91683135936713F5000801");//01001100„30…2501001100160„69301001100„30…2501001100160„69101001100160„6990100110010¡±70
+	}
+	else
+		strcat(final,"0011000D91683135936713F5000801");//01001100„30…2501001100160„69301001100„30…2501001100160„69101001100160„6990100110010¡±70
 	strcat(final,ch_c1);
-	 // printf("ch_c1 = %s\n", ch_c1);
+	// printf("ch_c1 = %s\n", ch_c1);
 	strcat(final,tmp);
 	// printf("final = %s\n", final);
-	 strcat(final,"\x1A");
-	 sprintf(cmgs,"%d",len1);//01001100160„69501001100„30…20len0100110010¡¤3401001100„30…2701001100„30…2801001100160„695cmgs01001100160„6980100110010¡±77
-	 send_at(fd);
-	 send_at_cmgf(fd,cmgf);
-	 send_at_cscs_ucs2(fd);
-	 send_at_csca(fd);
-	 send_at_cmgs(fd,cmgs,final);
-	 // printf("\n");
-	 return 0;
+	strcat(final,"\x1A");
+	sprintf(cmgs,"%d",len1);//01001100160„69501001100„30…20len0100110010¡¤3401001100„30…2701001100„30…2801001100160„695cmgs01001100160„6980100110010¡±77
+	send_at(fd);
+	send_at_cmgf(fd,cmgf);
+	send_at_cscs_ucs2(fd);
+	send_at_csca(fd);
+	send_at_cmgs(fd,cmgs,final);
+	// printf("\n");
+	return 0;
 }
 int send_error(int fd) 
 {
 	char cmgf[]     = "0";
-	 char cmgs[4]  = {'\0'}; 
-	 char final[1000]={'\0'};
-	 char tmp[100]={'\0'};
-	 int len1,len2; 
-	 char ch_c1[3]={'\0'};
-	 
+	char cmgs[4]  = {'\0'}; 
+	char final[1000]={'\0'};
+	char tmp[100]={'\0'};
+	int len1,len2; 
+	char ch_c1[3]={'\0'};
+
 	strcat(tmp,"5f53524d672a5b9a4f4d3002");
 	//当前未定位。
 
@@ -450,53 +448,53 @@ int send_error(int fd)
 	// printf("strlen(tmp)is %d\n",len2);
 	len1 = 15+len2;
 	// printf("\n");
-	
+
 	ch_c1[0] = len2/16 + '0';
 	ch_c1[1] = len2%16 + '0';
 	ch_c1[2] = 0;
 	//0100110010¡¤3401001100160„7030100110010¡¤3301001100160„67401001100„30…260106¥73¡§¡§01001100„30…2901001100160„7060100110010¡¤3701001100160„70101001100160„69901001100160„6950100110010¡¤3201001100160„69301001100160„7080100110016¡ì850106¥730106¥980„3¡ì0106¥7901001100160„70801001100160„69601001100160„67501001100„30…2101001100160„6900100110016¡ì8201001100160„7080100110016¡ì8501001100„30…2801001100160„70201001100„30…2501001100160„691001001100„30…270100110010¡¤3901001100160„69101001100160„69301001100160„69901001100160„6950100110010¡¤3201001100160„69301001100160„7080100110016¡ì85
-	 if(ch_c1[1]<1) 
-	 {
+	if(ch_c1[1]<1) 
+	{
 		//3135936713F5
 		strcat(final,"0011000D91683135936713F50008010");//01001100„30…2501001100160„6910(101001100160„6920„3¡ì010¡­301001100160„7010100110010¡±7301001100„30…2801001100160„7020)
-	  }
-	 else
-	 	strcat(final,"0011000D91683135936713F5000801");//01001100„30…2501001100160„69301001100„30…2501001100160„69101001100160„6990100110010¡±70
+	}
+	else
+		strcat(final,"0011000D91683135936713F5000801");//01001100„30…2501001100160„69301001100„30…2501001100160„69101001100160„6990100110010¡±70
 	strcat(final,ch_c1);
 	 // printf("ch_c1 = %s\n", ch_c1);
 	strcat(final,tmp);
 	// printf("final = %s\n", final);
-	 strcat(final,"\x1A");
-	 sprintf(cmgs,"%d",len1);//01001100160„69501001100„30…20len0100110010¡¤3401001100„30…2701001100„30…2801001100160„695cmgs01001100160„6980100110010¡±77
-	 send_at(fd);
-	 send_at_cmgf(fd,cmgf);
-	 send_at_cscs_ucs2(fd);
-	 send_at_csca(fd);
-	 send_at_cmgs(fd,cmgs,final);
-	 // printf("\n");
-	 return 0;
+	strcat(final,"\x1A");
+	sprintf(cmgs,"%d",len1);//01001100160„69501001100„30…20len0100110010¡¤3401001100„30…2701001100„30…2801001100160„695cmgs01001100160„6980100110010¡±77
+	send_at(fd);
+	send_at_cmgf(fd,cmgf);
+	send_at_cscs_ucs2(fd);
+	send_at_csca(fd);
+	send_at_cmgs(fd,cmgs,final);
+	// printf("\n");
+	return 0;
 }
 int serial_init(int fd) 
 { 
-	   struct termios options; 
-          if(tcgetattr(fd,&options)==-1)
-          {
-                return -1;
-	   }
-		cfmakeraw(&options);//01001100160„69501001100„30…2001001100„30Š500100110010¡¤3901001100„30…2901001100160„70901001100160„7070„3¡ì0„3¡ì01001100„30Š5001001100160„7010100110010¡¤3201001100160„6790100110010¡¤3801001100„30…2201001100160„70801001100160„69401001100160„70201001100160„67501001100160„70801001100160„695
-	   options.c_cflag |= ( CLOCAL | CREAD ); 
-	   options.c_cflag &= ~CSIZE; 
-	   options.c_cflag &= ~CRTSCTS; 
-	   options.c_cflag |=  CS8; 
-	   options.c_cflag &= ~CSTOPB; 
-	   options.c_iflag |= IGNPAR; 
-	   options.c_oflag = 0; 
-	   options.c_lflag = 0; 
-	   cfsetispeed  (&options, B9600); 
-	   cfsetospeed (&options, B9600);
-	   if(tcsetattr(fd,TCSANOW,&options)==-1)
-	   	return -1;
-	   return 0;
+	struct termios options; 
+    if(tcgetattr(fd,&options)==-1)
+    {
+    	return -1;
+	}
+	cfmakeraw(&options);//01001100160„69501001100„30…2001001100„30Š500100110010¡¤3901001100„30…2901001100160„70901001100160„7070„3¡ì0„3¡ì01001100„30Š5001001100160„7010100110010¡¤3201001100160„6790100110010¡¤3801001100„30…2201001100160„70801001100160„69401001100160„70201001100160„67501001100160„70801001100160„695
+	options.c_cflag |= ( CLOCAL | CREAD ); 
+	options.c_cflag &= ~CSIZE; 
+	options.c_cflag &= ~CRTSCTS; 
+	options.c_cflag |=  CS8; 
+	options.c_cflag &= ~CSTOPB; 
+	options.c_iflag |= IGNPAR; 
+	options.c_oflag = 0; 
+	options.c_lflag = 0; 
+	cfsetispeed  (&options, B9600); 
+	cfsetospeed (&options, B9600);
+	if(tcsetattr(fd,TCSANOW,&options)==-1)
+		return -1;
+	return 0;
 }
 
 int openGPRS(char *dev)
@@ -507,11 +505,10 @@ int openGPRS(char *dev)
 	{ 
 		perror("Can't Open Serial Port"); 
 	}
-        //printf("fd=%d\n",fd1);
 	if(serial_init(fd)==-1)
 	{
-			perror("serial error\n");
-			return -1;
+		perror("serial error\n");
+		return -1;
 	}
 	return fd;
 }
@@ -525,62 +522,5 @@ int closeGPRS(int fd)
 		printf("Close the file failed!\n");
 	}
 	return 0;
-
 }
-
-#if 0
-int main() 
-{ 
-	int fd1; 
-	char choice;
-	fd1 = open( "/dev/tq2440_serial1", O_RDWR|O_NOCTTY|O_NDELAY);
-	//fd2 = openGPS("/dev/tq2440_serial1");
-	//0100·360100·38010¡­90106¥990100·34010¡­70100·340100·320106¦080106¥95010¡­7¡§¡ã0106¥970106¥79
-       //O_NOCTTY:0106¦080106¥910100·370106¦010„30†80106¥96010¡­50100·320106¦080106§850106¦080„30†80106¥75010¡­10106¦060106§800100·320106¦020106¥940106§860100·320106¥79010¡ë00100·39010¡­90106¦090106¥75010¡­10106¦020106¦050106¦01010¡­70106¥900106¦01010¡ë00100·39010¡­90106¦09
-       //010¡­50106¥930106¥93¡§0„4010¡­60106¦070100·320106¥79010¡­80„30‡00100·370106¦01open()010¡­80106¦020106¦020106¦050106¥900106§820106¥950106§83010¡­60100·30010¡­80106¦020106¥97010¡ë1010¡ë00106¦04010¡ë00100·39010¡­90106¦09
-	if (-1 == fd1)
-	{ 
-		perror("Can't Open Serial Port"); 
-	}
-	//send_at_cnmi_2_1(fd);
-        printf("fd1=%d\n",fd1);
-	if(serial_init(fd1)==-1)
-	{
-			perror("serial error\n");
-			return 1;
-	}
-	while(1)
-	{
-		printf("enter your selete :              \n");
-		printf("1.send      chinese message.\n");
-		printf("2.receive  english  message.\n");
-		printf("3.exit.                                  \n");
-	
-		choice = getchar();
-		switch(choice)
-		{
-			case '1': send_zh_message(fd1);
-			break;
-			case '2': receive_en_message(fd1);
-			break;
-			case '3':break;
-			default :break;
-		}
-		//while(1) {
-		
-		//readGPS(fd2);
-		//printf("=================================================================================\n");
-		//printCommand();
-		//printData();
-		//sleep(1);
-
-		//fflush(stdout);//¡§0„70„30…20106¥530100”720106¥56010¡¤3QT0100”710106¥950106¥970100”740„3¡À0„3¡ì0100”770106¥94010¡°30100”720106¥920„3¡À¡§¡§010¡­40106¥760100”730100†10010¡­40100”730106¥900„30…2¡§0„70160†640„3¨¨0100”740106¥940„3¡ã0100”720160„69010¡­50100”72010¡°30106¥920100”720106¥560„3¨¬0100”770106¥94010¡°3¡§¡§0106¥970160†640100”730106¥720„3¡è0100”730„30Š50106¥530100”720106¥55010¡­40100”710106¥930106¥760100”73010¡­20106¥750100”720106¥900106¥90¡§¡§0106¥960„3¡ã0100”720160„700106¥920100”700„40Š0
-	//}
-		
-	}
-	close(fd1);
-	//closeGPS(fd2);
-	return 0;
-}
-#endif
 

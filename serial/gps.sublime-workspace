@@ -220,17 +220,6 @@
 	"buffers":
 	[
 		{
-			"contents": "#define arm1\n//#define gprs\n//#define x86\n#include <sys/time.h>\n\n#include <sys/types.h>\n#include <sys/stat.h>\n#include <fcntl.h>\n\n#include <unistd.h>\n\n#include <stdio.h>\n\n#include <string.h>\n\n#include <termios.h>\n\n#include <pthread.h>\n\n#include \"serial.h\"\n#include \"gps.h\"\n#include \"gprs.h\"\n\nvoid *MyGPS(int *fd);\nvoid *MyGPRS(int *fd);\n\n#ifdef arm1\nint main(int argc, char const *argv[])\n{\n	int fd_gprs, fd_gps;\n	pthread_t gps_thread, gprs_thread;\n	int gps_ret, gprs_ret;\n	int *p_fd_gps = &fd_gps;\n	int *p_fd_gprs = &fd_gprs;\n\n	fd_gps = openGPS(\"/dev/tq2440_serial2\");\n	fd_gprs = openGPRS(\"/dev/tq2440_serial1\");\n	gps_ret = pthread_create(&gps_thread, NULL, (void *)MyGPS, (int *)p_fd_gps);\n	if (gps_ret)\n	{\n		printf(\"create MyGPS error!\\n\");\n	}\n	gprs_ret = pthread_create(&gprs_thread, NULL, (void *)MyGPRS, (int *)p_fd_gprs);\n	if (gprs_ret)\n	{\n		printf(\"create MyGPRS error!\\n\");\n	}\n	//cfg(fd, cfg_rate_200);//不知道是什么原因定位太慢了，加快看看怎样\n	//cfg(fd, cfg_msg_GPGLL_on);\n	//cfg(fd, cfg_msg_GPGGA_on);\n	//cfg(fd, cfg_msg_GPVTG_on);\n	//cfg(fd, cfg_cfg_save);//保存配置\n\n/*\n**	这部分代码用于保存配置到EEPROME的，要修改配置就根据需要配置，然后运行\n**	已经设置了波特率为38400,原本为9600\n**	关闭了GPGLL, GPGGA, GPVTG\n**	其他还是采用默认配置\n\n	cfg(fd, cfg_rate_1000);//1Hz为默认配置\n	cfg(fd, cfg_msg_GPGLL_off);//关闭GPGLL\n	cfg(fd, cfg_msg_GPGGA_off);//关闭GPGGA\n	cfg(fd, cfg_msg_GPVTG_off);//关闭GPVTG\n	cfg(fd, cfg_rst_prt_38400);//修改GPS模块的波特率为38400\n	init_serial(fd, B38400);//修改串口的波特率为38400\n	cfg(fd, cfg_cfg_save);//保存配置\n*/\n	/*\n	fd1 = open(\"/mnt/GPS/serial/data.txt\", O_RDONLY);\n	rev = read(fd1, rxd_buf, 4000);\n	GPRMC_analysis(rxd_buf, &gprmc);\n	GPGSV_analysis(rxd_buf, &gpgsv);\n	GPGSA_analysis(rxd_buf, &gpgsa);\n	*/\n\n\n	while(1) \n	{\n	}\n\n	closeGPS(fd_gps);\n	closeGPRS(fd_gprs);\n	return 0;\n}\n\n\n\nvoid *MyGPS(int *fd)\n{\n	//int *gps;\n	//gps = (int *)fd;\n	int i = 0;\n	while(1)\n	{\n		readGPS(*fd);\n		printf(\"====================================================\\n\");\n		printCommand();\n		printData();\n		sleep(1);\n		if (gprmc.status == 'A')\n		{\n			if (i == 0)\n				{\n				i++;\n				send_position(*fd);\n			}\n		}\n		fflush(stdout);//配合QT使用，应该是清除缓冲区吧，这样才可以正常输出。\n	}\n}\n\nvoid *MyGPRS(int *fd)\n{\n	int ret;\n	while(1)\n	{\n		ret = receive_zh_message(*fd);\n		switch (ret)\n		{\n			case 1:\n				printf(\"获取当前位置中......\\n\");\n				if (gprmc.status == 'A')\n				{\n					send_position(*fd);\n				}\n				else\n				{\n					send_error(*fd);\n				}\n				break;\n			case 2:\n				break;\n			default:\n				break;\n		}\n		sleep(1);\n		fflush(stdout);//配合QT使用，应该是清除缓冲区吧，这样才可以正常输出。\n	}\n}\n\n#endif\n\n\n#ifdef gprs\nextern int serial_init(int fd);\nextern int receive_zh_message(int fd);\nint main() \n{ \n	int fd1; \n	char choice;\n	//fd1 = open( \"/dev/s3c2410_serial1\", O_RDWR|O_NOCTTY|O_NDELAY);\n	fd1 = open( \"/dev/tq2440_serial1\", O_RDWR|O_NOCTTY|O_NDELAY);\n	//fd2 = openGPS(\"/dev/tq2440_serial1\");\n	//以读写形式打开\n  //O_NOCTTY:使用本参数时，若文件为终端，那么该终端\n  //不会成为调用open()的那个进程的控制终端\n	if (-1 == fd1)\n	{ \n		perror(\"Can't Open Serial Port\"); \n	}\n	\n        printf(\"fd1=%d\\n\",fd1);\n	if(serial_init(fd1)==-1)\n	{\n			perror(\"serial error\\n\");\n			return 1;\n	}\n	while(1)\n	{\n		printf(\"enter your selete :              \\n\");\n		//printf(\"1.send      chinese message.\\n\");\n		printf(\"2.receive  english  message.\\n\");\n		printf(\"3.exit.                                  \\n\");\n	\n		choice = getchar();\n		switch(choice)\n		{\n			//case '1': send_zh_message(fd1);\n			//break;\n			case '2': receive_zh_message(fd1);\n			break;\n			case '3':break;\n			default :break;\n		}\n		\n	}\n	close(fd1);\n	//closeGPS(fd2);\n	return 0;\n}\n#endif\n\n\n\n#ifdef arm2\nint main()\n{\n	int fd, rev, i = 1;\n	char rxd_buf[4000];\n	fd = open(\"/mnt/2.serial/real.txt\", O_RDONLY);\n	rev = read(fd, rxd_buf, 4000);\n	if (rev == 0)\n	{\n		i = 0;\n	}\n	GPRMC_analysis(rxd_buf, &gprmc);\n	GPGSV_analysis(rxd_buf, &gpgsv);\n	GPGSA_analysis(rxd_buf, &gpgsa);\n	printGPRMC();\n	printGPGSV();\n	printGPGSA();\n	close(fd);\n	return 0;\n}\n#endif\n\n#ifdef x86\n\nextern int GPRMC_analysis(char *buf, struct gprmc_data *data);\nextern int GPGSV_analysis(char *buf, struct gpgsv_data *data);\nextern int GPGSA_analysis(char *buf, struct gpgsa_data *data);\nextern int GPGGA_analysis(char *buf, struct gpgga_data *data);\n\nint main()\n{\n	int fd, rev, i = 1;\n	char rxd_buf[4000];\n	fd = open(\"/home/ming/Project/kernel_module/tq2440/GPS/serial/real.txt\", O_RDONLY);\n	rev = read(fd, rxd_buf, 4000);\n	if (rev == 0)\n	{\n		i = 0;\n	}\n	GPRMC_analysis(rxd_buf, &gprmc);\n	GPGSV_analysis(rxd_buf, &gpgsv);\n	GPGSA_analysis(rxd_buf, &gpgsa);\n	GPGGA_analysis(rxd_buf, &gpgga);\n	printCommand();\n	printData();\n	close(fd);\n	return 0;\n}\n#endif\n\n\n",
-			"file": "test.c",
-			"file_size": 4885,
-			"file_write_time": 1398840088000000,
-			"settings":
-			{
-				"buffer_size": 4462,
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "gps.c",
 			"settings":
 			{
@@ -242,7 +231,7 @@
 			"file": "gprs.h",
 			"settings":
 			{
-				"buffer_size": 208,
+				"buffer_size": 276,
 				"line_ending": "Unix"
 			}
 		},
@@ -250,8 +239,48 @@
 			"file": "gprs.c",
 			"settings":
 			{
-				"buffer_size": 21334,
+				"buffer_size": 17700,
 				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "gps.h",
+			"settings":
+			{
+				"buffer_size": 2750,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Makefile",
+			"settings":
+			{
+				"buffer_size": 268,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "serial.c",
+			"settings":
+			{
+				"buffer_size": 9075,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "serial.h",
+			"settings":
+			{
+				"buffer_size": 1591,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "test.c",
+			"settings":
+			{
+				"buffer_size": 4357,
+				"line_ending": "Unix"
 			}
 		}
 	],
@@ -395,6 +424,11 @@
 	},
 	"file_history":
 	[
+		"/home/ming/Project/kernel_module/tq2440/GPS/serial/test.c",
+		"/home/ming/XP/Program/tmp/gprs2.c",
+		"/home/ming/XP/Program/tmp/1.c.dump",
+		"/home/ming/XP/Program/tmp/1.c",
+		"/home/ming/Project/kernel_module/tq2440/GPS/serial/gprs2.c",
 		"/home/ming/Project/kernel_module/tq2440/GPS/serial/Makefile",
 		"/home/ming/Project/kernel_module/tq2440/GPS/serial/serial.c",
 		"/home/ming/Desktop/gprs_send_receive.c",
@@ -411,7 +445,6 @@
 		"/home/ming/Project/kernel_module/tq2440/GPS/serial/gprs_send_receive.c",
 		"/home/ming/Project/kernel_module/tq2440/GPS/serial/gps.h",
 		"/home/ming/Project/kernel_module/tq2440/GPS/serial/gprs3.c",
-		"/home/ming/Project/kernel_module/tq2440/GPS/serial/gprs2.c",
 		"/home/ming/Project/kernel_module/tq2440/GPS/serial/gps.sublime-project",
 		"/home/ming/Project/stm32/src/main.c",
 		"/home/ming/Project/stm32/src/Makefile",
@@ -434,7 +467,6 @@
 		"/home/ming/XP/Program/STM8/digital_source/main.c.dump",
 		"/home/ming/XP/Program/STM8/digital_source/lcd1602.c",
 		"/home/ming/XP/Program/STM8/digital_source/main.c",
-		"/home/ming/Project/kernel_module/tq2440/GPS/serial/test.c",
 		"/home/ming/XP/Program/STM8/Voltmeter/digtal_tube.c.dump",
 		"/home/ming/XP/Program/STM8/Voltmeter/adc.c.dump",
 		"/home/ming/XP/Program/STM8/Voltmeter/main.c.dump",
@@ -519,10 +551,7 @@
 		"/home/ming/src/qt/qt4.8.5/qt-everywhere-opensource-src-4.8.5/src/gui/embedded/qmouseqnx_qws.cpp",
 		"/home/ming/src/kernel/linux-2.6.30.4_20100531/drivers/serial/s3c2440.c",
 		"/home/ming/src/kernel/linux-2.6.30.4_20100531/drivers/serial/samsung.c",
-		"/home/ming/src/kernel/linux-2.6.30.4/drivers/serial/s3c2440.c",
-		"/home/ming/src/kernel/linux-2.6.30.4/drivers/serial/samsung.c",
-		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/drivers/serial/s3c2440.c",
-		"/home/ming/src/kernel/linux-2.6.32.rc8.mini2440/drivers/serial/samsung.c"
+		"/home/ming/src/kernel/linux-2.6.30.4/drivers/serial/s3c2440.c"
 	],
 	"find":
 	{
@@ -533,6 +562,7 @@
 		"height": 0.0,
 		"where_history":
 		[
+			"/home/ming/Project/kernel_module/tq2440/GPS/serial",
 			"/home/ming/src/kernel/linux-2.6.30.4_20100531",
 			"/home/ming/src/qt/qt4.8.5/qt-everywhere-opensource-src-4.8.5/src",
 			"/home/ming/src/qt/qt4.5.0/qt-embedded-linux-opensource-src-4.5.0/src",
@@ -558,6 +588,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"delete_first_message",
 			"select",
 			"tmp1",
 			"send_cmgd_1",
@@ -684,8 +715,7 @@
 			"IXANY",
 			"INPCK",
 			"B9600",
-			"buf4",
-			"QWS_DISPLAY"
+			"buf4"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -729,187 +759,11 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "test.c",
-					"settings":
-					{
-						"buffer_size": 4462,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1968,
-								1968
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close"
-							],
-							"codeintel": true,
-							"codeintel_config":
-							{
-								"JavaScript":
-								{
-									"codeintel_max_recursive_dir_depth": 2.0,
-									"codeintel_scan_files_in_project": false,
-									"javascriptExtraPaths":
-									[
-									]
-								},
-								"PHP":
-								{
-									"codeintel_max_recursive_dir_depth": 5.0,
-									"codeintel_scan_files_in_project": false,
-									"phpExtraPaths":
-									[
-									]
-								},
-								"Python":
-								{
-									"env":
-									{
-									}
-								}
-							},
-							"codeintel_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_live": true,
-							"codeintel_live_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_max_recursive_dir_depth": 10.0,
-							"codeintel_scan_exclude_dir":
-							{
-								"JavaScript":
-								[
-									"/build/",
-									"/min/"
-								]
-							},
-							"codeintel_scan_files_in_project": true,
-							"codeintel_selected_catalogs":
-							[
-								"PyWin32",
-								"jQuery",
-								"Rails"
-							],
-							"codeintel_snippets": true,
-							"codeintel_syntax_map":
-							{
-								"Python Django": "Python"
-							},
-							"codeintel_tooltips": "popup",
-							"origin_encoding": "UTF-8",
-							"sublime_auto_complete": true,
-							"syntax": "Packages/C++/C.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1961.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "gps.c",
 					"settings":
 					{
@@ -920,8 +774,8 @@
 						"selection":
 						[
 							[
-								16007,
-								16007
+								21277,
+								21277
 							]
 						],
 						"settings":
@@ -975,25 +829,25 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 17598.0,
+						"translation.y": 25227.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 1,
 					"file": "gprs.h",
 					"settings":
 					{
-						"buffer_size": 208,
+						"buffer_size": 276,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								97,
-								97
+								128,
+								128
 							]
 						],
 						"settings":
@@ -1156,19 +1010,19 @@
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 2,
 					"file": "gprs.c",
 					"settings":
 					{
-						"buffer_size": 21334,
+						"buffer_size": 17700,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								11291,
-								11291
+								10921,
+								10921
 							]
 						],
 						"settings":
@@ -1326,7 +1180,470 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 3076.0,
+						"translation.y": 12342.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "gps.h",
+					"settings":
+					{
+						"buffer_size": 2750,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								501,
+								501
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2.0,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5.0,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10.0,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"origin_encoding": "UTF-8",
+							"sublime_auto_complete": true,
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3450.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "Makefile",
+					"settings":
+					{
+						"buffer_size": 268,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								38,
+								38
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"is_preview": true,
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Makefile/Makefile.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "serial.c",
+					"settings":
+					{
+						"buffer_size": 9075,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1664,
+								1664
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/C++/C.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "serial.h",
+					"settings":
+					{
+						"buffer_size": 1591,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "test.c",
+					"settings":
+					{
+						"buffer_size": 4357,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/C++/C.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

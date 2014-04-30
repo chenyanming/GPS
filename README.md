@@ -1,8 +1,8 @@
 # Graduation Design 我的毕业设计
 
-It is Based on NEO-6 u-blox 6 GPS Modules, Linux kernel 2.6.30, busybox, Qt 4.5 and TQ2440.
+It is Based on NEO-6 u-blox 6 GPS Modules, GPRS module, Linux kernel 2.6.30, busybox, Qt 4.5 and TQ2440.
 
-基于NEO-6 u-blox 6 GPS模块，Linux 2.6.30内核，busybox, Qt 4.5文件系统和TQ2440开发板。
+基于NEO-6 u-blox 6 GPS模块，GPRS模块，Linux 2.6.30内核，busybox, Qt 4.5文件系统和TQ2440开发板。
 
 
 ## Example 例子
@@ -107,6 +107,12 @@ C接口，其中gps.h头文件包含所有的重要的结构体和函数，调�
     
     char cfg_cfg_save[];
 
+### gprs.h
+    int openGPRS(char *dev);//打开GPRS模块
+    int send_position(int fd);//发送一条信息，内容为当前位置相关内容
+    int send_error(int fd);//发送一条信息，内容为“当前未定位”
+    int receive_zh_message(int fd);//接收中文信息
+    int closeGPRS(int fd);//关闭GPRS模块
 
 ### test.c
 Test code.

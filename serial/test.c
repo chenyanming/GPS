@@ -21,6 +21,7 @@
 #include "gps.h"
 #include "gprs.h"
 
+
 void *MyGPS(int *fd);
 void *MyGPRS(int *fd);
 
@@ -89,7 +90,6 @@ void *MyGPS(int *fd)
 {
 	//int *gps;
 	//gps = (int *)fd;
-	int i = 0;
 	while(1)
 	{
 		readGPS(*fd);
@@ -97,14 +97,6 @@ void *MyGPS(int *fd)
 		printCommand();
 		printData();
 		sleep(1);
-		if (gprmc.status == 'A')
-		{
-			if (i == 0)
-				{
-				i++;
-				send_position(*fd);
-			}
-		}
 		fflush(stdout);//配合QT使用，应该是清除缓冲区吧，这样才可以正常输出。
 	}
 }
