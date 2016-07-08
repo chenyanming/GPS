@@ -1,85 +1,82 @@
-# Graduation Design 我的毕业设计
+# Final Year Project
 
 It is Based on NEO-6 u-blox 6 GPS Modules, GPRS module, Linux kernel 2.6.30, busybox, Qt 4.5 and TQ2440.
 
-基于NEO-6 u-blox 6 GPS模块，GPRS模块，Linux 2.6.30内核，busybox, Qt 4.5文件系统和TQ2440开发板。
+## Example 
 
-
-## Example 例子
-
-1. 包含头文件 
+1. Include the header file
 
         #include "gps.h"
 
-1. 打开GPS设备，`int openGPS(char *dev);`   
+1. open the GPS device，`int openGPS(char *dev);`   
 
         int fd;  
         fd = openGPS("/dev/tq2440_serial1");
 
-2. 读取GPS数据，`int readGPS(int fd);`，然后就可以访问结构体gprmc， gpgsv， gpgsa的成员
+2. Read GPS data，`int readGPS(int fd);`，then can access the stucture of "gprmc， gpgsv， gpgsa"
 
-        readGPS(fd);//openGPS()需要一定时间，大约2秒后正常
+        readGPS(fd);//openGPS() need 2 seconds or more
         printf("Now the time is: %d:%d:%d.\n", gprmc.hour, gprmc.minute, gprmc.second);
 
-3. 关闭GPS，`int closeGPS(int fd);`
+3. Close GPS device，`int closeGPS(int fd);`
 
         closeGPS(fd);
 
-__可选:__ 打印所有接收的NEMA命令，`int printCommand(void);`
+__Option:__ Print all received NEMA command，`int printCommand(void);`
 
-__可选:__ 打印所有分析后的数据，`int printData(void);`
+__Option:__ Print all analysized data，`int printData(void);`
 
-__可选:__ 配置GPS，`int cfg(int fd, const char *buf);`
+__Option:__ Configure GPS，`int cfg(int fd, const char *buf);`
 
         #include "serial.h"
         ......
-        cfg(fd, cfg_rate_1000);//1Hz为默认配置
-        cfg(fd, cfg_msg_GPGLL_off);//关闭GPGLL
-        cfg(fd, cfg_msg_GPGGA_off);//关闭GPGGA
-        cfg(fd, cfg_msg_GPVTG_off);//关闭GPVTG
-        cfg(fd, cfg_rst_prt_38400);//修改GPS模块的波特率为38400
-        init_serial(fd, B38400);//修改串口的波特率为38400
-        cfg(fd, cfg_cfg_save);//保存配置
+        cfg(fd, cfg_rate_1000); //Default 1Hz
+        cfg(fd, cfg_msg_GPGLL_off); //Close GPGLL
+        cfg(fd, cfg_msg_GPGGA_off); //Close GPGGA
+        cfg(fd, cfg_msg_GPVTG_off); //CLose GPVTG
+        cfg(fd, cfg_rst_prt_38400); //Change the baud rate of GPS to 38400
+        init_serial(fd, B38400); //Change the baud rate of Uart to 38400
+        cfg(fd, cfg_cfg_save); //Save configuration
         ......
 
 ## serial/
 
-C接口，其中gps.h头文件包含所有的重要的结构体和函数，调用readGPS(int fd)函数后，数据就保存在各个接口处。
+C interface, all important sturts and functions are included in *gps.h*. After running readGPS(int fd), data will be saved.
 ### gps.h
-#### important members 重要成员
+#### important members
 *gprmc*
 
     char status;//定位状态，A正在定位，V无效定位
     char n;//N北纬，S南纬
-	char e;//E东经，W西经
+	char e; //E/W
 	
-	int hour;//时
-	int minute;//分
-	int second;//秒
-	int day;//日
-	int month;//月
-	int year;//年
-	int lati_degree;//纬度，度
-	int lati_minute;//纬度，分
-	double lati_second;//纬度，秒
-	int long_degree;//经度，度
-	int long_minute;//经度，分
-	double long_second;//经度，秒
-	double kmph;//速度，公里/小时
+	int hour; //hour
+	int minute; //minute
+	int second; //second
+	int day; //day
+	int month; //month
+	int year; //year
+	int lati_degree; //latitude, degree
+	int lati_minute; //latitude, minute
+	double lati_second; //latitude, second
+	int long_degree; //longtitude, degree
+	int long_minute; //longtitude, minute
+	double long_second; //longtitude, second
+	double kmph; //speed, km/h
 	
 *gpgsv*
 
-    int id[50];//可见卫星的编号
-	int no;//可见卫星数目
+    int id[50]; //the id of the visiable satellites
+	int no; //the number of the visiable satellites
 	
 *gpgsa*
 
-	int id[14];//用于定位的卫星编号 
+	int id[14]; //the id of the located satellites 
 	
 *gpgga*
     
-    int number;//用于定位的卫星个数
-    double altitude;//海拔，米
+    int number; //the numbers of the located satellites
+    double altitude; //attitude, meters
     
 ### serial.h
     int cfg(int fd, const char *buf);
@@ -90,9 +87,9 @@ C接口，其中gps.h头文件包含所有的重要的结构体和函数，调�
     char cfg_rate_500[];   
     char cfg_rate_200[];   
     
-    char cfg_rst_cs_wd[];//看门狗冷启动
-    char cfg_rst_cs_stop[];//冷启动, 停止所有GPS活动
-    char cfg_rst_cs_start[];//冷启动, 开始所有GPS活动
+    char cfg_rst_cs_wd[]; //enable watchdog
+    char cfg_rst_cs_stop[]; //cold start, stop all GPS activities
+    char cfg_rst_cs_start[]; //cold start,, start all GPS activities
     
     char cfg_rst_prt_38400[];
     char cfg_rst_prt_9600[];
@@ -108,29 +105,27 @@ C接口，其中gps.h头文件包含所有的重要的结构体和函数，调�
     char cfg_cfg_save[];
 
 ### gprs.h
-    int openGPRS(char *dev);//打开GPRS模块
-    int send_position(int fd);//发送一条信息，内容为当前位置相关内容
-    int send_error(int fd);//发送一条信息，内容为“当前未定位”
-    int receive_zh_message(int fd);//接收中文信息
-    int closeGPRS(int fd);//关闭GPRS模块
+    int openGPRS(char *dev); //enable GPRS module
+    int send_position(int fd); //Send a message: the current position
+    int send_error(int fd); //Send a message: 当前未定位
+    int receive_zh_message(int fd); //Accept Chinese message
+    int closeGPRS(int fd); //disalbe GPRS module
 
 ### test.c
 Test code.
-
-测试程序
 
 
 ## GPS/
 
 Master version.
 
-基本功能QT界面，有启动GPS，关闭GPS，关机，重启4个功能。
+GUI: Enalbe GPS, disable GPS, shutdown, reboot.
 
 ## qt/
 
 Development version.
 
-## Contact Information 联系信息
+## Contact Information
 
 *Author:* DR_MING  
 *Email:* elecming@gmail.com   
