@@ -46,8 +46,8 @@ C interface, all important sturts and functions are included in *gps.h*. After r
 #### important members
 *gprmc*
 
-    char status;//定位状态，A正在定位，V无效定位
-    char n;//N北纬，S南纬
+    char status; //A: valid，V: invalid
+    char n; //N. S
 	char e; //E/W
 	
 	int hour; //hour
